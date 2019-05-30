@@ -1,0 +1,722 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ivy-report.xsl"?>
+<ivy-report version="1.0">
+	<info
+		organisation="org.niblius"
+		module="tg-anonymizer$sources"
+		revision="0.0.1-SNAPSHOT"
+		conf="runtime-internal"
+		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, pom, scala-tool"
+		date="20190529233424"/>
+	<dependencies>
+		<module organisation="io.circe" name="circe-config_2.12">
+			<revision name="0.6.1" status="release" pubdate="20190128001050" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/circe/circe-config" extra-info.apiURL="https://circe.github.io/circe-config/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="58">
+				<license name="Apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0.html"/>
+				<metadata-artifact status="no" details="" size="4007" time="0" location="/home/nexiten/.ivy2/cache/io.circe/circe-config_2.12/ivy-0.6.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/io/circe/circe-config_2.12/0.6.1/circe-config_2.12-0.6.1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.6.1" rev-constraint-default="0.6.1" rev-constraint-dynamic="0.6.1" callerrev="0.0.1-SNAPSHOT" extra-info.apiURL="https://circe.github.io/circe-config/"/>
+				<artifacts>
+					<artifact name="circe-config_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="7489" time="0" location="/home/nexiten/.ivy2/cache/io.circe/circe-config_2.12/srcs/circe-config_2.12-0.6.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/io/circe/circe-config_2.12/0.6.1/circe-config_2.12-0.6.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="io.circe" name="circe-generic-extras_2.12">
+			<revision name="0.11.1" status="release" pubdate="20190112091339" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/circe/circe" extra-info.apiURL="https://circe.github.io/circe/api/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="55">
+				<license name="Apache 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
+				<metadata-artifact status="no" details="" size="3269" time="0" location="/home/nexiten/.ivy2/cache/io.circe/circe-generic-extras_2.12/ivy-0.11.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/io/circe/circe-generic-extras_2.12/0.11.1/circe-generic-extras_2.12-0.11.1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.11.1" rev-constraint-default="0.11.1" rev-constraint-dynamic="0.11.1" callerrev="0.0.1-SNAPSHOT" extra-info.apiURL="https://circe.github.io/circe/api/"/>
+				<artifacts>
+					<artifact name="circe-generic-extras_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="14442" time="0" location="/home/nexiten/.ivy2/cache/io.circe/circe-generic-extras_2.12/srcs/circe-generic-extras_2.12-0.11.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/io/circe/circe-generic-extras_2.12/0.11.1/circe-generic-extras_2.12-0.11.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.http4s" name="http4s-circe_2.12">
+			<revision name="0.20.1" status="release" pubdate="20190516200722" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://http4s.org/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="50">
+				<license name="Apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0.html"/>
+				<metadata-artifact status="no" details="" size="4361" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/http4s-circe_2.12/ivy-0.20.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/http4s/http4s-circe_2.12/0.20.1/http4s-circe_2.12-0.20.1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.20.1" rev-constraint-default="0.20.1" rev-constraint-dynamic="0.20.1" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="http4s-circe_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="4220" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/http4s-circe_2.12/srcs/http4s-circe_2.12-0.20.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/http4s/http4s-circe_2.12/0.20.1/http4s-circe_2.12-0.20.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.http4s" name="http4s-jawn_2.12">
+			<revision name="0.20.1" status="release" pubdate="20190516200556" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://http4s.org/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="56">
+				<license name="Apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0.html"/>
+				<metadata-artifact status="no" details="" size="4111" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/http4s-jawn_2.12/ivy-0.20.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/http4s/http4s-jawn_2.12/0.20.1/http4s-jawn_2.12-0.20.1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.20.1" rev-constraint-default="0.20.1" rev-constraint-dynamic="0.20.1" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="http4s-jawn_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="1473" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/http4s-jawn_2.12/srcs/http4s-jawn_2.12-0.20.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/http4s/http4s-jawn_2.12/0.20.1/http4s-jawn_2.12-0.20.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.tpolecat" name="doobie-h2_2.12">
+			<revision name="0.5.4" status="release" pubdate="20181207123333" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/tpolecat/doobie" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="49">
+				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
+				<metadata-artifact status="no" details="" size="3307" time="0" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-h2_2.12/ivy-0.5.4.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/tpolecat/doobie-h2_2.12/0.5.4/doobie-h2_2.12-0.5.4.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.5.4" rev-constraint-default="0.5.4" rev-constraint-dynamic="0.5.4" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="doobie-h2_2.12" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="3800" time="160" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-h2_2.12/srcs/doobie-h2_2.12-0.5.4-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/tpolecat/doobie-h2_2.12/0.5.4/doobie-h2_2.12-0.5.4-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="io.circe" name="circe-parser_2.12">
+			<revision name="0.11.1" status="release" pubdate="20190112091202" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/circe/circe" extra-info.apiURL="https://circe.github.io/circe/api/" downloaded="false" searched="false" default="false" conf="default, compile, runtime(*), master(compile), runtime, default(compile), compile(*), master" position="47">
+				<license name="Apache 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
+				<metadata-artifact status="no" details="" size="3082" time="0" location="/home/nexiten/.ivy2/cache/io.circe/circe-parser_2.12/ivy-0.11.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/io/circe/circe-parser_2.12/0.11.1/circe-parser_2.12-0.11.1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.11.1" rev-constraint-default="0.11.1" rev-constraint-dynamic="0.11.1" callerrev="0.0.1-SNAPSHOT" extra-info.apiURL="https://circe.github.io/circe/api/"/>
+				<artifacts>
+					<artifact name="circe-parser_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="829" time="0" location="/home/nexiten/.ivy2/cache/io.circe/circe-parser_2.12/srcs/circe-parser_2.12-0.11.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/io/circe/circe-parser_2.12/0.11.1/circe-parser_2.12-0.11.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.typesafe" name="config">
+			<revision name="1.3.3" status="release" pubdate="20180221090821" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/lightbend/config" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="45">
+				<license name="Apache License, Version 2.0" url="https://www.apache.org/licenses/LICENSE-2.0"/>
+				<metadata-artifact status="no" details="" size="2874" time="0" location="/home/nexiten/.ivy2/cache/com.typesafe/config/ivy-1.3.3.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/typesafe/config/1.3.3/config-1.3.3.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="1.3.3" rev-constraint-default="1.3.3" rev-constraint-dynamic="1.3.3" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="config" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="172783" time="0" location="/home/nexiten/.ivy2/cache/com.typesafe/config/srcs/config-1.3.3-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/typesafe/config/1.3.3/config-1.3.3-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="io.chrisdavenport" name="log4cats-slf4j_2.12">
+			<revision name="0.3.0" status="release" pubdate="20190217155826" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/ChristopherDavenport/log4cats" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="43">
+				<license name="Apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0.html"/>
+				<metadata-artifact status="no" details="" size="3397" time="0" location="/home/nexiten/.ivy2/cache/io.chrisdavenport/log4cats-slf4j_2.12/ivy-0.3.0.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/io/chrisdavenport/log4cats-slf4j_2.12/0.3.0/log4cats-slf4j_2.12-0.3.0.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.3.0" rev-constraint-default="0.3.0" rev-constraint-dynamic="0.3.0" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="log4cats-slf4j_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="4911" time="0" location="/home/nexiten/.ivy2/cache/io.chrisdavenport/log4cats-slf4j_2.12/srcs/log4cats-slf4j_2.12-0.3.0-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/io/chrisdavenport/log4cats-slf4j_2.12/0.3.0/log4cats-slf4j_2.12-0.3.0-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="io.chrisdavenport" name="log4cats-core_2.12">
+			<revision name="0.3.0" status="release" pubdate="20190217155832" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/ChristopherDavenport/log4cats" downloaded="false" searched="false" default="false" conf="default, compile, runtime(*), master(compile), runtime, default(compile), compile(*), master" position="53">
+				<license name="Apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0.html"/>
+				<metadata-artifact status="no" details="" size="2808" time="0" location="/home/nexiten/.ivy2/cache/io.chrisdavenport/log4cats-core_2.12/ivy-0.3.0.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/io/chrisdavenport/log4cats-core_2.12/0.3.0/log4cats-core_2.12-0.3.0.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.3.0" rev-constraint-default="0.3.0" rev-constraint-dynamic="0.3.0" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="log4cats-core_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="3590" time="0" location="/home/nexiten/.ivy2/cache/io.chrisdavenport/log4cats-core_2.12/srcs/log4cats-core_2.12-0.3.0-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/io/chrisdavenport/log4cats-core_2.12/0.3.0/log4cats-core_2.12-0.3.0-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.typelevel" name="cats-effect_2.12">
+			<revision name="2.0.0-M1" status="release" pubdate="20190501171708" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://typelevel.org/cats-effect/" downloaded="false" searched="false" default="false" conf="default, compile, runtime(*), master(compile), runtime, default(compile), compile(*), master" position="42">
+				<license name="Apache-2.0" url="http://www.apache.org/licenses/"/>
+				<metadata-artifact status="no" details="" size="3451" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/cats-effect_2.12/ivy-2.0.0-M1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/typelevel/cats-effect_2.12/2.0.0-M1/cats-effect_2.12-2.0.0-M1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="2.0.0-M1" rev-constraint-default="2.0.0-M1" rev-constraint-dynamic="2.0.0-M1" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="cats-effect_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="130038" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/cats-effect_2.12/srcs/cats-effect_2.12-2.0.0-M1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/typelevel/cats-effect_2.12/2.0.0-M1/cats-effect_2.12-2.0.0-M1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.tpolecat" name="doobie-hikari_2.12">
+			<revision name="0.5.4" status="release" pubdate="20181207123457" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/tpolecat/doobie" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="41">
+				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
+				<metadata-artifact status="no" details="" size="3319" time="0" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-hikari_2.12/ivy-0.5.4.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/tpolecat/doobie-hikari_2.12/0.5.4/doobie-hikari_2.12-0.5.4.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.5.4" rev-constraint-default="0.5.4" rev-constraint-dynamic="0.5.4" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="doobie-hikari_2.12" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="2536" time="150" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-hikari_2.12/srcs/doobie-hikari_2.12-0.5.4-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/tpolecat/doobie-hikari_2.12/0.5.4/doobie-hikari_2.12-0.5.4-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.tpolecat" name="doobie-scalatest_2.12">
+			<revision name="0.5.4" status="release" pubdate="20181207123420" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/tpolecat/doobie" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="37">
+				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
+				<metadata-artifact status="no" details="" size="3451" time="0" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-scalatest_2.12/ivy-0.5.4.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/tpolecat/doobie-scalatest_2.12/0.5.4/doobie-scalatest_2.12-0.5.4.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.5.4" rev-constraint-default="0.5.4" rev-constraint-dynamic="0.5.4" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="doobie-scalatest_2.12" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="3794" time="162" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-scalatest_2.12/srcs/doobie-scalatest_2.12-0.5.4-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/tpolecat/doobie-scalatest_2.12/0.5.4/doobie-scalatest_2.12-0.5.4-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.flywaydb" name="flyway-core">
+			<revision name="5.2.4" status="release" pubdate="20181204120152" resolver="sbt-chain" artresolver="sbt-chain" homepage="" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="34">
+				<license name="Apache License, Version 2.0" url="https://flywaydb.org/licenses/flyway-community"/>
+				<metadata-artifact status="no" details="" size="10012" time="0" location="/home/nexiten/.ivy2/cache/org.flywaydb/flyway-core/ivy-5.2.4.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/flywaydb/flyway-core/5.2.4/flyway-core-5.2.4.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="5.2.4" rev-constraint-default="5.2.4" rev-constraint-dynamic="5.2.4" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="flyway-core" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="457243" time="0" location="/home/nexiten/.ivy2/cache/org.flywaydb/flyway-core/srcs/flyway-core-5.2.4-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/flywaydb/flyway-core/5.2.4/flyway-core-5.2.4-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.http4s" name="jawn-fs2_2.12">
+			<revision name="0.14.2" status="release" pubdate="20190212150109" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/http4s/jawn-fs2" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="28">
+				<license name="Apache-2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+				<metadata-artifact status="no" details="" size="3294" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/jawn-fs2_2.12/ivy-0.14.2.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/http4s/jawn-fs2_2.12/0.14.2/jawn-fs2_2.12-0.14.2.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.14.2" rev-constraint-default="0.14.2" rev-constraint-dynamic="0.14.2" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="jawn-fs2_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="2604" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/jawn-fs2_2.12/srcs/jawn-fs2_2.12-0.14.2-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/http4s/jawn-fs2_2.12/0.14.2/jawn-fs2_2.12-0.14.2-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.http4s" name="http4s-blaze-server_2.12">
+			<revision name="0.20.1" status="release" pubdate="20190516200746" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://http4s.org/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="23">
+				<license name="Apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0.html"/>
+				<metadata-artifact status="no" details="" size="3998" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/http4s-blaze-server_2.12/ivy-0.20.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/http4s/http4s-blaze-server_2.12/0.20.1/http4s-blaze-server_2.12-0.20.1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.20.1" rev-constraint-default="0.20.1" rev-constraint-dynamic="0.20.1" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="http4s-blaze-server_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="22037" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/http4s-blaze-server_2.12/srcs/http4s-blaze-server_2.12-0.20.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/http4s/http4s-blaze-server_2.12/0.20.1/http4s-blaze-server_2.12-0.20.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.tpolecat" name="doobie-core_2.12">
+			<revision name="0.5.4" status="release" pubdate="20181207123446" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/tpolecat/doobie" downloaded="false" searched="false" default="false" conf="default, compile, runtime(*), master(compile), runtime, default(compile), compile(*), master" position="19">
+				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
+				<metadata-artifact status="no" details="" size="3739" time="0" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-core_2.12/ivy-0.5.4.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/tpolecat/doobie-core_2.12/0.5.4/doobie-core_2.12-0.5.4.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.5.4" rev-constraint-default="0.5.4" rev-constraint-dynamic="0.5.4" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="doobie-core_2.12" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="65842" time="158" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-core_2.12/srcs/doobie-core_2.12-0.5.4-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/tpolecat/doobie-core_2.12/0.5.4/doobie-core_2.12-0.5.4-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.lihaoyi" name="sourcecode_2.12">
+			<revision name="0.1.5" status="release" pubdate="20180924092010" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/lihaoyi/sourcecode" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="26">
+				<license name="MIT" url="http://www.opensource.org/licenses/mit-license.html"/>
+				<metadata-artifact status="no" details="" size="2962" time="0" location="/home/nexiten/.ivy2/cache/com.lihaoyi/sourcecode_2.12/ivy-0.1.5.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/lihaoyi/sourcecode_2.12/0.1.5/sourcecode_2.12-0.1.5.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.1.5" rev-constraint-default="0.1.5" rev-constraint-dynamic="0.1.5" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="sourcecode_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="2593" time="0" location="/home/nexiten/.ivy2/cache/com.lihaoyi/sourcecode_2.12/srcs/sourcecode_2.12-0.1.5-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/lihaoyi/sourcecode_2.12/0.1.5/sourcecode_2.12-0.1.5-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="io.circe" name="circe-literal_2.12">
+			<revision name="0.11.1" status="release" pubdate="20190112091208" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/circe/circe" extra-info.apiURL="https://circe.github.io/circe/api/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="15">
+				<license name="Apache 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
+				<metadata-artifact status="no" details="" size="3245" time="0" location="/home/nexiten/.ivy2/cache/io.circe/circe-literal_2.12/ivy-0.11.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/io/circe/circe-literal_2.12/0.11.1/circe-literal_2.12-0.11.1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.11.1" rev-constraint-default="0.11.1" rev-constraint-dynamic="0.11.1" callerrev="0.0.1-SNAPSHOT" extra-info.apiURL="https://circe.github.io/circe/api/"/>
+				<artifacts>
+					<artifact name="circe-literal_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="4466" time="0" location="/home/nexiten/.ivy2/cache/io.circe/circe-literal_2.12/srcs/circe-literal_2.12-0.11.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/io/circe/circe-literal_2.12/0.11.1/circe-literal_2.12-0.11.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.slf4j" name="slf4j-simple">
+			<revision name="1.7.25" status="release" pubdate="20170316123640" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.slf4j.org" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="14">
+				<license name="MIT License" url="http://www.opensource.org/licenses/mit-license.php"/>
+				<metadata-artifact status="no" details="" size="5351" time="0" location="/home/nexiten/.ivy2/cache/org.slf4j/slf4j-simple/ivy-1.7.25.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="1.7.25" rev-constraint-default="1.7.25" rev-constraint-dynamic="1.7.25" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="slf4j-simple" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="13815" time="0" location="/home/nexiten/.ivy2/cache/org.slf4j/slf4j-simple/srcs/slf4j-simple-1.7.25-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="io.circe" name="circe-generic_2.12">
+			<revision name="0.11.1" status="release" pubdate="20190112091216" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/circe/circe" extra-info.apiURL="https://circe.github.io/circe/api/" downloaded="false" searched="false" default="false" conf="default, compile, runtime(*), master(compile), runtime, default(compile), compile(*), master" position="13">
+				<license name="Apache 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
+				<metadata-artifact status="no" details="" size="3389" time="0" location="/home/nexiten/.ivy2/cache/io.circe/circe-generic_2.12/ivy-0.11.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/io/circe/circe-generic_2.12/0.11.1/circe-generic_2.12-0.11.1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.11.1" rev-constraint-default="0.11.1" rev-constraint-dynamic="0.11.1" callerrev="0.0.1-SNAPSHOT" extra-info.apiURL="https://circe.github.io/circe/api/"/>
+				<artifacts>
+					<artifact name="circe-generic_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="13093" time="0" location="/home/nexiten/.ivy2/cache/io.circe/circe-generic_2.12/srcs/circe-generic_2.12-0.11.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/io/circe/circe-generic_2.12/0.11.1/circe-generic_2.12-0.11.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.chuusai" name="shapeless_2.12">
+			<revision name="2.3.3" status="release" pubdate="20171231095153" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/milessabin/shapeless" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="21">
+				<license name="Apache 2" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+				<metadata-artifact status="no" details="" size="3230" time="0" location="/home/nexiten/.ivy2/cache/com.chuusai/shapeless_2.12/ivy-2.3.3.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/chuusai/shapeless_2.12/2.3.3/shapeless_2.12-2.3.3.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="2.3.3" rev-constraint-default="2.3.3" rev-constraint-dynamic="2.3.3" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="shapeless_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="172402" time="0" location="/home/nexiten/.ivy2/cache/com.chuusai/shapeless_2.12/srcs/shapeless_2.12-2.3.3-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/chuusai/shapeless_2.12/2.3.3/shapeless_2.12-2.3.3-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.typelevel" name="macro-compat_2.12">
+			<revision name="1.1.1" status="release" pubdate="20161102044258" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/milessabin/macro-compat" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="39">
+				<license name="Apache 2" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+				<metadata-artifact status="no" details="" size="2964" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/macro-compat_2.12/ivy-1.1.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/typelevel/macro-compat_2.12/1.1.1/macro-compat_2.12-1.1.1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="1.1.1" rev-constraint-default="1.1.1" rev-constraint-dynamic="1.1.1" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="macro-compat_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="1052" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/macro-compat_2.12/srcs/macro-compat_2.12-1.1.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/typelevel/macro-compat_2.12/1.1.1/macro-compat_2.12-1.1.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.zaxxer" name="HikariCP">
+			<revision name="3.2.0" status="release" pubdate="20180530024537" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/brettwooldridge/HikariCP" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="11">
+				<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+				<metadata-artifact status="no" details="" size="8024" time="0" location="/home/nexiten/.ivy2/cache/com.zaxxer/HikariCP/ivy-3.2.0.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/zaxxer/HikariCP/3.2.0/HikariCP-3.2.0.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="3.2.0" rev-constraint-default="3.2.0" rev-constraint-dynamic="3.2.0" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="HikariCP" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="78830" time="0" location="/home/nexiten/.ivy2/cache/com.zaxxer/HikariCP/srcs/HikariCP-3.2.0-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/zaxxer/HikariCP/3.2.0/HikariCP-3.2.0-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.h2database" name="h2">
+			<revision name="1.4.197" status="release" pubdate="20180318162844" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.h2database.com" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="9">
+				<license name="MPL 2.0 or EPL 1.0" url="http://h2database.com/html/license.html"/>
+				<metadata-artifact status="no" details="" size="2454" time="0" location="/home/nexiten/.ivy2/cache/com.h2database/h2/ivy-1.4.197.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/h2database/h2/1.4.197/h2-1.4.197.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="1.4.197" rev-constraint-default="1.4.197" rev-constraint-dynamic="1.4.197" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="h2" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="1335854" time="0" location="/home/nexiten/.ivy2/cache/com.h2database/h2/srcs/h2-1.4.197-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/h2database/h2/1.4.197/h2-1.4.197-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.http4s" name="http4s-blaze-client_2.12">
+			<revision name="0.20.1" status="release" pubdate="20190516200817" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://http4s.org/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="7">
+				<license name="Apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0.html"/>
+				<metadata-artifact status="no" details="" size="3998" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/http4s-blaze-client_2.12/ivy-0.20.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/http4s/http4s-blaze-client_2.12/0.20.1/http4s-blaze-client_2.12-0.20.1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.20.1" rev-constraint-default="0.20.1" rev-constraint-dynamic="0.20.1" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="http4s-blaze-client_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="16325" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/http4s-blaze-client_2.12/srcs/http4s-blaze-client_2.12-0.20.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/http4s/http4s-blaze-client_2.12/0.20.1/http4s-blaze-client_2.12-0.20.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.http4s" name="http4s-client_2.12">
+			<revision name="0.20.1" status="release" pubdate="20190516200711" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://http4s.org/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="40">
+				<license name="Apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0.html"/>
+				<metadata-artifact status="no" details="" size="4471" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/http4s-client_2.12/ivy-0.20.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/http4s/http4s-client_2.12/0.20.1/http4s-client_2.12-0.20.1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.20.1" rev-constraint-default="0.20.1" rev-constraint-dynamic="0.20.1" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="http4s-client_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="28972" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/http4s-client_2.12/srcs/http4s-client_2.12-0.20.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/http4s/http4s-client_2.12/0.20.1/http4s-client_2.12-0.20.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.http4s" name="http4s-server_2.12">
+			<revision name="0.20.1" status="release" pubdate="20190516200702" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://http4s.org/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="33">
+				<license name="Apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0.html"/>
+				<metadata-artifact status="no" details="" size="4081" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/http4s-server_2.12/ivy-0.20.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/http4s/http4s-server_2.12/0.20.1/http4s-server_2.12-0.20.1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.20.1" rev-constraint-default="0.20.1" rev-constraint-dynamic="0.20.1" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="http4s-server_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="54978" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/http4s-server_2.12/srcs/http4s-server_2.12-0.20.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/http4s/http4s-server_2.12/0.20.1/http4s-server_2.12-0.20.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.http4s" name="http4s-dsl_2.12">
+			<revision name="0.20.1" status="release" pubdate="20190516200605" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://http4s.org/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="51">
+				<license name="Apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0.html"/>
+				<metadata-artifact status="no" details="" size="3951" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/http4s-dsl_2.12/ivy-0.20.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/http4s/http4s-dsl_2.12/0.20.1/http4s-dsl_2.12-0.20.1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.20.1" rev-constraint-default="0.20.1" rev-constraint-dynamic="0.20.1" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="http4s-dsl_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="11145" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/http4s-dsl_2.12/srcs/http4s-dsl_2.12-0.20.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/http4s/http4s-dsl_2.12/0.20.1/http4s-dsl_2.12-0.20.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.http4s" name="http4s-blaze-core_2.12">
+			<revision name="0.20.1" status="release" pubdate="20190516200652" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://http4s.org/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="25">
+				<license name="Apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0.html"/>
+				<metadata-artifact status="no" details="" size="4132" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/http4s-blaze-core_2.12/ivy-0.20.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/http4s/http4s-blaze-core_2.12/0.20.1/http4s-blaze-core_2.12-0.20.1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.20.1" rev-constraint-default="0.20.1" rev-constraint-dynamic="0.20.1" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="http4s-blaze-core_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="20691" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/http4s-blaze-core_2.12/srcs/http4s-blaze-core_2.12-0.20.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/http4s/http4s-blaze-core_2.12/0.20.1/http4s-blaze-core_2.12-0.20.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.http4s" name="blaze-http_2.12">
+			<revision name="0.14.2" status="release" pubdate="20190516093303" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/http4s/blaze" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="36">
+				<license name="Apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0.html"/>
+				<metadata-artifact status="no" details="" size="3492" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/blaze-http_2.12/ivy-0.14.2.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/http4s/blaze-http_2.12/0.14.2/blaze-http_2.12-0.14.2.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.14.2" rev-constraint-default="0.14.2" rev-constraint-dynamic="0.14.2" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="blaze-http_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="125675" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/blaze-http_2.12/srcs/blaze-http_2.12-0.14.2-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/http4s/blaze-http_2.12/0.14.2/blaze-http_2.12-0.14.2-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.eclipse.jetty.alpn" name="alpn-api">
+			<revision name="1.1.3.v20160715" status="release" pubdate="20160714232221" resolver="sbt-chain" artresolver="sbt-chain" homepage="" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="24">
+				<license name="Apache Software License - Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
+				<license name="Eclipse Public License - Version 1.0" url="http://www.eclipse.org/org/documents/epl-v10.php"/>
+				<metadata-artifact status="no" details="" size="3360" time="0" location="/home/nexiten/.ivy2/cache/org.eclipse.jetty.alpn/alpn-api/ivy-1.1.3.v20160715.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/eclipse/jetty/alpn/alpn-api/1.1.3.v20160715/alpn-api-1.1.3.v20160715.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="1.1.3.v20160715" rev-constraint-default="1.1.3.v20160715" rev-constraint-dynamic="1.1.3.v20160715" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="alpn-api" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="3162" time="0" location="/home/nexiten/.ivy2/cache/org.eclipse.jetty.alpn/alpn-api/srcs/alpn-api-1.1.3.v20160715-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/eclipse/jetty/alpn/alpn-api/1.1.3.v20160715/alpn-api-1.1.3.v20160715-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.twitter" name="hpack">
+			<revision name="1.0.2" status="release" pubdate="20160324182836" resolver="sbt-chain" artresolver="sbt-chain" homepage="" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="30">
+				<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+				<metadata-artifact status="no" details="" size="4897" time="0" location="/home/nexiten/.ivy2/cache/com.twitter/hpack/ivy-1.0.2.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/twitter/hpack/1.0.2/hpack-1.0.2.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="1.0.2" rev-constraint-default="1.0.2" rev-constraint-dynamic="1.0.2" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="hpack" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="20134" time="0" location="/home/nexiten/.ivy2/cache/com.twitter/hpack/srcs/hpack-1.0.2-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/twitter/hpack/1.0.2/hpack-1.0.2-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.http4s" name="blaze-core_2.12">
+			<revision name="0.14.2" status="release" pubdate="20190516093247" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/http4s/blaze" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="52">
+				<license name="Apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0.html"/>
+				<metadata-artifact status="no" details="" size="3174" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/blaze-core_2.12/ivy-0.14.2.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/http4s/blaze-core_2.12/0.14.2/blaze-core_2.12-0.14.2.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.14.2" rev-constraint-default="0.14.2" rev-constraint-dynamic="0.14.2" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="blaze-core_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="60317" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/blaze-core_2.12/srcs/blaze-core_2.12-0.14.2-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/http4s/blaze-core_2.12/0.14.2/blaze-core_2.12-0.14.2-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.http4s" name="http4s-core_2.12">
+			<revision name="0.20.1" status="release" pubdate="20190516200709" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://http4s.org/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="22">
+				<license name="Apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0.html"/>
+				<metadata-artifact status="no" details="" size="4694" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/http4s-core_2.12/ivy-0.20.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/http4s/http4s-core_2.12/0.20.1/http4s-core_2.12-0.20.1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.20.1" rev-constraint-default="0.20.1" rev-constraint-dynamic="0.20.1" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="http4s-core_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="216801" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/http4s-core_2.12/srcs/http4s-core_2.12-0.20.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/http4s/http4s-core_2.12/0.20.1/http4s-core_2.12-0.20.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="io.chrisdavenport" name="vault_2.12">
+			<revision name="1.0.0" status="release" pubdate="20190206222334" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/ChristopherDavenport/vault" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="29">
+				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
+				<metadata-artifact status="no" details="" size="3329" time="0" location="/home/nexiten/.ivy2/cache/io.chrisdavenport/vault_2.12/ivy-1.0.0.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/io/chrisdavenport/vault_2.12/1.0.0/vault_2.12-1.0.0.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="1.0.0" rev-constraint-default="1.0.0" rev-constraint-dynamic="1.0.0" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="vault_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="2726" time="0" location="/home/nexiten/.ivy2/cache/io.chrisdavenport/vault_2.12/srcs/vault_2.12-1.0.0-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/io/chrisdavenport/vault_2.12/1.0.0/vault_2.12-1.0.0-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.http4s" name="parboiled_2.12">
+			<revision name="1.0.1" status="release" pubdate="20190206121303" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://parboiled.org" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="32">
+				<license name="Apache-2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+				<metadata-artifact status="no" details="" size="2966" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/parboiled_2.12/ivy-1.0.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/http4s/parboiled_2.12/1.0.1/parboiled_2.12-1.0.1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="1.0.1" rev-constraint-default="1.0.1" rev-constraint-dynamic="1.0.1" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="parboiled_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="57358" time="0" location="/home/nexiten/.ivy2/cache/org.http4s/parboiled_2.12/srcs/parboiled_2.12-1.0.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/http4s/parboiled_2.12/1.0.1/parboiled_2.12-1.0.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.log4s" name="log4s_2.12">
+			<revision name="1.7.0" status="release" pubdate="20190205211330" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://log4s.org/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="57">
+				<license name="Apache License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+				<metadata-artifact status="no" details="" size="3613" time="0" location="/home/nexiten/.ivy2/cache/org.log4s/log4s_2.12/ivy-1.7.0.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/log4s/log4s_2.12/1.7.0/log4s_2.12-1.7.0.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="1.7.0" rev-constraint-default="1.7.0" rev-constraint-dynamic="1.7.0" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="log4s_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="5809" time="0" location="/home/nexiten/.ivy2/cache/org.log4s/log4s_2.12/srcs/log4s_2.12-1.7.0-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/log4s/log4s_2.12/1.7.0/log4s_2.12-1.7.0-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.slf4j" name="slf4j-api">
+			<revision name="1.7.25" status="release" pubdate="20170316123632" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.slf4j.org" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="31">
+				<license name="MIT License" url="http://www.opensource.org/licenses/mit-license.php"/>
+				<metadata-artifact status="no" details="" size="5377" time="0" location="/home/nexiten/.ivy2/cache/org.slf4j/slf4j-api/ivy-1.7.25.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="1.7.25" rev-constraint-default="1.7.25" rev-constraint-dynamic="1.7.25" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="slf4j-api" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="55539" time="0" location="/home/nexiten/.ivy2/cache/org.slf4j/slf4j-api/srcs/slf4j-api-1.7.25-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="co.fs2" name="fs2-io_2.12">
+			<revision name="1.0.4" status="release" pubdate="20190228125015" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/functional-streams-for-scala/fs2" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="16">
+				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
+				<metadata-artifact status="no" details="" size="3237" time="0" location="/home/nexiten/.ivy2/cache/co.fs2/fs2-io_2.12/ivy-1.0.4.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/co/fs2/fs2-io_2.12/1.0.4/fs2-io_2.12-1.0.4.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="1.0.4" rev-constraint-default="1.0.4" rev-constraint-dynamic="1.0.4" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="fs2-io_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="24609" time="0" location="/home/nexiten/.ivy2/cache/co.fs2/fs2-io_2.12/srcs/fs2-io_2.12-1.0.4-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/co/fs2/fs2-io_2.12/1.0.4/fs2-io_2.12-1.0.4-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="co.fs2" name="fs2-core_2.12">
+			<revision name="1.0.4" status="release" pubdate="20190228125116" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/functional-streams-for-scala/fs2" downloaded="false" searched="false" default="false" conf="default, compile, runtime(*), master(compile), runtime, default(compile), compile(*), master" position="44">
+				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
+				<metadata-artifact status="no" details="" size="3250" time="0" location="/home/nexiten/.ivy2/cache/co.fs2/fs2-core_2.12/ivy-1.0.4.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/co/fs2/fs2-core_2.12/1.0.4/fs2-core_2.12-1.0.4.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="1.0.4" rev-constraint-default="1.0.4" rev-constraint-dynamic="1.0.4" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="fs2-core_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="104782" time="0" location="/home/nexiten/.ivy2/cache/co.fs2/fs2-core_2.12/srcs/fs2-core_2.12-1.0.4-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/co/fs2/fs2-core_2.12/1.0.4/fs2-core_2.12-1.0.4-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.scodec" name="scodec-bits_2.12">
+			<revision name="1.1.9" status="release" pubdate="20190119180343" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://github.com/scodec/scodec-bits" extra-info.apiURL="http://scodec.org/api/scodec-bits/1.1.9/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="46">
+				<license name="Three-clause BSD-style" url="https://github.com/scodec/scodec-bits/blob/master/LICENSE"/>
+				<metadata-artifact status="no" details="" size="2990" time="0" location="/home/nexiten/.ivy2/cache/org.scodec/scodec-bits_2.12/ivy-1.1.9.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scodec/scodec-bits_2.12/1.1.9/scodec-bits_2.12-1.1.9.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="1.1.9" rev-constraint-default="1.1.9" rev-constraint-dynamic="1.1.9" callerrev="0.0.1-SNAPSHOT" extra-info.apiURL="http://scodec.org/api/scodec-bits/1.1.9/"/>
+				<artifacts>
+					<artifact name="scodec-bits_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="38467" time="0" location="/home/nexiten/.ivy2/cache/org.scodec/scodec-bits_2.12/srcs/scodec-bits_2.12-1.1.9-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scodec/scodec-bits_2.12/1.1.9/scodec-bits_2.12-1.1.9-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.scala-lang.modules" name="scala-collection-compat_2.12">
+			<revision name="0.3.0" status="release" pubdate="20190208154515" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scala-lang.org/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="17">
+				<license name="Apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0"/>
+				<metadata-artifact status="no" details="" size="2819" time="0" location="/home/nexiten/.ivy2/cache/org.scala-lang.modules/scala-collection-compat_2.12/ivy-0.3.0.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/0.3.0/scala-collection-compat_2.12-0.3.0.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.3.0" rev-constraint-default="0.3.0" rev-constraint-dynamic="0.3.0" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="scala-collection-compat_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="7451" time="0" location="/home/nexiten/.ivy2/cache/org.scala-lang.modules/scala-collection-compat_2.12/srcs/scala-collection-compat_2.12-0.3.0-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scala-lang/modules/scala-collection-compat_2.12/0.3.0/scala-collection-compat_2.12-0.3.0-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="io.circe" name="circe-jawn_2.12">
+			<revision name="0.11.1" status="release" pubdate="20190112091028" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/circe/circe" extra-info.apiURL="https://circe.github.io/circe/api/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="6">
+				<license name="Apache 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
+				<metadata-artifact status="no" details="" size="3082" time="0" location="/home/nexiten/.ivy2/cache/io.circe/circe-jawn_2.12/ivy-0.11.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/io/circe/circe-jawn_2.12/0.11.1/circe-jawn_2.12-0.11.1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.11.1" rev-constraint-default="0.11.1" rev-constraint-dynamic="0.11.1" callerrev="0.0.1-SNAPSHOT" extra-info.apiURL="https://circe.github.io/circe/api/"/>
+				<artifacts>
+					<artifact name="circe-jawn_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="2728" time="0" location="/home/nexiten/.ivy2/cache/io.circe/circe-jawn_2.12/srcs/circe-jawn_2.12-0.11.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/io/circe/circe-jawn_2.12/0.11.1/circe-jawn_2.12-0.11.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.typelevel" name="jawn-parser_2.12">
+			<revision name="0.14.1" status="release" pubdate="20190106055950" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://github.com/typelevel/jawn" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="27">
+				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
+				<metadata-artifact status="no" details="" size="2884" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/jawn-parser_2.12/ivy-0.14.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/typelevel/jawn-parser_2.12/0.14.1/jawn-parser_2.12-0.14.1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.14.1" rev-constraint-default="0.14.1" rev-constraint-dynamic="0.14.1" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="jawn-parser_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="20028" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/jawn-parser_2.12/srcs/jawn-parser_2.12-0.14.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/typelevel/jawn-parser_2.12/0.14.1/jawn-parser_2.12-0.14.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="io.chrisdavenport" name="unique_2.12">
+			<revision name="1.0.0" status="release" pubdate="20190206214848" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/ChristopherDavenport/unique" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="5">
+				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
+				<metadata-artifact status="no" details="" size="3062" time="0" location="/home/nexiten/.ivy2/cache/io.chrisdavenport/unique_2.12/ivy-1.0.0.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/io/chrisdavenport/unique_2.12/1.0.0/unique_2.12-1.0.0.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="1.0.0" rev-constraint-default="1.0.0" rev-constraint-dynamic="1.0.0" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="unique_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="972" time="0" location="/home/nexiten/.ivy2/cache/io.chrisdavenport/unique_2.12/srcs/unique_2.12-1.0.0-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/io/chrisdavenport/unique_2.12/1.0.0/unique_2.12-1.0.0-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.scalatest" name="scalatest_2.12">
+			<revision name="3.0.5" status="release" pubdate="20180129082347" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scalatest.org" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="4">
+				<license name="the Apache License, ASL Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
+				<metadata-artifact status="no" details="" size="4732" time="0" location="/home/nexiten/.ivy2/cache/org.scalatest/scalatest_2.12/ivy-3.0.5.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scalatest/scalatest_2.12/3.0.5/scalatest_2.12-3.0.5.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="3.0.5" rev-constraint-default="3.0.5" rev-constraint-dynamic="3.0.5" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="scalatest_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="1641808" time="0" location="/home/nexiten/.ivy2/cache/org.scalatest/scalatest_2.12/srcs/scalatest_2.12-3.0.5-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scalatest/scalatest_2.12/3.0.5/scalatest_2.12-3.0.5-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.scala-lang.modules" name="scala-xml_2.12">
+			<revision name="1.0.6" status="release" pubdate="20161101102105" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scala-lang.org/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="20">
+				<license name="BSD 3-clause" url="http://opensource.org/licenses/BSD-3-Clause"/>
+				<metadata-artifact status="no" details="" size="2987" time="0" location="/home/nexiten/.ivy2/cache/org.scala-lang.modules/scala-xml_2.12/ivy-1.0.6.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.0.6/scala-xml_2.12-1.0.6.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="1.0.6" rev-constraint-default="1.0.6" rev-constraint-dynamic="1.0.6" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="scala-xml_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="109199" time="0" location="/home/nexiten/.ivy2/cache/org.scala-lang.modules/scala-xml_2.12/srcs/scala-xml_2.12-1.0.6-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.0.6/scala-xml_2.12-1.0.6-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.scalactic" name="scalactic_2.12">
+			<revision name="3.0.5" status="release" pubdate="20180129082214" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scalatest.org" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="10">
+				<license name="the Apache License, ASL Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
+				<metadata-artifact status="no" details="" size="2967" time="0" location="/home/nexiten/.ivy2/cache/org.scalactic/scalactic_2.12/ivy-3.0.5.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scalactic/scalactic_2.12/3.0.5/scalactic_2.12-3.0.5.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="3.0.5" rev-constraint-default="3.0.5" rev-constraint-dynamic="3.0.5" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="scalactic_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="201169" time="0" location="/home/nexiten/.ivy2/cache/org.scalactic/scalactic_2.12/srcs/scalactic_2.12-3.0.5-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scalactic/scalactic_2.12/3.0.5/scalactic_2.12-3.0.5-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.tpolecat" name="doobie-free_2.12">
+			<revision name="0.5.4" status="release" pubdate="20181207123438" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/tpolecat/doobie" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="2">
+				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
+				<metadata-artifact status="no" details="" size="3473" time="0" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-free_2.12/ivy-0.5.4.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/tpolecat/doobie-free_2.12/0.5.4/doobie-free_2.12-0.5.4.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.5.4" rev-constraint-default="0.5.4" rev-constraint-dynamic="0.5.4" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="doobie-free_2.12" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="57750" time="136" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-free_2.12/srcs/doobie-free_2.12-0.5.4-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/tpolecat/doobie-free_2.12/0.5.4/doobie-free_2.12-0.5.4-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.typelevel" name="cats-free_2.12">
+			<revision name="1.5.0" status="release" pubdate="20181130201031" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/typelevel/cats" extra-info.apiURL="http://typelevel.org/cats/api/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="12">
+				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
+				<metadata-artifact status="no" details="" size="3211" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/cats-free_2.12/ivy-1.5.0.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/typelevel/cats-free_2.12/1.5.0/cats-free_2.12-1.5.0.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="1.5.0" rev-constraint-default="1.5.0" rev-constraint-dynamic="1.5.0" callerrev="0.0.1-SNAPSHOT" extra-info.apiURL="http://typelevel.org/cats/api/"/>
+				<artifacts>
+					<artifact name="cats-free_2.12" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="16859" time="158" location="/home/nexiten/.ivy2/cache/org.typelevel/cats-free_2.12/srcs/cats-free_2.12-1.5.0-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/typelevel/cats-free_2.12/1.5.0/cats-free_2.12-1.5.0-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.typelevel" name="cats-core_2.12">
+			<revision name="2.0.0-M1" status="release" pubdate="20190425001351" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/typelevel/cats" extra-info.apiURL="http://typelevel.org/cats/api/" downloaded="false" searched="false" default="false" conf="default, compile, runtime(*), master(compile), runtime, default(compile), compile(*), master" position="1">
+				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
+				<metadata-artifact status="no" details="" size="3348" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/cats-core_2.12/ivy-2.0.0-M1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/typelevel/cats-core_2.12/2.0.0-M1/cats-core_2.12-2.0.0-M1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="2.0.0-M1" rev-constraint-default="2.0.0-M1" rev-constraint-dynamic="2.0.0-M1" callerrev="0.0.1-SNAPSHOT" extra-info.apiURL="http://typelevel.org/cats/api/"/>
+				<artifacts>
+					<artifact name="cats-core_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="250061" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/cats-core_2.12/srcs/cats-core_2.12-2.0.0-M1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/typelevel/cats-core_2.12/2.0.0-M1/cats-core_2.12-2.0.0-M1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.typelevel" name="cats-kernel_2.12">
+			<revision name="2.0.0-M1" status="release" pubdate="20190425000521" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/typelevel/cats" extra-info.apiURL="http://typelevel.org/cats/api/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="3">
+				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
+				<metadata-artifact status="no" details="" size="2906" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/cats-kernel_2.12/ivy-2.0.0-M1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/typelevel/cats-kernel_2.12/2.0.0-M1/cats-kernel_2.12-2.0.0-M1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="2.0.0-M1" rev-constraint-default="2.0.0-M1" rev-constraint-dynamic="2.0.0-M1" callerrev="0.0.1-SNAPSHOT" extra-info.apiURL="http://typelevel.org/cats/api/"/>
+				<artifacts>
+					<artifact name="cats-kernel_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="50740" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/cats-kernel_2.12/srcs/cats-kernel_2.12-2.0.0-M1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/typelevel/cats-kernel_2.12/2.0.0-M1/cats-kernel_2.12-2.0.0-M1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.typelevel" name="cats-macros_2.12">
+			<revision name="2.0.0-M1" status="release" pubdate="20190425000252" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/typelevel/cats" extra-info.apiURL="http://typelevel.org/cats/api/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="18">
+				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
+				<metadata-artifact status="no" details="" size="2926" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/cats-macros_2.12/ivy-2.0.0-M1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/typelevel/cats-macros_2.12/2.0.0-M1/cats-macros_2.12-2.0.0-M1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="2.0.0-M1" rev-constraint-default="2.0.0-M1" rev-constraint-dynamic="2.0.0-M1" callerrev="0.0.1-SNAPSHOT" extra-info.apiURL="http://typelevel.org/cats/api/"/>
+				<artifacts>
+					<artifact name="cats-macros_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="807" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/cats-macros_2.12/srcs/cats-macros_2.12-2.0.0-M1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/typelevel/cats-macros_2.12/2.0.0-M1/cats-macros_2.12-2.0.0-M1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.typelevel" name="machinist_2.12">
+			<revision name="0.6.7" status="release" pubdate="20190407084318" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://github.com/typelevel/machinist" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="35">
+				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
+				<metadata-artifact status="no" details="" size="2785" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/machinist_2.12/ivy-0.6.7.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/typelevel/machinist_2.12/0.6.7/machinist_2.12-0.6.7.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.6.7" rev-constraint-default="0.6.7" rev-constraint-dynamic="0.6.7" callerrev="0.0.1-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="machinist_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="3546" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/machinist_2.12/srcs/machinist_2.12-0.6.7-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/typelevel/machinist_2.12/0.6.7/machinist_2.12-0.6.7-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.scala-lang" name="scala-reflect">
+			<revision name="2.12.8" status="release" pubdate="20181204051524" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scala-lang.org/" extra-info.apiURL="http://www.scala-lang.org/api/2.12.8/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="48">
+				<license name="Apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0"/>
+				<metadata-artifact status="no" details="" size="2828" time="0" location="/home/nexiten/.ivy2/cache/org.scala-lang/scala-reflect/ivy-2.12.8.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.8/scala-reflect-2.12.8.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.0.1-SNAPSHOT" extra-info.apiURL="http://www.scala-lang.org/api/2.12.8/"/>
+				<artifacts>
+					<artifact name="scala-reflect" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="615375" time="0" location="/home/nexiten/.ivy2/cache/org.scala-lang/scala-reflect/srcs/scala-reflect-2.12.8-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.8/scala-reflect-2.12.8-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="io.circe" name="circe-java8_2.12">
+			<revision name="0.11.1" status="release" pubdate="20190112102439" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/circe/circe" extra-info.apiURL="https://circe.github.io/circe/api/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="0">
+				<license name="Apache 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
+				<metadata-artifact status="no" details="" size="2936" time="0" location="/home/nexiten/.ivy2/cache/io.circe/circe-java8_2.12/ivy-0.11.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/io/circe/circe-java8_2.12/0.11.1/circe-java8_2.12-0.11.1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.11.1" rev-constraint-default="0.11.1" rev-constraint-dynamic="0.11.1" callerrev="0.0.1-SNAPSHOT" extra-info.apiURL="https://circe.github.io/circe/api/"/>
+				<artifacts>
+					<artifact name="circe-java8_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="3605" time="0" location="/home/nexiten/.ivy2/cache/io.circe/circe-java8_2.12/srcs/circe-java8_2.12-0.11.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/io/circe/circe-java8_2.12/0.11.1/circe-java8_2.12-0.11.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="io.circe" name="circe-core_2.12">
+			<revision name="0.11.1" status="release" pubdate="20190112091054" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/circe/circe" extra-info.apiURL="https://circe.github.io/circe/api/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="38">
+				<license name="Apache 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
+				<metadata-artifact status="no" details="" size="3082" time="0" location="/home/nexiten/.ivy2/cache/io.circe/circe-core_2.12/ivy-0.11.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/io/circe/circe-core_2.12/0.11.1/circe-core_2.12-0.11.1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.11.1" rev-constraint-default="0.11.1" rev-constraint-dynamic="0.11.1" callerrev="0.0.1-SNAPSHOT" extra-info.apiURL="https://circe.github.io/circe/api/"/>
+				<artifacts>
+					<artifact name="circe-core_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="45381" time="0" location="/home/nexiten/.ivy2/cache/io.circe/circe-core_2.12/srcs/circe-core_2.12-0.11.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/io/circe/circe-core_2.12/0.11.1/circe-core_2.12-0.11.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="io.circe" name="circe-numbers_2.12">
+			<revision name="0.11.1" status="release" pubdate="20190112090830" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/circe/circe" extra-info.apiURL="https://circe.github.io/circe/api/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="54">
+				<license name="Apache 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
+				<metadata-artifact status="no" details="" size="2799" time="0" location="/home/nexiten/.ivy2/cache/io.circe/circe-numbers_2.12/ivy-0.11.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/io/circe/circe-numbers_2.12/0.11.1/circe-numbers_2.12-0.11.1.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="0.11.1" rev-constraint-default="0.11.1" rev-constraint-dynamic="0.11.1" callerrev="0.0.1-SNAPSHOT" extra-info.apiURL="https://circe.github.io/circe/api/"/>
+				<artifacts>
+					<artifact name="circe-numbers_2.12" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="3900" time="0" location="/home/nexiten/.ivy2/cache/io.circe/circe-numbers_2.12/srcs/circe-numbers_2.12-0.11.1-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/io/circe/circe-numbers_2.12/0.11.1/circe-numbers_2.12-0.11.1-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.scala-lang" name="scala-library">
+			<revision name="2.12.8" status="release" pubdate="20181204051556" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scala-lang.org/" extra-info.apiURL="http://www.scala-lang.org/api/2.12.8/" downloaded="false" searched="false" default="false" conf="default, master(*), compile, runtime(*), master(compile), runtime, default(compile), compile(*), master" position="8">
+				<license name="Apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0"/>
+				<metadata-artifact status="no" details="" size="2656" time="0" location="/home/nexiten/.ivy2/cache/org.scala-lang/scala-library/ivy-2.12.8.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.8/scala-library-2.12.8.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer$sources" conf="compile, runtime-internal, runtime, optional" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.0.1-SNAPSHOT" extra-info.apiURL="http://www.scala-lang.org/api/2.12.8/"/>
+				<artifacts>
+					<artifact name="scala-library" type="src" ext="jar" extra-classifier="sources" status="no" details="" size="1020924" time="0" location="/home/nexiten/.ivy2/cache/org.scala-lang/scala-library/srcs/scala-library-2.12.8-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.8/scala-library-2.12.8-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+	</dependencies>
+</ivy-report>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0" xmlns:e="http://ant.apache.org/ivy/extra">
+	<info organisation="org.niblius"
+		module="tg-anonymizer_2.12"
+		revision="0.0.1-SNAPSHOT"
+		status="integration"
+		publication="20190529233421"
+	>
+		<description>
+		tg-anonymizer
+		</description>
+	</info>
+	<configurations>
+		<conf name="compile" visibility="public" description=""/>
+		<conf name="runtime" visibility="public" description="" extends="compile"/>
+		<conf name="test" visibility="public" description="" extends="runtime"/>
+		<conf name="provided" visibility="public" description=""/>
+		<conf name="optional" visibility="public" description=""/>
+		<conf name="compile-internal" visibility="private" description="" extends="compile,optional,provided"/>
+		<conf name="runtime-internal" visibility="private" description="" extends="runtime,optional"/>
+		<conf name="test-internal" visibility="private" description="" extends="test,optional,provided"/>
+		<conf name="plugin" visibility="private" description=""/>
+		<conf name="pom" visibility="public" description=""/>
+		<conf name="scala-tool" visibility="private" description=""/>
+	</configurations>
+	<publications>
+		<artifact name="tg-anonymizer_2.12" type="pom" ext="pom" conf="pom"/>
+		<artifact name="tg-anonymizer_2.12" type="jar" ext="jar" conf="compile"/>
+		<artifact name="tg-anonymizer_2.12" type="src" ext="jar" conf="compile" e:classifier="sources"/>
+		<artifact name="tg-anonymizer_2.12" type="doc" ext="jar" conf="compile" e:classifier="javadoc"/>
+	</publications>
+	<dependencies>
+		<dependency org="org.scala-lang" name="scala-compiler" rev="2.12.8" conf="scala-tool->default,optional(default)"/>
+		<dependency org="org.scala-lang" name="scala-library" rev="2.12.8" conf="scala-tool->default,optional(default);compile->default(compile)"/>
+		<dependency org="org.typelevel" name="kind-projector_2.12" rev="0.10.1" conf="plugin->default(compile)"/>
+		<dependency org="io.circe" name="circe-generic_2.12" rev="0.11.1" conf="compile->default(compile)"/>
+		<dependency org="io.circe" name="circe-literal_2.12" rev="0.11.1" conf="compile->default(compile)"/>
+		<dependency org="io.circe" name="circe-generic-extras_2.12" rev="0.11.1" conf="compile->default(compile)"/>
+		<dependency org="io.circe" name="circe-parser_2.12" rev="0.11.1" conf="compile->default(compile)"/>
+		<dependency org="io.circe" name="circe-java8_2.12" rev="0.11.1" conf="compile->default(compile)"/>
+		<dependency org="io.circe" name="circe-config_2.12" rev="0.6.1" conf="compile->default(compile)"/>
+		<dependency org="org.typelevel" name="cats-core_2.12" rev="2.0.0-M1" conf="compile->default(compile)"/>
+		<dependency org="org.typelevel" name="cats-effect_2.12" rev="2.0.0-M1" conf="compile->default(compile)"/>
+		<dependency org="co.fs2" name="fs2-core_2.12" rev="1.0.4" conf="compile->default(compile)"/>
+		<dependency org="io.chrisdavenport" name="log4cats-core_2.12" rev="0.3.0" conf="compile->default(compile)"/>
+		<dependency org="io.chrisdavenport" name="log4cats-slf4j_2.12" rev="0.3.0" conf="compile->default(compile)"/>
+		<dependency org="org.slf4j" name="slf4j-simple" rev="1.7.25" conf="compile->default(compile)"/>
+		<dependency org="org.http4s" name="http4s-blaze-client_2.12" rev="0.20.1" conf="compile->default(compile)"/>
+		<dependency org="org.http4s" name="http4s-blaze-server_2.12" rev="0.20.1" conf="compile->default(compile)"/>
+		<dependency org="org.http4s" name="http4s-circe_2.12" rev="0.20.1" conf="compile->default(compile)"/>
+		<dependency org="org.http4s" name="http4s-dsl_2.12" rev="0.20.1" conf="compile->default(compile)"/>
+		<dependency org="org.flywaydb" name="flyway-core" rev="5.2.4" conf="compile->default(compile)"/>
+		<dependency org="org.tpolecat" name="doobie-core_2.12" rev="0.5.4" conf="compile->default(compile)"/>
+		<dependency org="org.tpolecat" name="doobie-h2_2.12" rev="0.5.4" conf="compile->default(compile)"/>
+		<dependency org="org.tpolecat" name="doobie-scalatest_2.12" rev="0.5.4" conf="compile->default(compile)"/>
+		<dependency org="org.tpolecat" name="doobie-hikari_2.12" rev="0.5.4" conf="compile->default(compile)"/>
+	</dependencies>
+</ivy-module>

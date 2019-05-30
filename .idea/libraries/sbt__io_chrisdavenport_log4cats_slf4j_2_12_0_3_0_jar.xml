@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sbt: io.chrisdavenport:log4cats-slf4j_2.12:0.3.0:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/io.chrisdavenport/log4cats-slf4j_2.12/jars/log4cats-slf4j_2.12-0.3.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/io.chrisdavenport/log4cats-slf4j_2.12/srcs/log4cats-slf4j_2.12-0.3.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
