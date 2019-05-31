@@ -4,7 +4,7 @@
 		module="tg-anonymizer-build"
 		revision="0.1.0-SNAPSHOT"
 		status="integration"
-		publication="20190529233416"
+		publication="20190531014554"
 		e:sbtVersion="1.0" e:scalaVersion="2.12"
 	>
 		<description>

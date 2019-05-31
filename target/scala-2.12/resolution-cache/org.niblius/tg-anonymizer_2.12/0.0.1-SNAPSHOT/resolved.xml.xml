@@ -4,7 +4,7 @@
 		module="tg-anonymizer_2.12"
 		revision="0.0.1-SNAPSHOT"
 		status="integration"
-		publication="20190529233421"
+		publication="20190530183528"
 	>
 		<description>
 		tg-anonymizer
@@ -50,9 +50,9 @@
 		<dependency org="org.http4s" name="http4s-circe_2.12" rev="0.20.1" conf="compile->default(compile)"/>
 		<dependency org="org.http4s" name="http4s-dsl_2.12" rev="0.20.1" conf="compile->default(compile)"/>
 		<dependency org="org.flywaydb" name="flyway-core" rev="5.2.4" conf="compile->default(compile)"/>
-		<dependency org="org.tpolecat" name="doobie-core_2.12" rev="0.5.4" conf="compile->default(compile)"/>
-		<dependency org="org.tpolecat" name="doobie-h2_2.12" rev="0.5.4" conf="compile->default(compile)"/>
-		<dependency org="org.tpolecat" name="doobie-scalatest_2.12" rev="0.5.4" conf="compile->default(compile)"/>
-		<dependency org="org.tpolecat" name="doobie-hikari_2.12" rev="0.5.4" conf="compile->default(compile)"/>
+		<dependency org="org.tpolecat" name="doobie-core_2.12" rev="0.7.0" conf="compile->default(compile)"/>
+		<dependency org="org.tpolecat" name="doobie-h2_2.12" rev="0.7.0" conf="compile->default(compile)"/>
+		<dependency org="org.tpolecat" name="doobie-scalatest_2.12" rev="0.7.0" conf="compile->default(compile)"/>
+		<dependency org="org.tpolecat" name="doobie-hikari_2.12" rev="0.7.0" conf="compile->default(compile)"/>
 	</dependencies>
 </ivy-module>

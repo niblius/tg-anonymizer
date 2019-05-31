@@ -7,7 +7,7 @@
 		revision="0.0.1-SNAPSHOT"
 		conf="plugin"
 		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, pom, scala-tool"
-		date="20190529233424"/>
+		date="20190530183532"/>
 	<dependencies>
 		<module organisation="org.typelevel" name="kind-projector_2.12">
 			<revision name="0.10.1" status="release" pubdate="20190520084223" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://github.com/typelevel/kind-projector" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="1">

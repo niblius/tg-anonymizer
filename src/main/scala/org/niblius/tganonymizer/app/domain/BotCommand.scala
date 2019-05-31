@@ -22,6 +22,8 @@ object BotCommand {
   val help  = "/help"
   val join  = "/join"
   val leave = "/leave"
+  // val showAllOnline
+  // val ban
   // val sendIn
   // val begin
   // val end

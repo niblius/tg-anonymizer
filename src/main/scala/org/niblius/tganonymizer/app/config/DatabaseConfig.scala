@@ -5,6 +5,8 @@ import cats.syntax.functor._
 import doobie.hikari.HikariTransactor
 import org.flywaydb.core.Flyway
 
+import scala.concurrent.ExecutionContext
+
 case class DatabaseConfig(url: String,
                           user: String,
                           password: String,
@@ -12,10 +14,16 @@ case class DatabaseConfig(url: String,
 
 object DatabaseConfig {
   def dbTransactor[F[_]: Async: ContextShift](
-      dbc: DatabaseConfig
-  ): F[HikariTransactor[F]] =
-    HikariTransactor
-      .newHikariTransactor[F](dbc.driver, dbc.url, dbc.user, dbc.password)
+      dbc: DatabaseConfig,
+      connEc: ExecutionContext,
+      transEc: ExecutionContext
+  ): Resource[F, HikariTransactor[F]] =
+    HikariTransactor.newHikariTransactor[F](dbc.driver,
+                                            dbc.url,
+                                            dbc.user,
+                                            dbc.password,
+                                            connEc,
+                                            transEc)
 
   /**
     * Runs the flyway migrations against the target database

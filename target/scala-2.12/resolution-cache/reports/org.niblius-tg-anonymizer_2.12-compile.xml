@@ -7,79 +7,116 @@
 		revision="0.0.1-SNAPSHOT"
 		conf="compile"
 		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, pom, scala-tool"
-		date="20190529233421"/>
+		date="20190530183528"/>
 	<dependencies>
 		<module organisation="org.tpolecat" name="doobie-hikari_2.12">
-			<revision name="0.5.4" status="release" pubdate="20181207123457" resolver="public" artresolver="public" homepage="https://github.com/tpolecat/doobie" downloaded="true" searched="true" default="false" conf="default, compile, runtime, default(compile), master" position="57">
+			<revision name="0.7.0" status="release" pubdate="20190526012919" resolver="public" artresolver="public" homepage="https://github.com/tpolecat/doobie" downloaded="true" searched="true" default="false" conf="default, compile, runtime, default(compile), master" position="57">
 				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
-				<metadata-artifact status="successful" details="" size="2535" time="57" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-hikari_2.12/ivy-0.5.4.xml" searched="true" original-local-location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-hikari_2.12/ivy-0.5.4.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/tpolecat/doobie-hikari_2.12/0.5.4/doobie-hikari_2.12-0.5.4.pom"/>
-				<caller organisation="org.niblius" name="tg-anonymizer_2.12" conf="compile" rev="0.5.4" rev-constraint-default="0.5.4" rev-constraint-dynamic="0.5.4" callerrev="0.0.1-SNAPSHOT"/>
+				<metadata-artifact status="successful" details="" size="2749" time="71" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-hikari_2.12/ivy-0.7.0.xml" searched="true" original-local-location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-hikari_2.12/ivy-0.7.0.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/tpolecat/doobie-hikari_2.12/0.7.0/doobie-hikari_2.12-0.7.0.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer_2.12" conf="compile" rev="0.7.0" rev-constraint-default="0.7.0" rev-constraint-dynamic="0.7.0" callerrev="0.0.1-SNAPSHOT"/>
 				<artifacts>
-					<artifact name="doobie-hikari_2.12" type="jar" ext="jar" status="successful" details="" size="13981" time="553" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-hikari_2.12/jars/doobie-hikari_2.12-0.5.4.jar">
-						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/tpolecat/doobie-hikari_2.12/0.5.4/doobie-hikari_2.12-0.5.4.jar"/>
+					<artifact name="doobie-hikari_2.12" type="jar" ext="jar" status="successful" details="" size="9098" time="634" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-hikari_2.12/jars/doobie-hikari_2.12-0.7.0.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/tpolecat/doobie-hikari_2.12/0.7.0/doobie-hikari_2.12-0.7.0.jar"/>
 					</artifact>
 				</artifacts>
 			</revision>
 		</module>
 		<module organisation="com.zaxxer" name="HikariCP">
-			<revision name="3.2.0" status="release" pubdate="20180530024537" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/brettwooldridge/HikariCP" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="58">
+			<revision name="3.3.1" status="release" pubdate="20190207230239" resolver="public" artresolver="public" homepage="https://github.com/brettwooldridge/HikariCP" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="58">
 				<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
-				<metadata-artifact status="no" details="" size="8024" time="0" location="/home/nexiten/.ivy2/cache/com.zaxxer/HikariCP/ivy-3.2.0.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/zaxxer/HikariCP/3.2.0/HikariCP-3.2.0.pom"/>
-				<caller organisation="org.tpolecat" name="doobie-hikari_2.12" conf="default, compile, runtime, master" rev="3.2.0" rev-constraint-default="3.2.0" rev-constraint-dynamic="3.2.0" callerrev="0.5.4"/>
+				<metadata-artifact status="successful" details="" size="19160" time="68" location="/home/nexiten/.ivy2/cache/com.zaxxer/HikariCP/ivy-3.3.1.xml" searched="true" original-local-location="/home/nexiten/.ivy2/cache/com.zaxxer/HikariCP/ivy-3.3.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/zaxxer/HikariCP/3.3.1/HikariCP-3.3.1.pom"/>
+				<caller organisation="org.tpolecat" name="doobie-hikari_2.12" conf="default, compile, runtime, master" rev="3.3.1" rev-constraint-default="3.3.1" rev-constraint-dynamic="3.3.1" callerrev="0.7.0"/>
 				<artifacts>
-					<artifact name="HikariCP" type="bundle" ext="jar" status="no" details="" size="143577" time="0" location="/home/nexiten/.ivy2/cache/com.zaxxer/HikariCP/bundles/HikariCP-3.2.0.jar">
-						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/zaxxer/HikariCP/3.2.0/HikariCP-3.2.0.jar"/>
+					<artifact name="HikariCP" type="bundle" ext="jar" status="successful" details="" size="139168" time="952" location="/home/nexiten/.ivy2/cache/com.zaxxer/HikariCP/bundles/HikariCP-3.3.1.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/zaxxer/HikariCP/3.3.1/HikariCP-3.3.1.jar"/>
 					</artifact>
 				</artifacts>
 			</revision>
 		</module>
 		<module organisation="org.tpolecat" name="doobie-scalatest_2.12">
-			<revision name="0.5.4" status="release" pubdate="20181207123420" resolver="public" artresolver="public" homepage="https://github.com/tpolecat/doobie" downloaded="true" searched="true" default="false" conf="default, compile, runtime, default(compile), master" position="53">
+			<revision name="0.7.0" status="release" pubdate="20190526012853" resolver="public" artresolver="public" homepage="https://github.com/tpolecat/doobie" downloaded="true" searched="true" default="false" conf="default, compile, runtime, default(compile), master" position="53">
 				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
-				<metadata-artifact status="successful" details="" size="2753" time="64" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-scalatest_2.12/ivy-0.5.4.xml" searched="true" original-local-location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-scalatest_2.12/ivy-0.5.4.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/tpolecat/doobie-scalatest_2.12/0.5.4/doobie-scalatest_2.12-0.5.4.pom"/>
-				<caller organisation="org.niblius" name="tg-anonymizer_2.12" conf="compile" rev="0.5.4" rev-constraint-default="0.5.4" rev-constraint-dynamic="0.5.4" callerrev="0.0.1-SNAPSHOT"/>
+				<metadata-artifact status="successful" details="" size="2753" time="57" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-scalatest_2.12/ivy-0.7.0.xml" searched="true" original-local-location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-scalatest_2.12/ivy-0.7.0.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/tpolecat/doobie-scalatest_2.12/0.7.0/doobie-scalatest_2.12-0.7.0.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer_2.12" conf="compile" rev="0.7.0" rev-constraint-default="0.7.0" rev-constraint-dynamic="0.7.0" callerrev="0.0.1-SNAPSHOT"/>
 				<artifacts>
-					<artifact name="doobie-scalatest_2.12" type="jar" ext="jar" status="successful" details="" size="15467" time="553" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-scalatest_2.12/jars/doobie-scalatest_2.12-0.5.4.jar">
-						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/tpolecat/doobie-scalatest_2.12/0.5.4/doobie-scalatest_2.12-0.5.4.jar"/>
+					<artifact name="doobie-scalatest_2.12" type="jar" ext="jar" status="successful" details="" size="11803" time="637" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-scalatest_2.12/jars/doobie-scalatest_2.12-0.7.0.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/tpolecat/doobie-scalatest_2.12/0.7.0/doobie-scalatest_2.12-0.7.0.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.scalatest" name="scalatest_2.12">
+			<revision name="3.0.7" status="release" pubdate="20190318221517" resolver="public" artresolver="public" homepage="http://www.scalatest.org" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="54">
+				<license name="the Apache License, ASL Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
+				<metadata-artifact status="successful" details="" size="5119" time="63" location="/home/nexiten/.ivy2/cache/org.scalatest/scalatest_2.12/ivy-3.0.7.xml" searched="true" original-local-location="/home/nexiten/.ivy2/cache/org.scalatest/scalatest_2.12/ivy-3.0.7.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scalatest/scalatest_2.12/3.0.7/scalatest_2.12-3.0.7.pom"/>
+				<caller organisation="org.tpolecat" name="doobie-scalatest_2.12" conf="default, compile, runtime, master" rev="3.0.7" rev-constraint-default="3.0.7" rev-constraint-dynamic="3.0.7" callerrev="0.7.0"/>
+				<artifacts>
+					<artifact name="scalatest_2.12" type="bundle" ext="jar" status="successful" details="" size="7101411" time="1188" location="/home/nexiten/.ivy2/cache/org.scalatest/scalatest_2.12/bundles/scalatest_2.12-3.0.7.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scalatest/scalatest_2.12/3.0.7/scalatest_2.12-3.0.7.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.scalactic" name="scalactic_2.12">
+			<revision name="3.0.7" status="release" pubdate="20190318221402" resolver="public" artresolver="public" homepage="http://www.scalatest.org" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="55">
+				<license name="the Apache License, ASL Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
+				<metadata-artifact status="successful" details="" size="2422" time="66" location="/home/nexiten/.ivy2/cache/org.scalactic/scalactic_2.12/ivy-3.0.7.xml" searched="true" original-local-location="/home/nexiten/.ivy2/cache/org.scalactic/scalactic_2.12/ivy-3.0.7.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scalactic/scalactic_2.12/3.0.7/scalactic_2.12-3.0.7.pom"/>
+				<caller organisation="org.scalatest" name="scalatest_2.12" conf="compile, runtime" rev="3.0.7" rev-constraint-default="3.0.7" rev-constraint-dynamic="3.0.7" callerrev="3.0.7"/>
+				<artifacts>
+					<artifact name="scalactic_2.12" type="bundle" ext="jar" status="successful" details="" size="718332" time="1077" location="/home/nexiten/.ivy2/cache/org.scalactic/scalactic_2.12/bundles/scalactic_2.12-3.0.7.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scalactic/scalactic_2.12/3.0.7/scalactic_2.12-3.0.7.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.scala-lang.modules" name="scala-xml_2.12">
+			<revision name="1.1.0" status="release" pubdate="20180220125820" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scala-lang.org/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="56">
+				<license name="BSD 3-clause" url="http://opensource.org/licenses/BSD-3-Clause"/>
+				<metadata-artifact status="no" details="" size="3266" time="0" location="/home/nexiten/.ivy2/cache/org.scala-lang.modules/scala-xml_2.12/ivy-1.1.0.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.1.0/scala-xml_2.12-1.1.0.pom"/>
+				<caller organisation="org.scalatest" name="scalatest_2.12" conf="compile, runtime" rev="1.1.0" rev-constraint-default="1.1.0" rev-constraint-dynamic="1.1.0" callerrev="3.0.7"/>
+				<caller organisation="org.scalactic" name="scalactic_2.12" conf="compile, runtime" rev="1.1.0" rev-constraint-default="1.1.0" rev-constraint-dynamic="1.1.0" callerrev="3.0.7"/>
+				<artifacts>
+					<artifact name="scala-xml_2.12" type="bundle" ext="jar" status="no" details="" size="548586" time="0" location="/home/nexiten/.ivy2/cache/org.scala-lang.modules/scala-xml_2.12/bundles/scala-xml_2.12-1.1.0.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.1.0/scala-xml_2.12-1.1.0.jar"/>
 					</artifact>
 				</artifacts>
 			</revision>
 		</module>
 		<module organisation="org.tpolecat" name="doobie-h2_2.12">
-			<revision name="0.5.4" status="release" pubdate="20181207123333" resolver="public" artresolver="public" homepage="https://github.com/tpolecat/doobie" downloaded="true" searched="true" default="false" conf="default, compile, runtime, default(compile), master" position="51">
+			<revision name="0.7.0" status="release" pubdate="20190526012907" resolver="public" artresolver="public" homepage="https://github.com/tpolecat/doobie" downloaded="true" searched="true" default="false" conf="default, compile, runtime, default(compile), master" position="51">
 				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
-				<metadata-artifact status="successful" details="" size="2523" time="65" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-h2_2.12/ivy-0.5.4.xml" searched="true" original-local-location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-h2_2.12/ivy-0.5.4.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/tpolecat/doobie-h2_2.12/0.5.4/doobie-h2_2.12-0.5.4.pom"/>
-				<caller organisation="org.niblius" name="tg-anonymizer_2.12" conf="compile" rev="0.5.4" rev-constraint-default="0.5.4" rev-constraint-dynamic="0.5.4" callerrev="0.0.1-SNAPSHOT"/>
+				<metadata-artifact status="successful" details="" size="2523" time="75" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-h2_2.12/ivy-0.7.0.xml" searched="true" original-local-location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-h2_2.12/ivy-0.7.0.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/tpolecat/doobie-h2_2.12/0.7.0/doobie-h2_2.12-0.7.0.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer_2.12" conf="compile" rev="0.7.0" rev-constraint-default="0.7.0" rev-constraint-dynamic="0.7.0" callerrev="0.0.1-SNAPSHOT"/>
 				<artifacts>
-					<artifact name="doobie-h2_2.12" type="jar" ext="jar" status="successful" details="" size="45397" time="569" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-h2_2.12/jars/doobie-h2_2.12-0.5.4.jar">
-						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/tpolecat/doobie-h2_2.12/0.5.4/doobie-h2_2.12-0.5.4.jar"/>
+					<artifact name="doobie-h2_2.12" type="jar" ext="jar" status="successful" details="" size="44912" time="806" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-h2_2.12/jars/doobie-h2_2.12-0.7.0.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/tpolecat/doobie-h2_2.12/0.7.0/doobie-h2_2.12-0.7.0.jar"/>
 					</artifact>
 				</artifacts>
 			</revision>
 		</module>
 		<module organisation="org.tpolecat" name="doobie-core_2.12">
-			<revision name="0.5.4" status="release" pubdate="20181207123446" resolver="public" artresolver="public" homepage="https://github.com/tpolecat/doobie" downloaded="true" searched="true" default="false" conf="default, compile, runtime(*), master(compile), runtime, default(compile), compile(*), master" position="47">
+			<revision name="0.7.0" status="release" pubdate="20190526012759" resolver="public" artresolver="public" homepage="https://github.com/tpolecat/doobie" downloaded="true" searched="true" default="false" conf="default, compile, runtime(*), master(compile), runtime, default(compile), compile(*), master" position="47">
 				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
-				<metadata-artifact status="successful" details="" size="3103" time="110" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-core_2.12/ivy-0.5.4.xml" searched="true" original-local-location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-core_2.12/ivy-0.5.4.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/tpolecat/doobie-core_2.12/0.5.4/doobie-core_2.12-0.5.4.pom"/>
-				<caller organisation="org.niblius" name="tg-anonymizer_2.12" conf="compile" rev="0.5.4" rev-constraint-default="0.5.4" rev-constraint-dynamic="0.5.4" callerrev="0.0.1-SNAPSHOT"/>
-				<caller organisation="org.tpolecat" name="doobie-scalatest_2.12" conf="default, compile, runtime, master" rev="0.5.4" rev-constraint-default="0.5.4" rev-constraint-dynamic="0.5.4" callerrev="0.5.4"/>
-				<caller organisation="org.tpolecat" name="doobie-h2_2.12" conf="default, compile, runtime, master" rev="0.5.4" rev-constraint-default="0.5.4" rev-constraint-dynamic="0.5.4" callerrev="0.5.4"/>
-				<caller organisation="org.tpolecat" name="doobie-hikari_2.12" conf="default, compile, runtime, master" rev="0.5.4" rev-constraint-default="0.5.4" rev-constraint-dynamic="0.5.4" callerrev="0.5.4"/>
+				<metadata-artifact status="successful" details="" size="3103" time="133" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-core_2.12/ivy-0.7.0.xml" searched="true" original-local-location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-core_2.12/ivy-0.7.0.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/tpolecat/doobie-core_2.12/0.7.0/doobie-core_2.12-0.7.0.pom"/>
+				<caller organisation="org.niblius" name="tg-anonymizer_2.12" conf="compile" rev="0.7.0" rev-constraint-default="0.7.0" rev-constraint-dynamic="0.7.0" callerrev="0.0.1-SNAPSHOT"/>
+				<caller organisation="org.tpolecat" name="doobie-h2_2.12" conf="default, compile, runtime, master" rev="0.7.0" rev-constraint-default="0.7.0" rev-constraint-dynamic="0.7.0" callerrev="0.7.0"/>
+				<caller organisation="org.tpolecat" name="doobie-hikari_2.12" conf="default, compile, runtime, master" rev="0.7.0" rev-constraint-default="0.7.0" rev-constraint-dynamic="0.7.0" callerrev="0.7.0"/>
+				<caller organisation="org.tpolecat" name="doobie-scalatest_2.12" conf="default, compile, runtime, master" rev="0.7.0" rev-constraint-default="0.7.0" rev-constraint-dynamic="0.7.0" callerrev="0.7.0"/>
 				<artifacts>
-					<artifact name="doobie-core_2.12" type="jar" ext="jar" status="successful" details="" size="790020" time="610" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-core_2.12/jars/doobie-core_2.12-0.5.4.jar">
-						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/tpolecat/doobie-core_2.12/0.5.4/doobie-core_2.12-0.5.4.jar"/>
+					<artifact name="doobie-core_2.12" type="jar" ext="jar" status="successful" details="" size="797200" time="1182" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-core_2.12/jars/doobie-core_2.12-0.7.0.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/tpolecat/doobie-core_2.12/0.7.0/doobie-core_2.12-0.7.0.jar"/>
 					</artifact>
 				</artifacts>
 			</revision>
 		</module>
 		<module organisation="com.h2database" name="h2">
-			<revision name="1.4.197" status="release" pubdate="20180318162844" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.h2database.com" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="52">
+			<revision name="1.4.199" status="release" pubdate="20190313101907" resolver="public" artresolver="public" homepage="http://www.h2database.com" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="52">
 				<license name="MPL 2.0 or EPL 1.0" url="http://h2database.com/html/license.html"/>
-				<metadata-artifact status="no" details="" size="2454" time="0" location="/home/nexiten/.ivy2/cache/com.h2database/h2/ivy-1.4.197.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/h2database/h2/1.4.197/h2-1.4.197.pom"/>
-				<caller organisation="org.tpolecat" name="doobie-h2_2.12" conf="default, compile, runtime, master" rev="1.4.197" rev-constraint-default="1.4.197" rev-constraint-dynamic="1.4.197" callerrev="0.5.4"/>
+				<metadata-artifact status="successful" details="" size="960" time="58" location="/home/nexiten/.ivy2/cache/com.h2database/h2/ivy-1.4.199.xml" searched="true" original-local-location="/home/nexiten/.ivy2/cache/com.h2database/h2/ivy-1.4.199.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/h2database/h2/1.4.199/h2-1.4.199.pom"/>
+				<caller organisation="org.tpolecat" name="doobie-h2_2.12" conf="default, compile, runtime, master" rev="1.4.199" rev-constraint-default="1.4.199" rev-constraint-dynamic="1.4.199" callerrev="0.7.0"/>
 				<artifacts>
-					<artifact name="h2" type="jar" ext="jar" status="no" details="" size="1927540" time="0" location="/home/nexiten/.ivy2/cache/com.h2database/h2/jars/h2-1.4.197.jar">
-						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/h2database/h2/1.4.197/h2-1.4.197.jar"/>
+					<artifact name="h2" type="jar" ext="jar" status="successful" details="" size="2178179" time="1702" location="/home/nexiten/.ivy2/cache/com.h2database/h2/jars/h2-1.4.199.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/h2database/h2/1.4.199/h2-1.4.199.jar"/>
 					</artifact>
 				</artifacts>
 			</revision>
@@ -88,7 +125,7 @@
 			<revision name="0.1.5" status="release" pubdate="20180924092010" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/lihaoyi/sourcecode" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="50">
 				<license name="MIT" url="http://www.opensource.org/licenses/mit-license.html"/>
 				<metadata-artifact status="no" details="" size="2962" time="0" location="/home/nexiten/.ivy2/cache/com.lihaoyi/sourcecode_2.12/ivy-0.1.5.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/lihaoyi/sourcecode_2.12/0.1.5/sourcecode_2.12-0.1.5.pom"/>
-				<caller organisation="org.tpolecat" name="doobie-core_2.12" conf="default, compile, runtime, master" rev="0.1.5" rev-constraint-default="0.1.5" rev-constraint-dynamic="0.1.5" callerrev="0.5.4"/>
+				<caller organisation="org.tpolecat" name="doobie-core_2.12" conf="default, compile, runtime, master" rev="0.1.5" rev-constraint-default="0.1.5" rev-constraint-dynamic="0.1.5" callerrev="0.7.0"/>
 				<artifacts>
 					<artifact name="sourcecode_2.12" type="bundle" ext="jar" status="no" details="" size="111520" time="0" location="/home/nexiten/.ivy2/cache/com.lihaoyi/sourcecode_2.12/bundles/sourcecode_2.12-0.1.5.jar">
 						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/lihaoyi/sourcecode_2.12/0.1.5/sourcecode_2.12-0.1.5.jar"/>
@@ -97,25 +134,25 @@
 			</revision>
 		</module>
 		<module organisation="org.tpolecat" name="doobie-free_2.12">
-			<revision name="0.5.4" status="release" pubdate="20181207123438" resolver="public" artresolver="public" homepage="https://github.com/tpolecat/doobie" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="48">
+			<revision name="0.7.0" status="release" pubdate="20190526012733" resolver="public" artresolver="public" homepage="https://github.com/tpolecat/doobie" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="48">
 				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
-				<metadata-artifact status="successful" details="" size="2720" time="70" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-free_2.12/ivy-0.5.4.xml" searched="true" original-local-location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-free_2.12/ivy-0.5.4.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/tpolecat/doobie-free_2.12/0.5.4/doobie-free_2.12-0.5.4.pom"/>
-				<caller organisation="org.tpolecat" name="doobie-core_2.12" conf="default, compile, runtime, master" rev="0.5.4" rev-constraint-default="0.5.4" rev-constraint-dynamic="0.5.4" callerrev="0.5.4"/>
+				<metadata-artifact status="successful" details="" size="2898" time="84" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-free_2.12/ivy-0.7.0.xml" searched="true" original-local-location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-free_2.12/ivy-0.7.0.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/tpolecat/doobie-free_2.12/0.7.0/doobie-free_2.12-0.7.0.pom"/>
+				<caller organisation="org.tpolecat" name="doobie-core_2.12" conf="default, compile, runtime, master" rev="0.7.0" rev-constraint-default="0.7.0" rev-constraint-dynamic="0.7.0" callerrev="0.7.0"/>
 				<artifacts>
-					<artifact name="doobie-free_2.12" type="jar" ext="jar" status="successful" details="" size="3477535" time="664" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-free_2.12/jars/doobie-free_2.12-0.5.4.jar">
-						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/tpolecat/doobie-free_2.12/0.5.4/doobie-free_2.12-0.5.4.jar"/>
+					<artifact name="doobie-free_2.12" type="jar" ext="jar" status="successful" details="" size="3771039" time="1736" location="/home/nexiten/.ivy2/cache/org.tpolecat/doobie-free_2.12/jars/doobie-free_2.12-0.7.0.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/tpolecat/doobie-free_2.12/0.7.0/doobie-free_2.12-0.7.0.jar"/>
 					</artifact>
 				</artifacts>
 			</revision>
 		</module>
 		<module organisation="org.typelevel" name="cats-free_2.12">
-			<revision name="1.5.0" status="release" pubdate="20181130201031" resolver="public" artresolver="public" homepage="https://github.com/typelevel/cats" extra-info.apiURL="http://typelevel.org/cats/api/" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="49">
+			<revision name="1.6.0" status="release" pubdate="20190131135402" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/typelevel/cats" extra-info.apiURL="http://typelevel.org/cats/api/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="49">
 				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
-				<metadata-artifact status="successful" details="" size="4357" time="57" location="/home/nexiten/.ivy2/cache/org.typelevel/cats-free_2.12/ivy-1.5.0.xml" searched="true" original-local-location="/home/nexiten/.ivy2/cache/org.typelevel/cats-free_2.12/ivy-1.5.0.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/typelevel/cats-free_2.12/1.5.0/cats-free_2.12-1.5.0.pom"/>
-				<caller organisation="org.tpolecat" name="doobie-free_2.12" conf="compile, runtime" rev="1.5.0" rev-constraint-default="1.5.0" rev-constraint-dynamic="1.5.0" callerrev="0.5.4"/>
+				<metadata-artifact status="no" details="" size="3211" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/cats-free_2.12/ivy-1.6.0.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/typelevel/cats-free_2.12/1.6.0/cats-free_2.12-1.6.0.pom"/>
+				<caller organisation="org.tpolecat" name="doobie-free_2.12" conf="compile, runtime" rev="1.6.0" rev-constraint-default="1.6.0" rev-constraint-dynamic="1.6.0" callerrev="0.7.0"/>
 				<artifacts>
-					<artifact name="cats-free_2.12" type="jar" ext="jar" status="successful" details="" size="243300" time="589" location="/home/nexiten/.ivy2/cache/org.typelevel/cats-free_2.12/jars/cats-free_2.12-1.5.0.jar">
-						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/typelevel/cats-free_2.12/1.5.0/cats-free_2.12-1.5.0.jar"/>
+					<artifact name="cats-free_2.12" type="jar" ext="jar" status="no" details="" size="243300" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/cats-free_2.12/jars/cats-free_2.12-1.6.0.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/typelevel/cats-free_2.12/1.6.0/cats-free_2.12-1.6.0.jar"/>
 					</artifact>
 				</artifacts>
 			</revision>
@@ -397,9 +434,9 @@
 				<license name="MIT License" url="http://www.opensource.org/licenses/mit-license.php"/>
 				<metadata-artifact status="no" details="" size="5377" time="0" location="/home/nexiten/.ivy2/cache/org.slf4j/slf4j-api/ivy-1.7.25.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.pom"/>
 				<caller organisation="org.slf4j" name="slf4j-simple" conf="default, compile, runtime, master" rev="1.7.25" rev-constraint-default="1.7.25" rev-constraint-dynamic="1.7.25" callerrev="1.7.25"/>
+				<caller organisation="com.zaxxer" name="HikariCP" conf="compile, runtime" rev="1.7.25" rev-constraint-default="1.7.25" rev-constraint-dynamic="1.7.25" callerrev="3.3.1"/>
 				<caller organisation="org.log4s" name="log4s_2.12" conf="compile, runtime" rev="1.7.25" rev-constraint-default="1.7.25" rev-constraint-dynamic="1.7.25" callerrev="1.7.0"/>
 				<caller organisation="io.chrisdavenport" name="log4cats-slf4j_2.12" conf="default, compile, runtime, master" rev="1.7.25" rev-constraint-default="1.7.25" rev-constraint-dynamic="1.7.25" callerrev="0.3.0"/>
-				<caller organisation="com.zaxxer" name="HikariCP" conf="compile, runtime" rev="1.7.25" rev-constraint-default="1.7.25" rev-constraint-dynamic="1.7.25" callerrev="3.2.0"/>
 				<artifacts>
 					<artifact name="slf4j-api" type="jar" ext="jar" status="no" details="" size="41203" time="0" location="/home/nexiten/.ivy2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.7.25.jar">
 						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar"/>
@@ -426,18 +463,12 @@
 				<metadata-artifact status="no" details="" size="3250" time="0" location="/home/nexiten/.ivy2/cache/co.fs2/fs2-core_2.12/ivy-1.0.4.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/co/fs2/fs2-core_2.12/1.0.4/fs2-core_2.12-1.0.4.pom"/>
 				<caller organisation="org.niblius" name="tg-anonymizer_2.12" conf="compile" rev="1.0.4" rev-constraint-default="1.0.4" rev-constraint-dynamic="1.0.4" callerrev="0.0.1-SNAPSHOT"/>
 				<caller organisation="co.fs2" name="fs2-io_2.12" conf="compile, runtime" rev="1.0.4" rev-constraint-default="1.0.4" rev-constraint-dynamic="1.0.4" callerrev="1.0.4"/>
-				<caller organisation="org.tpolecat" name="doobie-free_2.12" conf="compile, runtime" rev="0.10.6" rev-constraint-default="0.10.6" rev-constraint-dynamic="0.10.6" callerrev="0.5.4"/>
+				<caller organisation="org.tpolecat" name="doobie-free_2.12" conf="compile, runtime" rev="1.0.4" rev-constraint-default="1.0.4" rev-constraint-dynamic="1.0.4" callerrev="0.7.0"/>
 				<caller organisation="org.http4s" name="jawn-fs2_2.12" conf="compile, runtime" rev="1.0.3" rev-constraint-default="1.0.3" rev-constraint-dynamic="1.0.3" callerrev="0.14.2"/>
 				<artifacts>
 					<artifact name="fs2-core_2.12" type="jar" ext="jar" status="no" details="" size="824573" time="0" location="/home/nexiten/.ivy2/cache/co.fs2/fs2-core_2.12/jars/fs2-core_2.12-1.0.4.jar">
 						<origin-location is-local="false" location="https://repo1.maven.org/maven2/co/fs2/fs2-core_2.12/1.0.4/fs2-core_2.12-1.0.4.jar"/>
 					</artifact>
-				</artifacts>
-			</revision>
-			<revision name="0.10.6" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="-1">
-				<evicted-by rev="1.0.4"/>
-				<caller organisation="org.tpolecat" name="doobie-free_2.12" conf="compile, runtime" rev="0.10.6" rev-constraint-default="0.10.6" rev-constraint-dynamic="0.10.6" callerrev="0.5.4"/>
-				<artifacts>
 				</artifacts>
 			</revision>
 			<revision name="1.0.3" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="-1">
@@ -481,6 +512,7 @@
 				<caller organisation="co.fs2" name="fs2-io_2.12" conf="compile, runtime" rev="1.2.0" rev-constraint-default="1.2.0" rev-constraint-dynamic="1.2.0" callerrev="1.0.4"/>
 				<caller organisation="org.http4s" name="http4s-core_2.12" conf="compile, runtime" rev="1.3.0" rev-constraint-default="1.3.0" rev-constraint-dynamic="1.3.0" callerrev="0.20.1"/>
 				<caller organisation="io.chrisdavenport" name="vault_2.12" conf="compile, runtime" rev="1.2.0" rev-constraint-default="1.2.0" rev-constraint-dynamic="1.2.0" callerrev="1.0.0"/>
+				<caller organisation="org.tpolecat" name="doobie-free_2.12" conf="compile, runtime" rev="1.3.0" rev-constraint-default="1.3.0" rev-constraint-dynamic="1.3.0" callerrev="0.7.0"/>
 				<caller organisation="io.chrisdavenport" name="log4cats-slf4j_2.12" conf="default, compile, runtime, master" rev="1.2.0" rev-constraint-default="1.2.0" rev-constraint-dynamic="1.2.0" callerrev="0.3.0"/>
 				<caller organisation="io.chrisdavenport" name="unique_2.12" conf="compile, runtime" rev="1.2.0" rev-constraint-default="1.2.0" rev-constraint-dynamic="1.2.0" callerrev="1.0.0"/>
 				<artifacts>
@@ -495,6 +527,7 @@
 				<caller organisation="co.fs2" name="fs2-core_2.12" conf="default, compile, runtime, master" rev="1.2.0" rev-constraint-default="1.2.0" rev-constraint-dynamic="1.2.0" callerrev="1.0.4"/>
 				<caller organisation="co.fs2" name="fs2-io_2.12" conf="compile, runtime" rev="1.2.0" rev-constraint-default="1.2.0" rev-constraint-dynamic="1.2.0" callerrev="1.0.4"/>
 				<caller organisation="org.http4s" name="http4s-core_2.12" conf="compile, runtime" rev="1.3.0" rev-constraint-default="1.3.0" rev-constraint-dynamic="1.3.0" callerrev="0.20.1"/>
+				<caller organisation="org.tpolecat" name="doobie-free_2.12" conf="compile, runtime" rev="1.3.0" rev-constraint-default="1.3.0" rev-constraint-dynamic="1.3.0" callerrev="0.7.0"/>
 				<caller organisation="io.chrisdavenport" name="log4cats-slf4j_2.12" conf="default, compile, runtime, master" rev="1.2.0" rev-constraint-default="1.2.0" rev-constraint-dynamic="1.2.0" callerrev="0.3.0"/>
 				<artifacts>
 				</artifacts>
@@ -521,11 +554,11 @@
 				<caller organisation="co.fs2" name="fs2-io_2.12" conf="compile, runtime" rev="1.6.0" rev-constraint-default="1.6.0" rev-constraint-dynamic="1.6.0" callerrev="1.0.4"/>
 				<caller organisation="org.http4s" name="http4s-core_2.12" conf="compile, runtime" rev="1.6.0" rev-constraint-default="1.6.0" rev-constraint-dynamic="1.6.0" callerrev="0.20.1"/>
 				<caller organisation="io.chrisdavenport" name="vault_2.12" conf="compile, runtime" rev="1.6.0" rev-constraint-default="1.6.0" rev-constraint-dynamic="1.6.0" callerrev="1.0.0"/>
-				<caller organisation="org.tpolecat" name="doobie-free_2.12" conf="compile, runtime" rev="1.5.0" rev-constraint-default="1.5.0" rev-constraint-dynamic="1.5.0" callerrev="0.5.4"/>
+				<caller organisation="org.typelevel" name="cats-free_2.12" conf="compile, runtime" rev="1.6.0" rev-constraint-default="1.6.0" rev-constraint-dynamic="1.6.0" callerrev="1.6.0"/>
 				<caller organisation="io.circe" name="circe-core_2.12" conf="compile, runtime" rev="1.5.0" rev-constraint-default="1.5.0" rev-constraint-dynamic="1.5.0" callerrev="0.11.1"/>
+				<caller organisation="org.tpolecat" name="doobie-free_2.12" conf="compile, runtime" rev="1.6.0" rev-constraint-default="1.6.0" rev-constraint-dynamic="1.6.0" callerrev="0.7.0"/>
 				<caller organisation="io.chrisdavenport" name="log4cats-slf4j_2.12" conf="default, compile, runtime, master" rev="1.6.0" rev-constraint-default="1.6.0" rev-constraint-dynamic="1.6.0" callerrev="0.3.0"/>
 				<caller organisation="io.chrisdavenport" name="unique_2.12" conf="compile, runtime" rev="1.6.0" rev-constraint-default="1.6.0" rev-constraint-dynamic="1.6.0" callerrev="1.0.0"/>
-				<caller organisation="org.typelevel" name="cats-free_2.12" conf="compile, runtime" rev="1.5.0" rev-constraint-default="1.5.0" rev-constraint-dynamic="1.5.0" callerrev="1.5.0"/>
 				<artifacts>
 					<artifact name="cats-core_2.12" type="jar" ext="jar" status="no" details="" size="4600557" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/cats-core_2.12/jars/cats-core_2.12-2.0.0-M1.jar">
 						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/typelevel/cats-core_2.12/2.0.0-M1/cats-core_2.12-2.0.0-M1.jar"/>
@@ -538,16 +571,16 @@
 				<caller organisation="co.fs2" name="fs2-io_2.12" conf="compile, runtime" rev="1.6.0" rev-constraint-default="1.6.0" rev-constraint-dynamic="1.6.0" callerrev="1.0.4"/>
 				<caller organisation="org.http4s" name="http4s-core_2.12" conf="compile, runtime" rev="1.6.0" rev-constraint-default="1.6.0" rev-constraint-dynamic="1.6.0" callerrev="0.20.1"/>
 				<caller organisation="io.chrisdavenport" name="vault_2.12" conf="compile, runtime" rev="1.6.0" rev-constraint-default="1.6.0" rev-constraint-dynamic="1.6.0" callerrev="1.0.0"/>
+				<caller organisation="org.typelevel" name="cats-free_2.12" conf="compile, runtime" rev="1.6.0" rev-constraint-default="1.6.0" rev-constraint-dynamic="1.6.0" callerrev="1.6.0"/>
+				<caller organisation="org.tpolecat" name="doobie-free_2.12" conf="compile, runtime" rev="1.6.0" rev-constraint-default="1.6.0" rev-constraint-dynamic="1.6.0" callerrev="0.7.0"/>
 				<caller organisation="io.chrisdavenport" name="log4cats-slf4j_2.12" conf="default, compile, runtime, master" rev="1.6.0" rev-constraint-default="1.6.0" rev-constraint-dynamic="1.6.0" callerrev="0.3.0"/>
 				<caller organisation="io.chrisdavenport" name="unique_2.12" conf="compile, runtime" rev="1.6.0" rev-constraint-default="1.6.0" rev-constraint-dynamic="1.6.0" callerrev="1.0.0"/>
 				<artifacts>
 				</artifacts>
 			</revision>
-			<revision name="1.5.0" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="-1">
+			<revision name="1.5.0" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="runtime(*), master(compile), compile(*)" position="-1">
 				<evicted-by rev="2.0.0-M1"/>
-				<caller organisation="org.tpolecat" name="doobie-free_2.12" conf="compile, runtime" rev="1.5.0" rev-constraint-default="1.5.0" rev-constraint-dynamic="1.5.0" callerrev="0.5.4"/>
 				<caller organisation="io.circe" name="circe-core_2.12" conf="compile, runtime" rev="1.5.0" rev-constraint-default="1.5.0" rev-constraint-dynamic="1.5.0" callerrev="0.11.1"/>
-				<caller organisation="org.typelevel" name="cats-free_2.12" conf="compile, runtime" rev="1.5.0" rev-constraint-default="1.5.0" rev-constraint-dynamic="1.5.0" callerrev="1.5.0"/>
 				<artifacts>
 				</artifacts>
 			</revision>
@@ -569,16 +602,16 @@
 				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
 				<metadata-artifact status="no" details="" size="2926" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/cats-macros_2.12/ivy-2.0.0-M1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/typelevel/cats-macros_2.12/2.0.0-M1/cats-macros_2.12-2.0.0-M1.pom"/>
 				<caller organisation="org.typelevel" name="cats-core_2.12" conf="default, compile, runtime, master" rev="2.0.0-M1" rev-constraint-default="2.0.0-M1" rev-constraint-dynamic="2.0.0-M1" callerrev="2.0.0-M1"/>
-				<caller organisation="org.typelevel" name="cats-free_2.12" conf="compile, runtime" rev="1.5.0" rev-constraint-default="1.5.0" rev-constraint-dynamic="1.5.0" callerrev="1.5.0"/>
+				<caller organisation="org.typelevel" name="cats-free_2.12" conf="compile, runtime" rev="1.6.0" rev-constraint-default="1.6.0" rev-constraint-dynamic="1.6.0" callerrev="1.6.0"/>
 				<artifacts>
 					<artifact name="cats-macros_2.12" type="jar" ext="jar" status="no" details="" size="5253" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/cats-macros_2.12/jars/cats-macros_2.12-2.0.0-M1.jar">
 						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/typelevel/cats-macros_2.12/2.0.0-M1/cats-macros_2.12-2.0.0-M1.jar"/>
 					</artifact>
 				</artifacts>
 			</revision>
-			<revision name="1.5.0" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="-1">
+			<revision name="1.6.0" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="-1">
 				<evicted-by rev="2.0.0-M1"/>
-				<caller organisation="org.typelevel" name="cats-free_2.12" conf="compile, runtime" rev="1.5.0" rev-constraint-default="1.5.0" rev-constraint-dynamic="1.5.0" callerrev="1.5.0"/>
+				<caller organisation="org.typelevel" name="cats-free_2.12" conf="compile, runtime" rev="1.6.0" rev-constraint-default="1.6.0" rev-constraint-dynamic="1.6.0" callerrev="1.6.0"/>
 				<artifacts>
 				</artifacts>
 			</revision>
@@ -588,8 +621,8 @@
 				<license name="MIT" url="http://opensource.org/licenses/MIT"/>
 				<metadata-artifact status="no" details="" size="2785" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/machinist_2.12/ivy-0.6.7.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/typelevel/machinist_2.12/0.6.7/machinist_2.12-0.6.7.pom"/>
 				<caller organisation="org.typelevel" name="cats-core_2.12" conf="default, compile, runtime, master" rev="0.6.7" rev-constraint-default="0.6.7" rev-constraint-dynamic="0.6.7" callerrev="2.0.0-M1"/>
+				<caller organisation="org.typelevel" name="cats-free_2.12" conf="compile, runtime" rev="0.6.6" rev-constraint-default="0.6.6" rev-constraint-dynamic="0.6.6" callerrev="1.6.0"/>
 				<caller organisation="org.typelevel" name="cats-macros_2.12" conf="compile, runtime" rev="0.6.7" rev-constraint-default="0.6.7" rev-constraint-dynamic="0.6.7" callerrev="2.0.0-M1"/>
-				<caller organisation="org.typelevel" name="cats-free_2.12" conf="compile, runtime" rev="0.6.6" rev-constraint-default="0.6.6" rev-constraint-dynamic="0.6.6" callerrev="1.5.0"/>
 				<artifacts>
 					<artifact name="machinist_2.12" type="jar" ext="jar" status="no" details="" size="33786" time="0" location="/home/nexiten/.ivy2/cache/org.typelevel/machinist_2.12/jars/machinist_2.12-0.6.7.jar">
 						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/typelevel/machinist_2.12/0.6.7/machinist_2.12-0.6.7.jar"/>
@@ -598,7 +631,7 @@
 			</revision>
 			<revision name="0.6.6" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="-1">
 				<evicted-by rev="0.6.7"/>
-				<caller organisation="org.typelevel" name="cats-free_2.12" conf="compile, runtime" rev="0.6.6" rev-constraint-default="0.6.6" rev-constraint-dynamic="0.6.6" callerrev="1.5.0"/>
+				<caller organisation="org.typelevel" name="cats-free_2.12" conf="compile, runtime" rev="0.6.6" rev-constraint-default="0.6.6" rev-constraint-dynamic="0.6.6" callerrev="1.6.0"/>
 				<artifacts>
 				</artifacts>
 			</revision>
@@ -678,42 +711,6 @@
 				</artifacts>
 			</revision>
 		</module>
-		<module organisation="org.scalatest" name="scalatest_2.12">
-			<revision name="3.0.5" status="release" pubdate="20180129082347" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scalatest.org" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="54">
-				<license name="the Apache License, ASL Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
-				<metadata-artifact status="no" details="" size="4732" time="0" location="/home/nexiten/.ivy2/cache/org.scalatest/scalatest_2.12/ivy-3.0.5.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scalatest/scalatest_2.12/3.0.5/scalatest_2.12-3.0.5.pom"/>
-				<caller organisation="org.tpolecat" name="doobie-scalatest_2.12" conf="default, compile, runtime, master" rev="3.0.5" rev-constraint-default="3.0.5" rev-constraint-dynamic="3.0.5" callerrev="0.5.4"/>
-				<artifacts>
-					<artifact name="scalatest_2.12" type="bundle" ext="jar" status="no" details="" size="7013188" time="0" location="/home/nexiten/.ivy2/cache/org.scalatest/scalatest_2.12/bundles/scalatest_2.12-3.0.5.jar">
-						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scalatest/scalatest_2.12/3.0.5/scalatest_2.12-3.0.5.jar"/>
-					</artifact>
-				</artifacts>
-			</revision>
-		</module>
-		<module organisation="org.scala-lang.modules" name="scala-xml_2.12">
-			<revision name="1.0.6" status="release" pubdate="20161101102105" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scala-lang.org/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="56">
-				<license name="BSD 3-clause" url="http://opensource.org/licenses/BSD-3-Clause"/>
-				<metadata-artifact status="no" details="" size="2987" time="0" location="/home/nexiten/.ivy2/cache/org.scala-lang.modules/scala-xml_2.12/ivy-1.0.6.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.0.6/scala-xml_2.12-1.0.6.pom"/>
-				<caller organisation="org.scalatest" name="scalatest_2.12" conf="compile, runtime" rev="1.0.6" rev-constraint-default="1.0.6" rev-constraint-dynamic="1.0.6" callerrev="3.0.5"/>
-				<artifacts>
-					<artifact name="scala-xml_2.12" type="bundle" ext="jar" status="no" details="" size="547860" time="0" location="/home/nexiten/.ivy2/cache/org.scala-lang.modules/scala-xml_2.12/bundles/scala-xml_2.12-1.0.6.jar">
-						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scala-lang/modules/scala-xml_2.12/1.0.6/scala-xml_2.12-1.0.6.jar"/>
-					</artifact>
-				</artifacts>
-			</revision>
-		</module>
-		<module organisation="org.scalactic" name="scalactic_2.12">
-			<revision name="3.0.5" status="release" pubdate="20180129082214" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scalatest.org" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="55">
-				<license name="the Apache License, ASL Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
-				<metadata-artifact status="no" details="" size="2967" time="0" location="/home/nexiten/.ivy2/cache/org.scalactic/scalactic_2.12/ivy-3.0.5.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scalactic/scalactic_2.12/3.0.5/scalactic_2.12-3.0.5.pom"/>
-				<caller organisation="org.scalatest" name="scalatest_2.12" conf="compile, runtime" rev="3.0.5" rev-constraint-default="3.0.5" rev-constraint-dynamic="3.0.5" callerrev="3.0.5"/>
-				<artifacts>
-					<artifact name="scalactic_2.12" type="bundle" ext="jar" status="no" details="" size="708098" time="0" location="/home/nexiten/.ivy2/cache/org.scalactic/scalactic_2.12/bundles/scalactic_2.12-3.0.5.jar">
-						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scalactic/scalactic_2.12/3.0.5/scalactic_2.12-3.0.5.jar"/>
-					</artifact>
-				</artifacts>
-			</revision>
-		</module>
 		<module organisation="io.circe" name="circe-generic-extras_2.12">
 			<revision name="0.11.1" status="release" pubdate="20190112091339" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/circe/circe" extra-info.apiURL="https://circe.github.io/circe/api/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="7">
 				<license name="Apache 2.0" url="http://www.apache.org/licenses/LICENSE-2.0"/>
@@ -756,7 +753,7 @@
 				<license name="Apache 2" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
 				<metadata-artifact status="no" details="" size="3230" time="0" location="/home/nexiten/.ivy2/cache/com.chuusai/shapeless_2.12/ivy-2.3.3.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/chuusai/shapeless_2.12/2.3.3/shapeless_2.12-2.3.3.pom"/>
 				<caller organisation="io.circe" name="circe-generic_2.12" conf="default, compile, runtime, master" rev="2.3.3" rev-constraint-default="2.3.3" rev-constraint-dynamic="2.3.3" callerrev="0.11.1"/>
-				<caller organisation="org.tpolecat" name="doobie-core_2.12" conf="default, compile, runtime, master" rev="2.3.3" rev-constraint-default="2.3.3" rev-constraint-dynamic="2.3.3" callerrev="0.5.4"/>
+				<caller organisation="org.tpolecat" name="doobie-core_2.12" conf="default, compile, runtime, master" rev="2.3.3" rev-constraint-default="2.3.3" rev-constraint-dynamic="2.3.3" callerrev="0.7.0"/>
 				<artifacts>
 					<artifact name="shapeless_2.12" type="bundle" ext="jar" status="no" details="" size="3243337" time="0" location="/home/nexiten/.ivy2/cache/com.chuusai/shapeless_2.12/bundles/shapeless_2.12-2.3.3.jar">
 						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/chuusai/shapeless_2.12/2.3.3/shapeless_2.12-2.3.3.jar"/>
@@ -780,9 +777,9 @@
 			<revision name="2.12.8" status="release" pubdate="20181204051524" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scala-lang.org/" extra-info.apiURL="http://www.scala-lang.org/api/2.12.8/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="17">
 				<license name="Apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0"/>
 				<metadata-artifact status="no" details="" size="2828" time="0" location="/home/nexiten/.ivy2/cache/org.scala-lang/scala-reflect/ivy-2.12.8.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.12.8/scala-reflect-2.12.8.pom"/>
-				<caller organisation="org.scalatest" name="scalatest_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="3.0.5"/>
-				<caller organisation="org.tpolecat" name="doobie-core_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.5.4"/>
-				<caller organisation="org.scalactic" name="scalactic_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="3.0.5"/>
+				<caller organisation="org.tpolecat" name="doobie-core_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.7.0"/>
+				<caller organisation="org.scalatest" name="scalatest_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="3.0.7"/>
+				<caller organisation="org.scalactic" name="scalactic_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="3.0.7"/>
 				<caller organisation="org.typelevel" name="machinist_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.6.7"/>
 				<artifacts>
 					<artifact name="scala-reflect" type="jar" ext="jar" status="no" details="" size="3645095" time="0" location="/home/nexiten/.ivy2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.12.8.jar">
@@ -821,36 +818,34 @@
 			</revision>
 		</module>
 		<module organisation="org.scala-lang" name="scala-library">
-			<revision name="2.12.8" status="release" pubdate="20181204051556" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scala-lang.org/" extra-info.apiURL="http://www.scala-lang.org/api/2.12.8/" downloaded="false" searched="false" default="false" conf="default, master(*), compile, runtime(*), master(compile), runtime, default(compile), compile(*), master" position="0">
+			<revision name="2.12.8" status="release" pubdate="20181204051556" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scala-lang.org/" extra-info.apiURL="http://www.scala-lang.org/api/2.12.8/" downloaded="false" searched="false" default="false" conf="default, compile, runtime(*), master(compile), runtime, default(compile), compile(*), master" position="0">
 				<license name="Apache-2.0" url="https://www.apache.org/licenses/LICENSE-2.0"/>
 				<metadata-artifact status="no" details="" size="2656" time="0" location="/home/nexiten/.ivy2/cache/org.scala-lang/scala-library/ivy-2.12.8.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.8/scala-library-2.12.8.pom"/>
 				<caller organisation="io.circe" name="circe-generic_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.11.1"/>
+				<caller organisation="org.tpolecat" name="doobie-h2_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.7.0"/>
 				<caller organisation="org.http4s" name="http4s-blaze-client_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.20.1"/>
 				<caller organisation="org.scala-lang" name="scala-reflect" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="2.12.8"/>
 				<caller organisation="org.typelevel" name="cats-kernel_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="2.0.0-M1"/>
-				<caller organisation="org.tpolecat" name="doobie-free_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.5.4"/>
+				<caller organisation="org.typelevel" name="cats-free_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="1.6.0"/>
 				<caller organisation="io.circe" name="circe-jawn_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.11.1"/>
 				<caller organisation="io.chrisdavenport" name="unique_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="1.0.0"/>
-				<caller organisation="org.scala-lang.modules" name="scala-xml_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="1.0.6"/>
 				<caller organisation="org.http4s" name="http4s-client_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.20.1"/>
 				<caller organisation="org.typelevel" name="cats-core_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="2.0.0-M1"/>
 				<caller organisation="org.http4s" name="http4s-circe_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.20.1"/>
 				<caller organisation="io.circe" name="circe-core_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.11.1"/>
-				<caller organisation="org.tpolecat" name="doobie-core_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.5.4"/>
 				<caller organisation="org.scodec" name="scodec-bits_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="1.1.9"/>
 				<caller organisation="org.typelevel" name="cats-effect_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="2.0.0-M1"/>
 				<caller organisation="org.http4s" name="blaze-http_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.14.2"/>
+				<caller organisation="org.tpolecat" name="doobie-scalatest_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.7.0"/>
+				<caller organisation="org.tpolecat" name="doobie-free_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.7.0"/>
 				<caller organisation="org.typelevel" name="jawn-parser_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.14.1"/>
 				<caller organisation="co.fs2" name="fs2-core_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="1.0.4"/>
 				<caller organisation="io.circe" name="circe-config_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.6.1"/>
 				<caller organisation="co.fs2" name="fs2-io_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="1.0.4"/>
-				<caller organisation="org.tpolecat" name="doobie-h2_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.5.4"/>
+				<caller organisation="org.scalatest" name="scalatest_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="3.0.7"/>
 				<caller organisation="com.chuusai" name="shapeless_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="2.3.3"/>
 				<caller organisation="io.circe" name="circe-numbers_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.11.1"/>
-				<caller organisation="org.scalactic" name="scalactic_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="3.0.5"/>
 				<caller organisation="org.http4s" name="jawn-fs2_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.14.2"/>
-				<caller organisation="org.tpolecat" name="doobie-hikari_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.5.4"/>
-				<caller organisation="org.tpolecat" name="doobie-scalatest_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.5.4"/>
 				<caller organisation="io.circe" name="circe-java8_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.11.1"/>
 				<caller organisation="org.http4s" name="http4s-core_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.20.1"/>
 				<caller organisation="org.typelevel" name="cats-macros_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="2.0.0-M1"/>
@@ -858,6 +853,7 @@
 				<caller organisation="org.typelevel" name="machinist_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.6.7"/>
 				<caller organisation="org.http4s" name="parboiled_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="1.0.1"/>
 				<caller organisation="io.circe" name="circe-generic-extras_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.11.1"/>
+				<caller organisation="org.tpolecat" name="doobie-core_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.7.0"/>
 				<caller organisation="io.chrisdavenport" name="log4cats-core_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.3.0"/>
 				<caller organisation="org.http4s" name="http4s-blaze-core_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.20.1"/>
 				<caller organisation="io.chrisdavenport" name="vault_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="1.0.0"/>
@@ -866,7 +862,9 @@
 				<caller organisation="org.http4s" name="http4s-server_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.20.1"/>
 				<caller organisation="org.http4s" name="http4s-blaze-server_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.20.1"/>
 				<caller organisation="org.niblius" name="tg-anonymizer_2.12" conf="compile" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.0.1-SNAPSHOT"/>
-				<caller organisation="org.scalatest" name="scalatest_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="3.0.5"/>
+				<caller organisation="org.scala-lang.modules" name="scala-xml_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="1.1.0"/>
+				<caller organisation="org.scalactic" name="scalactic_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="3.0.7"/>
+				<caller organisation="org.tpolecat" name="doobie-hikari_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.7.0"/>
 				<caller organisation="com.lihaoyi" name="sourcecode_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.1.5"/>
 				<caller organisation="org.http4s" name="blaze-core_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.14.2"/>
 				<caller organisation="io.circe" name="circe-literal_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.11.1"/>
@@ -874,7 +872,6 @@
 				<caller organisation="io.circe" name="circe-parser_2.12" conf="default, compile, runtime, master" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.11.1"/>
 				<caller organisation="org.http4s" name="http4s-jawn_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="0.20.1"/>
 				<caller organisation="org.typelevel" name="macro-compat_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="1.1.1"/>
-				<caller organisation="org.typelevel" name="cats-free_2.12" conf="compile, runtime" rev="2.12.8" rev-constraint-default="2.12.8" rev-constraint-dynamic="2.12.8" callerrev="1.5.0"/>
 				<artifacts>
 					<artifact name="scala-library" type="jar" ext="jar" status="no" details="" size="5272591" time="0" location="/home/nexiten/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.12.8.jar">
 						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.12.8/scala-library-2.12.8.jar"/>
