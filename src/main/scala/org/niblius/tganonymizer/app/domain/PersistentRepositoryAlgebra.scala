@@ -7,7 +7,9 @@ trait PersistentRepositoryAlgebra[F[_]] {
 
   def get(userId: Long): F[Option[ChatMemberSettings]]
 
-  def getActive: F[List[ChatMemberSettings]]
+  def getByStatus(active: Boolean): F[List[ChatMemberSettings]]
+
+  def getAll: F[List[ChatMemberSettings]]
 
   def delete(userId: Long): F[Option[ChatMemberSettings]]
 }

@@ -6,7 +6,7 @@ import fs2.Stream
 import io.chrisdavenport.log4cats.Logger
 import org.http4s.client._
 import org.http4s.{EntityDecoder, Uri}
-import org.niblius.tganonymizer.api.dto.{BotResponse, BotUpdate}
+import org.niblius.tganonymizer.api.dto.{BotResponse, BotUpdate, Chat}
 
 import scala.language.higherKinds
 
@@ -30,6 +30,8 @@ trait BotAPI[F[_], S[_]] {
     * @param fromOffset offset of the fist message to start polling from
     */
   def pollUpdates(fromOffset: Offset): S[BotUpdate]
+
+  def getChat(chatId: ChatId): F[Option[Chat]]
 }
 
 trait StreamingBotAPI[F[_]] extends BotAPI[F, Stream[F, ?]]

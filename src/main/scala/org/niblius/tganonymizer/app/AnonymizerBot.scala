@@ -8,6 +8,7 @@ import cats.data._
 import cats.effect.{Concurrent, Sync, Timer}
 import cats.implicits._
 import fs2._
+import org.niblius.tganonymizer.api.dto.Chat
 import org.niblius.tganonymizer.api.{ChatId, StreamingBotAPI}
 import org.niblius.tganonymizer.app.domain.BotCommand._
 import org.niblius.tganonymizer.app.domain._
@@ -32,6 +33,7 @@ class AnonymizerBot[F[_]: Timer](
   def launch: Stream[F, Unit] =
     pollCommands.evalMap(handleCommand)
 
+  // TODO: logging
   // TODO: fix nickname everywhere
 
   private def pollCommands: Stream[F, BotCommand] =
@@ -56,26 +58,104 @@ class AnonymizerBot[F[_]: Timer](
       case c: ShowHelp =>
         api.sendMessage(c.chatId, templateHelp)
 
-      // TODO: shouldn't do anything if not joined
       // TODO: fix c: Command
-      case c: Join          => handleJoin(c.chatId)
-      case c: Leave         => handleLeave(c.chatId)
-      case c: Message       => handleMessage(c.chatId, c.content)
-      case c: SetDelay      => handleSetDelay(c.chatId, c.delay)
-      case c: ResetDelay    => handleResetDelay(c.chatId)
-      case c: ResetNickname => handleResetNickname(c.chatId)
+      case c: Join           => handleJoin(c.chatId)
+      case c: Leave          => handleLeave(c.chatId)
+      case c: Message        => handleMessage(c.chatId, c.content)
+      case c: SetDelay       => handleSetDelay(c.chatId, c.delay)
+      case c: ResetDelay     => handleResetDelay(c.chatId)
+      case c: ResetNickname  => handleResetNickname(c.chatId)
+      case c: UnknownCommand => handleUnknown(c.chatId)
+      case c: ShowAll        => handleShowAll(c.chatId)
+      case c: MakeActive     => handleMakeActive(c.chatId, c.target)
     }
 
     (command match {
-      case c: Join =>
+      case Join(_) =>
         process
       case _ =>
-        persistent.getActive.flatMap(
-          _.find(m => m.id == command.chatId)
-            .map(_ => process)
-            .getOrElse(api.sendMessage(command.chatId, templateNotJoined)))
+        persistent
+          .getByStatus(true)
+          .flatMap(
+            _.find(m => m.id == command.chatId)
+              .map(_ => process)
+              .getOrElse(api.sendMessage(command.chatId, templateNotJoined)))
     }).handleErrorWith(e => logger.error(e.toString))
   }
+
+  private def handleMakeActive(chatId: ChatId, targetStr: String): F[Unit] =
+    for {
+      chatMember <- inMemory.touchNickname(chatId)
+      target     <- persistent.get(targetStr.toLong)
+      _ <- target match {
+        case Some(t) =>
+          for {
+            _ <- persistent.update(t.copy(isActive = true))
+            _ <- sendEveryone(
+              templateMakeActiveSucc(chatMember.name, targetStr))
+          } yield ()
+        case None =>
+          sendEveryone(templateMakeActiveFail(chatMember.name, targetStr))
+      }
+    } yield ()
+
+  private def templateMakeActiveFail(name: String, target: String): String =
+    s"$name tried to add $target to the channel, but such user wasn't found."
+
+  private def templateMakeActiveSucc(name: String, target: String): String =
+    s"$name added $target to the channel."
+
+  private def handleShowAll(chatId: ChatId): F[Unit] = {
+    def retrieveTelegramChats(
+        members: List[ChatMemberSettings]): F[List[Option[(Chat, Boolean)]]] =
+      members.traverse(m => api.getChat(m.id).map(_.map(c => (c, m.isActive))))
+
+    for {
+      _          <- handleMessage(chatId, showAll)
+      allMembers <- persistent.getAll
+      chats      <- retrieveTelegramChats(allMembers)
+      (active, notActive) = chats.flatten.partition(_._2)
+      template            = templateShowAll(active.map(_._1), notActive.map(_._1))
+      _ <- sendEveryone(template)
+    } yield ()
+  }
+
+  private def templateShowAll(active: List[Chat],
+                              notActive: List[Chat]): String = {
+    def getNameAndId(c: Chat): String = {
+      val username = c.first_name
+        .orElse(c.title)
+        .orElse(c.username)
+        .getOrElse("unknown")
+
+      s"$username : ${c.id}"
+    }
+
+    val inChatListStr =
+      active.map(getNameAndId).mkString("\n")
+
+    val uplural = if (active.size > 1) "s" else ""
+
+    val inChatStr =
+      s"There are ${active.size} user$uplural in the channel:\n$inChatListStr"
+
+    val missingListStr = notActive.map(getNameAndId).mkString("\n")
+
+    val bplural = if (notActive.size > 1) "s" else ""
+
+    val missingStr =
+      if (notActive.nonEmpty)
+        s"and ${notActive.size} bastard$bplural missing:\n $missingListStr"
+      else ""
+
+    s"$inChatStr\n$missingStr"
+  }
+
+  private def handleUnknown(chatId: ChatId): F[Unit] =
+    api.sendMessage(chatId, templateUnknown)
+
+  private def templateUnknown: String =
+    s"Unknown command. Try $help to list all available commands."
 
   private def handleResetNickname(chatId: ChatId): F[Unit] =
     inMemory.resetNickname(chatId).void
@@ -88,7 +168,7 @@ class AnonymizerBot[F[_]: Timer](
     } yield ()
 
   private def templateSetDelay(delay: String): String =
-    s"Delay has been successfully set to $delay."
+    s"Delay has been set to $delay."
 
   private def handleResetDelay(chatId: ChatId): F[Unit] =
     for {
@@ -98,7 +178,7 @@ class AnonymizerBot[F[_]: Timer](
     } yield ()
 
   private def templateResetDelay: String =
-    s"Delay has been successfully reset."
+    s"Delay has been reset."
 
   private def handleJoin(chatId: ChatId): F[Unit] =
     for {
@@ -121,7 +201,7 @@ class AnonymizerBot[F[_]: Timer](
   private def sendEveryone(content: String,
                            but: Option[ChatId] = None): F[Unit] =
     for {
-      members <- persistent.getActive
+      members <- persistent.getByStatus(true)
       target = but.map(id => members.filter(_.id != id)).getOrElse(members)
       _ <- target.traverse(m => api.sendMessage(m.id, content))
     } yield ()
@@ -148,8 +228,8 @@ class AnonymizerBot[F[_]: Timer](
     for {
       nickname <- inMemory.touchNickname(chatId)
       template = messageTemplate(nickname.name, content)
-      activeMembers <- persistent.getActive
-      _ <- activeMembers
+      active <- persistent.getByStatus(true)
+      _ <- active
         .filter(m => m.id != chatId)
         .traverse { m =>
           nickname.delay

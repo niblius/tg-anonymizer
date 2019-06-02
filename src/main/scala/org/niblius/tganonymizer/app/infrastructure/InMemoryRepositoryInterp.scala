@@ -7,11 +7,9 @@ import cats._
 import cats.effect.Timer
 import cats.effect.concurrent.Ref
 import org.niblius.tganonymizer.api.ChatId
-import org.niblius.tganonymizer.app.domain.{
-  ChatMember,
-  InMemoryRepositoryAlgebra,
-  SECONDS
-}
+import org.niblius.tganonymizer.app.domain._
+import io.circe.generic.auto._
+import io.circe.syntax._
 
 case class InMemoryRepositoryInterp[F[_]: FlatMap: Timer](
     store: Ref[F, Map[ChatId, ChatMember]])
@@ -45,10 +43,11 @@ case class InMemoryRepositoryInterp[F[_]: FlatMap: Timer](
   def resetNickname(chatId: ChatId): F[ChatMember] =
     touchNickname(chatId, Some(generateName))
 
-  // TODO: set delay 0 equivalent to reset delay
   def setDelay(chatId: ChatId, delay: Option[SECONDS]): F[Option[ChatMember]] =
     store.modify(ms => {
-      val member = ms.get(chatId).map(_.copy(delay = delay))
+      val member = ms
+        .get(chatId)
+        .map(_.copy(delay = delay.flatMap(d => if (d == 0L) None else Some(d))))
       val newMap = member.map(m => ms + (chatId -> m)).getOrElse(ms)
       (newMap, member)
     })

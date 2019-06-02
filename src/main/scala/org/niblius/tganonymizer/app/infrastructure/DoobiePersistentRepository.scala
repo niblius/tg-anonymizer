@@ -29,21 +29,32 @@ private object MemberSQL {
     WHERE ID = $memberId
   """.query
 
-  def selectActive: Query0[ChatMemberSettings] = sql"""
+  def selectByStatus(isActive: Boolean): Query0[ChatMemberSettings] = sql"""
     SELECT ID, NICKNAME, IS_ACTIVE
     FROM CHAT_MEMBERS
-    WHERE IS_ACTIVE = TRUE
+    WHERE IS_ACTIVE = $isActive
   """.query
 
   def delete(memberId: Long): Update0 = sql"""
     DELETE FROM CHAT_MEMBERS WHERE ID = $memberId
   """.update
+
+  def selectAll: Query0[ChatMemberSettings] = sql"""
+    SELECT ID, NICKNAME, IS_ACTIVE
+    FROM CHAT_MEMBERS
+  """.query
 }
 
 class DoobiePersistentRepository[F[_]: Sync](val xa: Transactor[F])
     extends PersistentRepositoryAlgebra[F] {
 
   import MemberSQL._
+
+  def getAll: F[List[ChatMemberSettings]] =
+    selectAll.to[List].transact(xa)
+
+  def getByStatus(active: Boolean): F[List[ChatMemberSettings]] =
+    selectByStatus(active).to[List].transact(xa)
 
   def create(member: ChatMemberSettings): F[ChatMemberSettings] =
     insert(member).run.as(member).transact(xa)
@@ -61,7 +72,7 @@ class DoobiePersistentRepository[F[_]: Sync](val xa: Transactor[F])
       .value
 
   def getActive: F[List[ChatMemberSettings]] =
-    selectActive.to[List].transact(xa)
+    selectByStatus(true).to[List].transact(xa)
 
 }
 
