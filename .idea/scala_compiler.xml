@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ScalaCompilerConfiguration">
     <profile name="sbt 1" modules="tg-anonymizer">
+      <option name="higherKinds" value="true" />
       <parameters>
         <parameter value="-Ypartial-unification" />
       </parameters>

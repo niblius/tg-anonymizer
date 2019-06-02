@@ -1,12 +1,7 @@
 package org.niblius.tganonymizer.api
 
-import cats.effect.Sync
-import cats.implicits._
 import fs2.Stream
-import io.chrisdavenport.log4cats.Logger
-import org.http4s.client._
-import org.http4s.{EntityDecoder, Uri}
-import org.niblius.tganonymizer.api.dto.{BotResponse, BotUpdate, Chat}
+import org.niblius.tganonymizer.api.dto.{BotUpdate, Chat}
 
 import scala.language.higherKinds
 

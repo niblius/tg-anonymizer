@@ -10,7 +10,6 @@ import org.niblius.tganonymizer.api.dto._
 
 /**
   * Single bot API instance with http4s client.
-  * Requires an implicit decoder for incoming bot updates.
   *
   * @param token  bot api token
   * @param client http client algebra

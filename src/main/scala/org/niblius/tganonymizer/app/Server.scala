@@ -14,11 +14,11 @@ import org.niblius.tganonymizer.api.{ChatId, Http4SBotAPI}
 import org.niblius.tganonymizer.app.config.{BotConfig, DatabaseConfig}
 import org.niblius.tganonymizer.app.domain.{
   ChatMember,
-  InMemoryRepositoryAlgebra
+  ChatMemberServiceAlgebra
 }
 import org.niblius.tganonymizer.app.infrastructure.{
-  DoobiePersistentRepository,
-  InMemoryRepositoryInterp
+  DoobieUserRepository,
+  ChatMemberServiceInterp
 }
 import io.circe.generic.auto._
 
@@ -29,7 +29,10 @@ object Server extends IOApp {
     def readConfiguration: F[BotConfig] =
       parser.decodePathF[F, BotConfig]("bot")
 
-    // TODO: use env var
+    def readToken: F[String] =
+      Sync[F].delay(System.getenv("ANONYMIZER_BOT_TOKEN"))
+
+    // TODO: use separate execution contexts
 
     def allocateResources(
         config: BotConfig): Resource[F, (Client[F], HikariTransactor[F])] =
@@ -38,16 +41,16 @@ object Server extends IOApp {
         xa     <- DatabaseConfig.dbTransactor(config.db, global, global)
       } yield (client, xa)
 
-    def launch(logger: Logger[F], config: BotConfig)(
+    def launch(logger: Logger[F], config: BotConfig, token: String)(
         resources: (Client[F], HikariTransactor[F])): F[Unit] = {
       val (client, xa) = resources
-      val membersRepo  = DoobiePersistentRepository(xa)
-      val botAPI       = new Http4SBotAPI(config.token, client, logger)
+      val usersRepo    = DoobieUserRepository(xa)
+      val botAPI       = new Http4SBotAPI(token, client, logger)
       for {
-        nicknameStore <- Ref
+        membersRepo <- Ref
           .of(Map.empty[ChatId, ChatMember])
-          .map(InMemoryRepositoryInterp[F](_))
-        bot = new AnonymizerBot(botAPI, logger, membersRepo, nicknameStore)
+          .map(m => ChatMemberServiceInterp[F](m, usersRepo))
+        bot = new AnonymizerBot(botAPI, logger, usersRepo, membersRepo)
         _ <- bot.launch.compile.drain
       } yield ()
     }
@@ -56,10 +59,11 @@ object Server extends IOApp {
       logger <- Slf4jLogger.create[F]
       _      <- logger.info("Reading configuration...")
       config <- readConfiguration
+      token  <- readToken
       _      <- logger.info("Prepare database...")
       _      <- DatabaseConfig.initializeDb(config.db)
       _      <- logger.info("Launching the bot...")
-      _      <- allocateResources(config).use(launch(logger, config))
+      _      <- allocateResources(config).use(launch(logger, config, token))
     } yield ()
   }
 
