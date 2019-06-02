@@ -9,7 +9,8 @@ import cats.effect.{
   IO,
   IOApp,
   Resource,
-  Sync
+  Sync,
+  Timer
 }
 import doobie.hikari.HikariTransactor
 import fs2.Stream
@@ -21,15 +22,24 @@ import org.http4s.circe._
 import org.http4s.client.Client
 import org.http4s.client.blaze.BlazeClientBuilder
 import _root_.io.chrisdavenport.log4cats._
-import org.niblius.tganonymizer.api.Http4SBotAPI
+import cats.effect.concurrent.Ref
+import doobie.util.testing.AnalysisReport.Item
+import org.niblius.tganonymizer.api.{ChatId, Http4SBotAPI}
 import org.niblius.tganonymizer.api.dto.{BotResponse, BotUpdate}
 import org.niblius.tganonymizer.app.config.{BotConfig, DatabaseConfig}
-import org.niblius.tganonymizer.app.infrastructure.DoobieMemberRepositoryInterpreter
+import org.niblius.tganonymizer.app.domain.{
+  ChatMember,
+  InMemoryRepositoryAlgebra
+}
+import org.niblius.tganonymizer.app.infrastructure.{
+  DoobiePersistentRepository,
+  InMemoryRepositoryInterp
+}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object Server extends IOApp {
-  def createServer[F[_]: ConcurrentEffect: ContextShift]: F[Unit] = {
+  def createServer[F[_]: ConcurrentEffect: ContextShift: Timer]: F[Unit] = {
     implicit val decoder: EntityDecoder[F, BotResponse[List[BotUpdate]]] =
       jsonOf[F, BotResponse[List[BotUpdate]]]
 
@@ -46,21 +56,25 @@ object Server extends IOApp {
     def launch(logger: Logger[F], config: BotConfig)(
         resources: (Client[F], HikariTransactor[F])): F[Unit] = {
       val (client, xa) = resources
-      val membersRepo  = DoobieMemberRepositoryInterpreter(xa)
+      val membersRepo  = DoobiePersistentRepository(xa)
       val botAPI       = new Http4SBotAPI(config.token, client, logger)
-      val bot          = new AnonymizerBot(botAPI, logger, membersRepo)
-      bot.launch.compile.drain
+      for {
+        nicknameStore <- Ref
+          .of(Map.empty[ChatId, ChatMember])
+          .map(InMemoryRepositoryInterp[F](_))
+        bot = new AnonymizerBot(botAPI, logger, membersRepo, nicknameStore)
+        _ <- bot.launch.compile.drain
+      } yield ()
     }
 
     for {
       logger <- Slf4jLogger.create[F]
       _      <- logger.info("Reading configuration...")
       config <- readConfiguration
-      _      <- logger.info("Prepare database and http...")
+      _      <- logger.info("Prepare database...")
       _      <- DatabaseConfig.initializeDb(config.db)
-      resources = allocateResources(config)
-      _ <- logger.info("Launching the bot...")
-      _ <- resources.use(launch(logger, config))
+      _      <- logger.info("Launching the bot...")
+      _      <- allocateResources(config).use(launch(logger, config))
     } yield ()
   }
 
