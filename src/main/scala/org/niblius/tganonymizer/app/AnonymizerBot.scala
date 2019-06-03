@@ -8,8 +8,8 @@ import cats.data._
 import cats.effect.{Concurrent, Sync, Timer}
 import cats.implicits._
 import fs2._
-import org.niblius.tganonymizer.api.dto.Chat
-import org.niblius.tganonymizer.api.{ChatId, StreamingBotAPI}
+import org.niblius.tganonymizer.api.dto.{Chat, InputMediaPhoto}
+import org.niblius.tganonymizer.api.{ChatId, FileId, MessageId, StreamingBotAPI}
 import org.niblius.tganonymizer.app.domain.BotCommand._
 import org.niblius.tganonymizer.app.domain._
 import org.niblius.tganonymizer.app.infrastructure.EnglishTemplate
@@ -36,27 +36,50 @@ class AnonymizerBot[F[_]: Timer](
   def launch: Stream[F, Unit] =
     pollCommands.evalMap(handleCommand)
 
+  // TODO: write help
+  // TODO: stickers, gifs, sounds, files
+  // TODO: forward
+  // TODO: pinned
+  // TODO: reply
+  // TODO: editing
   // TODO: logging
 
   private def pollCommands: Stream[F, BotCommand] =
     for {
-      update <- api.pollUpdates(0)
-      chatIdAndMessage <- Stream.emits(
-        update.message.flatMap(a => a.text.map(a.chat.id -> _)).toSeq)
-    } yield BotCommand.fromRawMessage(chatIdAndMessage._1, chatIdAndMessage._2)
+      update  <- api.pollUpdates(0)
+      message <- Stream.emits(update.message.toSeq)
+      cmdOpt = BotCommand.fromRawMessage(message)
+      _ <- cmdOpt
+        .map(cmd => Stream.eval(logger.debug(cmd.toString)))
+        .getOrElse(Stream.eval(logger.info("Received unknown message.")))
+      command <- Stream.emits(cmdOpt.toSeq)
+    } yield command
 
   private def handleCommand(command: BotCommand): F[Unit] = {
     def process: F[Unit] = command match {
       case c: ShowHelp       => handleHelp(c.chatId)
       case c: Join           => handleJoin(c.chatId)
       case c: Leave          => handleLeave(c.chatId)
-      case c: Message        => handleMessage(c.chatId, c.content)
+      case c: PlainMessage   => handleMessage(c.chatId, c.content)
       case c: SetDelay       => handleSetDelay(c.chatId, c.delay)
       case c: ResetDelay     => handleResetDelay(c.chatId)
       case c: ResetNickname  => handleResetNickname(c.chatId)
       case c: UnknownCommand => handleUnknown(c.chatId)
       case c: ShowAll        => handleShowAll(c.chatId)
-      case c: MakeActive     => handleMakeActive(c.chatId, c.target)
+      case c: MakeActive =>
+        handleMakeActive(c.chatId, c.target)
+
+      case c: ForwardMessage => handleForward(c.chatId, c.msgId, c.from)
+      case c: SendMediaGroup => sendMediaGroup(c.chatId, c.fileIds)
+      case c: SendLocation   => sendLocation(c.chatId, c.longitude, c.latitude)
+      case c: SendPhoto      => sendPhoto(c.chatId, c.fileId)
+      case c: SendAudio      => sendAudio(c.chatId, c.fileId)
+      case c: SendDocument   => sendDocument(c.chatId, c.fileId)
+      case c: SendAnimation  => sendAnimation(c.chatId, c.fileId)
+      case c: SendSticker    => sendSticker(c.chatId, c.fileId)
+      case c: SendVideo      => sendVideo(c.chatId, c.fileId)
+      case c: SendVoice      => sendVoice(c.chatId, c.fileId)
+      case c: SendVideoNote  => sendVideoNote(c.chatId, c.fileId)
     }
 
     (command match {
@@ -71,6 +94,34 @@ class AnonymizerBot[F[_]: Timer](
               .getOrElse(api.sendMessage(command.chatId, language.notJoined)))
     }).handleErrorWith(e => logger.error(e.toString))
   }
+
+  def handleForward(chatId: ChatId, msgId: MessageId, from: ChatId): F[Unit] =
+    execForAll(usr => api.forwardMessage(usr.chatId, from.toString, msgId),
+               chatId.some)
+  def sendMediaGroup(chatId: ChatId, fileIds: List[FileId]): F[Unit] =
+    execForAll(usr =>
+                 api.sendMediaGroup(usr.chatId,
+                                    fileIds.map(InputMediaPhoto("photo", _))),
+               chatId.some)
+  def sendLocation(chatId: ChatId, longitude: Float, latitude: Float): F[Unit] =
+    execForAll(usr => api.sendLocation(usr.chatId, latitude, longitude),
+               chatId.some)
+  def sendPhoto(chatId: ChatId, fileId: FileId): F[Unit] =
+    execForAll(usr => api.sendPhoto(usr.chatId, fileId), chatId.some)
+  def sendAudio(chatId: ChatId, fileId: FileId): F[Unit] =
+    execForAll(usr => api.sendAudio(usr.chatId, fileId), chatId.some)
+  def sendDocument(chatId: ChatId, fileId: FileId): F[Unit] =
+    execForAll(usr => api.sendDocument(usr.chatId, fileId), chatId.some)
+  def sendAnimation(chatId: ChatId, fileId: FileId): F[Unit] =
+    execForAll(usr => api.sendAnimation(usr.chatId, fileId), chatId.some)
+  def sendSticker(chatId: ChatId, fileId: FileId): F[Unit] =
+    execForAll(usr => api.sendSticker(usr.chatId, fileId), chatId.some)
+  def sendVideo(chatId: ChatId, fileId: FileId): F[Unit] =
+    execForAll(usr => api.sendVideo(usr.chatId, fileId), chatId.some)
+  def sendVoice(chatId: ChatId, fileId: FileId): F[Unit] =
+    execForAll(usr => api.sendVoice(usr.chatId, fileId), chatId.some)
+  def sendVideoNote(chatId: ChatId, fileId: FileId): F[Unit] =
+    execForAll(usr => api.sendVideoNote(usr.chatId, fileId), chatId.some)
 
   private def handleHelp(chatId: ChatId): F[Unit] =
     api.sendMessage(chatId, language.help)
@@ -149,10 +200,14 @@ class AnonymizerBot[F[_]: Timer](
 
   private def sendEveryone(content: String,
                            but: Option[ChatId] = None): F[Unit] =
+    execForAll(usr => api.sendMessage(usr.chatId, content))
+
+  private def execForAll(action: User => F[Unit],
+                         but: Option[ChatId] = None): F[Unit] =
     for {
       users <- userRepo.getByIsActive(true)
       target = but.map(id => users.filter(_.chatId != id)).getOrElse(users)
-      _ <- target.traverse(usr => api.sendMessage(usr.chatId, content))
+      _ <- target.traverse(action)
     } yield ()
 
   private def handleLeave(chatId: ChatId): F[Unit] =

@@ -2,7 +2,7 @@ package org.niblius.tganonymizer.app.infrastructure
 
 import org.niblius.tganonymizer.api.dto.Chat
 import org.niblius.tganonymizer.app.domain.BotCommand._
-import org.niblius.tganonymizer.app.domain.TemplateAlgebra
+import org.niblius.tganonymizer.app.domain.{BotCommand, TemplateAlgebra}
 
 class EnglishTemplate extends TemplateAlgebra {
   val help: String = List(
@@ -12,7 +12,7 @@ class EnglishTemplate extends TemplateAlgebra {
     s"`$leaveStr` - to stop receiving messages"
   ).mkString("\n")
 
-  val notJoined = "You should join the channel first."
+  val notJoined = s"You should $joinStr the channel first."
 
   def makeActiveFail(name: String, target: String): String =
     s"$name tried to add $target to the channel, but such user wasn't found."
@@ -22,7 +22,7 @@ class EnglishTemplate extends TemplateAlgebra {
 
   def showAll(active: List[Chat], notActive: List[Chat]): String = {
     def getNameAndId(c: Chat): String = {
-      val username = c.first_name
+      val username = c.firstName
         .orElse(c.title)
         .orElse(c.username)
         .getOrElse("unknown")

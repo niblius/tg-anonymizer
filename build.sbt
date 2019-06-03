@@ -7,7 +7,6 @@ val loggerVersion =  "0.3.0"
 val slf4jVersion = "1.7.25"
 val circeConfigVersion = "0.6.1"
 val reactiveMongoVersion = "0.17.0"
-val circleBsonVersion = "0.3.1"
 val flywayVersion = "5.2.4"
 val doobieVersion = "0.7.0"
 
@@ -42,4 +41,4 @@ libraryDependencies ++= Seq(
 )
 
 enablePlugins(ScalafmtPlugin)
-
+addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)

@@ -4,6 +4,10 @@ import cats.effect.Sync
 import cats.implicits._
 import fs2.Stream
 import io.chrisdavenport.log4cats.Logger
+import io.circe.Encoder
+import io.circe.syntax._
+import io.circe.generic.semiauto._
+import org.http4s.circe._
 import org.http4s.client.Client
 import org.http4s._
 import org.niblius.tganonymizer.api.dto._
@@ -67,7 +71,7 @@ class Http4SBotAPI[F[_]](token: String, client: Client[F], logger: Logger[F])(
       response: BotResponse[List[BotUpdate]]): Option[Offset] =
     response.result match {
       case Nil      => None
-      case nonEmpty => Some(nonEmpty.maxBy(_.update_id).update_id)
+      case nonEmpty => Some(nonEmpty.maxBy(_.updateId).updateId)
     }
 
   def getChat(chatId: ChatId): F[Option[Chat]] = {
@@ -84,5 +88,128 @@ class Http4SBotAPI[F[_]](token: String, client: Client[F], logger: Logger[F])(
             .error(ex)("Failed to get chat")
             .as(None)
       }
+  }
+
+  // TODO: doesn't work
+  def forwardMessage(chatId: ChatId,
+                     fromChatId: String,
+                     messageId: MessageId): F[Unit] = {
+    val uri = botApiUri / "forwardMessage" =? Map(
+      "chat_id"      -> List(chatId.toString),
+      "from_chat_id" -> List(fromChatId),
+      "message_id"   -> List(messageId.toString)
+    )
+
+    client.expect[Unit](uri)
+  }
+
+  def sendPhoto(chatId: ChatId, photo: String): F[Unit] = {
+    val uri = botApiUri / "sendPhoto" =? Map(
+      "chat_id" -> List(chatId.toString),
+      "photo"   -> List(photo)
+    )
+
+    client.expect[Unit](uri)
+  }
+
+  def sendAudio(chatId: ChatId, audio: String): F[Unit] = {
+    val uri = botApiUri / "sendAudio" =? Map(
+      "chat_id" -> List(chatId.toString),
+      "audio"   -> List(audio)
+    )
+
+    client.expect[Unit](uri)
+  }
+
+  def sendDocument(chatId: ChatId, document: String): F[Unit] = {
+    val uri = botApiUri / "sendDocument" =? Map(
+      "chat_id"      -> List(chatId.toString),
+      "from_chat_id" -> List(document)
+    )
+
+    client.expect[Unit](uri)
+  }
+
+  def sendVideo(chatId: ChatId, video: String): F[Unit] = {
+    val uri = botApiUri / "sendVideo" =? Map(
+      "chat_id" -> List(chatId.toString),
+      "video"   -> List(video)
+    )
+
+    client.expect[Unit](uri)
+  }
+
+  // TODO: doesn't work
+  def sendAnimation(chatId: ChatId, animation: String): F[Unit] = {
+    val uri = botApiUri / "sendAnimation" =? Map(
+      "chat_id"   -> List(chatId.toString),
+      "animation" -> List(animation)
+    )
+
+    client.expect[Unit](uri)
+  }
+
+  // TODO: doesn't work
+  def sendVoice(chatId: ChatId, voice: String): F[Unit] = {
+    val uri = botApiUri / "sendVoice" =? Map(
+      "chat_id" -> List(chatId.toString),
+      "voice"   -> List(voice)
+    )
+
+    client.expect[Unit](uri)
+  }
+
+  def sendVideoNote(chatId: ChatId, videoNote: String): F[Unit] = {
+    val uri = botApiUri / "sendVideoNote" =? Map(
+      "chat_id"    -> List(chatId.toString),
+      "video_note" -> List(videoNote)
+    )
+
+    client.expect[Unit](uri)
+  }
+
+  def sendSticker(chatId: ChatId, sticker: String): F[Unit] = {
+    val uri = botApiUri / "sendSticker" =? Map(
+      "chat_id" -> List(chatId.toString),
+      "sticker" -> List(sticker)
+    )
+
+    client.expect[Unit](uri)
+  }
+
+  private case class SendMediaGroupReq(chat_id: String,
+                                       media: List[InputMediaPhoto])
+
+  private implicit val sendMediaGroupReqDec: Encoder[SendMediaGroupReq] =
+    deriveEncoder
+
+  def sendMediaGroup(chatId: ChatId, media: List[InputMediaPhoto]): F[Unit] = {
+
+    val uri = botApiUri / "sendMediaGroup"
+    val req = Request[F]()
+      .withMethod(Method.GET)
+      .withUri(uri)
+      .withEntity(SendMediaGroupReq(chatId.toString, media).asJson)
+
+    client.expect[Unit](req)
+  }
+
+  private case class SendLocationReq(chat_id: String,
+                                     longitude: Float,
+                                     latitude: Float)
+  private implicit val sendLocationReqDec: Encoder[SendLocationReq] =
+    deriveEncoder
+
+  def sendLocation(chatId: ChatId,
+                   latitude: Float,
+                   longitude: Float): F[Unit] = {
+    val uri = botApiUri / "sendLocation"
+
+    val req = Request[F]()
+      .withMethod(Method.GET)
+      .withUri(uri)
+      .withEntity(SendLocationReq(chatId.toString, latitude, longitude).asJson)
+
+    client.expect(req)
   }
 }
