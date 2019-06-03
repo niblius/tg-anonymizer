@@ -42,3 +42,4 @@ libraryDependencies ++= Seq(
 )
 
 enablePlugins(ScalafmtPlugin)
+
