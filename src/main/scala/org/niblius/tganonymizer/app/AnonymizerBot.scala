@@ -36,13 +36,10 @@ class AnonymizerBot[F[_]: Timer](
   def launch: Stream[F, Unit] =
     pollCommands.evalMap(handleCommand)
 
-  // TODO: write help
-  // TODO: stickers, gifs, sounds, files
-  // TODO: forward
   // TODO: pinned
   // TODO: reply
   // TODO: editing
-  // TODO: logging
+  // TODO: logging - log description field in the response, log request string in DEBUG mode
 
   private def pollCommands: Stream[F, BotCommand] =
     for {
@@ -60,7 +57,6 @@ class AnonymizerBot[F[_]: Timer](
       case c: ShowHelp       => handleHelp(c.chatId)
       case c: Join           => handleJoin(c.chatId)
       case c: Leave          => handleLeave(c.chatId)
-      case c: PlainMessage   => handleMessage(c.chatId, c.content)
       case c: SetDelay       => handleSetDelay(c.chatId, c.delay)
       case c: ResetDelay     => handleResetDelay(c.chatId)
       case c: ResetNickname  => handleResetNickname(c.chatId)
@@ -68,18 +64,22 @@ class AnonymizerBot[F[_]: Timer](
       case c: ShowAll        => handleShowAll(c.chatId)
       case c: MakeActive =>
         handleMakeActive(c.chatId, c.target)
+      case c: PlainMessage => handleMessage(c.chatId, c.content, c.from)
 
-      case c: ForwardMessage => handleForward(c.chatId, c.msgId, c.from)
-      case c: SendMediaGroup => sendMediaGroup(c.chatId, c.fileIds)
-      case c: SendLocation   => sendLocation(c.chatId, c.longitude, c.latitude)
-      case c: SendPhoto      => sendPhoto(c.chatId, c.fileId)
-      case c: SendAudio      => sendAudio(c.chatId, c.fileId)
-      case c: SendDocument   => sendDocument(c.chatId, c.fileId)
-      case c: SendAnimation  => sendAnimation(c.chatId, c.fileId)
-      case c: SendSticker    => sendSticker(c.chatId, c.fileId)
-      case c: SendVideo      => sendVideo(c.chatId, c.fileId)
-      case c: SendVoice      => sendVoice(c.chatId, c.fileId)
-      case c: SendVideoNote  => sendVideoNote(c.chatId, c.fileId)
+      case c: SendMediaGroup =>
+        trivia(c.chatId, c.from)(handleMediaGroup(c.fileIds))
+      case c: SendLocation =>
+        trivia(c.chatId, c.from)(handleLocation(c.longitude, c.latitude))
+      case c: SendPhoto    => trivia(c.chatId, c.from)(handlePhoto(c.fileId))
+      case c: SendAudio    => trivia(c.chatId, c.from)(handleAudio(c.fileId))
+      case c: SendDocument => trivia(c.chatId, c.from)(handleDocument(c.fileId))
+      case c: SendAnimation =>
+        trivia(c.chatId, c.from)(handleAnimation(c.fileId))
+      case c: SendSticker => trivia(c.chatId, c.from)(handleSticker(c.fileId))
+      case c: SendVideo   => trivia(c.chatId, c.from)(handleVideo(c.fileId))
+      case c: SendVoice   => trivia(c.chatId, c.from)(handleVoice(c.fileId))
+      case c: SendVideoNote =>
+        trivia(c.chatId, c.from)(handleVideoNote(c.fileId))
     }
 
     (command match {
@@ -95,32 +95,51 @@ class AnonymizerBot[F[_]: Timer](
     }).handleErrorWith(e => logger.error(e.toString))
   }
 
-  def handleForward(chatId: ChatId, msgId: MessageId, from: ChatId): F[Unit] =
-    execForAll(usr => api.forwardMessage(usr.chatId, from.toString, msgId),
-               chatId.some)
-  def sendMediaGroup(chatId: ChatId, fileIds: List[FileId]): F[Unit] =
-    execForAll(usr =>
-                 api.sendMediaGroup(usr.chatId,
-                                    fileIds.map(InputMediaPhoto("photo", _))),
-               chatId.some)
-  def sendLocation(chatId: ChatId, longitude: Float, latitude: Float): F[Unit] =
+  /**
+    * Wrapper that performs routine operations:
+    *  - checks if it's a forward
+    *  - updates the nickname timestamp
+    * @param chatId
+    * @param from
+    * @return
+    */
+  def trivia(chatId: ChatId, from: ForwardOpt)(
+      sendItem: ChatId => F[Unit]): F[Unit] = {
+    for {
+      member <- memberRepo.touch(chatId)
+      msg = from
+        .map(forw => language.forward(member.name, forw))
+        .getOrElse(language.sendItem(member.name))
+      _ <- sendEveryone(msg, chatId.some)
+      _ <- sendItem(chatId)
+    } yield ()
+  }
+
+  def handleMediaGroup(fileIds: List[FileId])(chatId: ChatId): F[Unit] = {
+    val media = fileIds.map(id => InputMediaPhoto("photo", id))
+    execForAll(usr => api.sendMediaGroup(usr.chatId, media), chatId.some)
+  }
+
+  def handleLocation(longitude: Float, latitude: Float)(
+      chatId: ChatId): F[Unit] =
     execForAll(usr => api.sendLocation(usr.chatId, latitude, longitude),
                chatId.some)
-  def sendPhoto(chatId: ChatId, fileId: FileId): F[Unit] =
+
+  def handlePhoto(fileId: FileId)(chatId: ChatId): F[Unit] =
     execForAll(usr => api.sendPhoto(usr.chatId, fileId), chatId.some)
-  def sendAudio(chatId: ChatId, fileId: FileId): F[Unit] =
+  def handleAudio(fileId: FileId)(chatId: ChatId): F[Unit] =
     execForAll(usr => api.sendAudio(usr.chatId, fileId), chatId.some)
-  def sendDocument(chatId: ChatId, fileId: FileId): F[Unit] =
+  def handleDocument(fileId: FileId)(chatId: ChatId): F[Unit] =
     execForAll(usr => api.sendDocument(usr.chatId, fileId), chatId.some)
-  def sendAnimation(chatId: ChatId, fileId: FileId): F[Unit] =
+  def handleAnimation(fileId: FileId)(chatId: ChatId): F[Unit] =
     execForAll(usr => api.sendAnimation(usr.chatId, fileId), chatId.some)
-  def sendSticker(chatId: ChatId, fileId: FileId): F[Unit] =
+  def handleSticker(fileId: FileId)(chatId: ChatId): F[Unit] =
     execForAll(usr => api.sendSticker(usr.chatId, fileId), chatId.some)
-  def sendVideo(chatId: ChatId, fileId: FileId): F[Unit] =
+  def handleVideo(fileId: FileId)(chatId: ChatId): F[Unit] =
     execForAll(usr => api.sendVideo(usr.chatId, fileId), chatId.some)
-  def sendVoice(chatId: ChatId, fileId: FileId): F[Unit] =
+  def handleVoice(fileId: FileId)(chatId: ChatId): F[Unit] =
     execForAll(usr => api.sendVoice(usr.chatId, fileId), chatId.some)
-  def sendVideoNote(chatId: ChatId, fileId: FileId): F[Unit] =
+  def handleVideoNote(fileId: FileId)(chatId: ChatId): F[Unit] =
     execForAll(usr => api.sendVideoNote(usr.chatId, fileId), chatId.some)
 
   private def handleHelp(chatId: ChatId): F[Unit] =
@@ -148,7 +167,7 @@ class AnonymizerBot[F[_]: Timer](
         api.getChat(usr.chatId).map(_.map(chat => (chat, usr.isActive))))
 
     for {
-      _                <- handleMessage(chatId, showAllStr)
+      _                <- handleMessage(chatId, showAllStr, None)
       allUsers         <- userRepo.getAll
       chatsAndIsActive <- retrieveTelegramChats(allUsers)
       (active, notActive) = chatsAndIsActive.flatten.partition(_._2)
@@ -200,7 +219,7 @@ class AnonymizerBot[F[_]: Timer](
 
   private def sendEveryone(content: String,
                            but: Option[ChatId] = None): F[Unit] =
-    execForAll(usr => api.sendMessage(usr.chatId, content))
+    execForAll(usr => api.sendMessage(usr.chatId, content), but)
 
   private def execForAll(action: User => F[Unit],
                          but: Option[ChatId] = None): F[Unit] =
@@ -222,10 +241,12 @@ class AnonymizerBot[F[_]: Timer](
       .value
       .void
 
-  private def handleMessage(chatId: ChatId, content: String): F[Unit] =
+  private def handleMessage(chatId: ChatId,
+                            content: String,
+                            from: ForwardOpt): F[Unit] =
     for {
       member <- memberRepo.touch(chatId)
-      template = language.message(member.name, content)
+      template = language.message(member.name, content, from)
       active <- userRepo.getByIsActive(true)
       _ <- active
         .filter(usr => usr.chatId != chatId)

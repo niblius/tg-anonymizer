@@ -1,6 +1,7 @@
 package org.niblius.tganonymizer.app.infrastructure
 
 import org.niblius.tganonymizer.api.dto.Chat
+import org.niblius.tganonymizer.api.dto.{User => apiUser}
 import org.niblius.tganonymizer.app.domain.BotCommand._
 import org.niblius.tganonymizer.app.domain.{BotCommand, TemplateAlgebra}
 
@@ -20,14 +21,25 @@ class EnglishTemplate extends TemplateAlgebra {
   def makeActiveSucc(name: String, target: String): String =
     s"$name added $target to the channel."
 
+  private def getChatName(chat: Chat): String = {
+    val aka = chat.username.map(name => s" aka @$name").getOrElse("")
+    val title = chat.firstName
+      .orElse(chat.title)
+      .getOrElse("unknown")
+
+    s"$title$aka"
+  }
+
+  private def getUserName(user: apiUser): String = {
+    val aka = user.username.map(name => s" aka @$name").getOrElse("")
+    s"${user.firstName}$aka"
+  }
+
   def showAll(active: List[Chat], notActive: List[Chat]): String = {
     def getNameAndId(c: Chat): String = {
-      val username = c.firstName
-        .orElse(c.title)
-        .orElse(c.username)
-        .getOrElse("unknown")
+      val chatName = getChatName(c)
 
-      s"$username : ${c.id}"
+      s"$chatName : ${c.id}"
     }
 
     val inChatListStr =
@@ -68,6 +80,17 @@ class EnglishTemplate extends TemplateAlgebra {
   def leave(name: String): String =
     s"User $name left the channel."
 
-  def message(name: String, content: String): String =
-    s"$name says:\n$content"
+  private def fwdToName(fwd: Forward): String =
+    fwd.fold(getUserName, getChatName)
+
+  def message(name: String, content: String, from: ForwardOpt): String =
+    from
+      .map(fwd => s"${forward(name, fwd)}\n$content")
+      .getOrElse(s"$name says:\n$content")
+
+  def forward(name: String, from: Forward): String =
+    s"$name forwards from ${fwdToName(from)}"
+
+  def sendItem(name: String): String =
+    s"$name sends:"
 }

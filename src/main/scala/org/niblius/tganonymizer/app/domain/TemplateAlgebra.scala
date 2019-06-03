@@ -1,6 +1,7 @@
 package org.niblius.tganonymizer.app.domain
 
 import org.niblius.tganonymizer.api.dto.Chat
+import org.niblius.tganonymizer.app.domain.BotCommand.{Forward, ForwardOpt}
 
 trait TemplateAlgebra {
   def help: String
@@ -14,5 +15,7 @@ trait TemplateAlgebra {
   def resetDelay: String
   def join(name: String): String
   def leave(name: String): String
-  def message(name: String, content: String): String
+  def message(name: String, content: String, from: ForwardOpt): String
+  def forward(name: String, from: Forward): String
+  def sendItem(name: String): String
 }

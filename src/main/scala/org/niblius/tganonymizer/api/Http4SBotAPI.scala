@@ -90,7 +90,6 @@ class Http4SBotAPI[F[_]](token: String, client: Client[F], logger: Logger[F])(
       }
   }
 
-  // TODO: doesn't work
   def forwardMessage(chatId: ChatId,
                      fromChatId: String,
                      messageId: MessageId): F[Unit] = {
@@ -99,6 +98,8 @@ class Http4SBotAPI[F[_]](token: String, client: Client[F], logger: Logger[F])(
       "from_chat_id" -> List(fromChatId),
       "message_id"   -> List(messageId.toString)
     )
+
+    println(uri.toString())
 
     client.expect[Unit](uri)
   }
@@ -123,8 +124,8 @@ class Http4SBotAPI[F[_]](token: String, client: Client[F], logger: Logger[F])(
 
   def sendDocument(chatId: ChatId, document: String): F[Unit] = {
     val uri = botApiUri / "sendDocument" =? Map(
-      "chat_id"      -> List(chatId.toString),
-      "from_chat_id" -> List(document)
+      "chat_id"  -> List(chatId.toString),
+      "document" -> List(document)
     )
 
     client.expect[Unit](uri)
@@ -139,7 +140,6 @@ class Http4SBotAPI[F[_]](token: String, client: Client[F], logger: Logger[F])(
     client.expect[Unit](uri)
   }
 
-  // TODO: doesn't work
   def sendAnimation(chatId: ChatId, animation: String): F[Unit] = {
     val uri = botApiUri / "sendAnimation" =? Map(
       "chat_id"   -> List(chatId.toString),
@@ -149,7 +149,6 @@ class Http4SBotAPI[F[_]](token: String, client: Client[F], logger: Logger[F])(
     client.expect[Unit](uri)
   }
 
-  // TODO: doesn't work
   def sendVoice(chatId: ChatId, voice: String): F[Unit] = {
     val uri = botApiUri / "sendVoice" =? Map(
       "chat_id" -> List(chatId.toString),
