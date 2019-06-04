@@ -10,7 +10,13 @@ class EnglishTemplate extends TemplateAlgebra {
     s"This bot enables anonymous communication in Telegram. Just type `$joinStr` to enter the chat.",
     s"Other commands:",
     s"`$helpStr` - to show this help message",
-    s"`$leaveStr` - to stop receiving messages"
+    s"`$leaveStr` - to stop receiving messages",
+    s" $joinStr` - to enter the channel",
+    s"`$setDelayStr NUMBER` - to set delay (in seconds) for your messages",
+    s"`$resetNicknameStr` - to reset your current nickname (nicknames are valid for 1 one hour)",
+    s"`$resetDelayStr` - equivalent to $setDelayStr 0",
+    s"`$showAllStr` - to print a list of every member that ever joined the channel`",
+    s"`$makeActiveStr MEMBER_ID` - to print a list of every member that ever joined the channel`",
   ).mkString("\n")
 
   val notJoined = s"You should $joinStr the channel first."

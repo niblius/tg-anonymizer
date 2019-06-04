@@ -27,14 +27,24 @@ class Http4SBotAPI[F[_]](token: String, client: Client[F], logger: Logger[F])(
   private val botApiUri: Uri  = uri"https://api.telegram.org" / s"bot$token"
   private val timeout: String = "0.5" // timeout to throttle the polling
 
-  def sendMessage(chatId: ChatId, message: String): F[Unit] = {
-    val uri = botApiUri / "sendMessage" =? Map(
-      "chat_id"    -> List(chatId.toString),
-      "parse_mode" -> List("Markdown"),
-      "text"       -> List(message)
-    )
+  private case class SendMessageReq(chat_id: String,
+                                    parse_more: String,
+                                    text: String)
 
-    client.expect[Unit](uri)
+  private implicit val sendMessageReqDec: Encoder[SendMessageReq] =
+    deriveEncoder
+
+  def sendMessage(chatId: ChatId, message: String): F[Unit] = {
+    val uri = botApiUri / "sendMessage"
+
+    val data = SendMessageReq(chatId.toString, "Markdown", message)
+
+    val req = Request[F]()
+      .withMethod(Method.POST)
+      .withUri(uri)
+      .withEntity(data.asJson)
+
+    client.expect[Unit](req)
   }
 
   def pollUpdates(fromOffset: Offset): Stream[F, BotUpdate] = {

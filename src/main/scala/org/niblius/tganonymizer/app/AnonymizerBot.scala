@@ -143,7 +143,10 @@ class AnonymizerBot[F[_]: Timer](
     execForAll(usr => api.sendVideoNote(usr.chatId, fileId), chatId.some)
 
   private def handleHelp(chatId: ChatId): F[Unit] =
-    api.sendMessage(chatId, language.help)
+    for {
+      _ <- handleMessage(chatId, helpStr, None)
+      _ <- sendEveryone(language.help)
+    } yield ()
 
   private def handleMakeActive(chatId: ChatId, targetIdStr: String): F[Unit] =
     for {
