@@ -16,10 +16,6 @@ jobs:
 
     working_directory: ~/repo
 
-    environment:
-      # Customize the JVM maximum heap limit
-      BOT_ENVIRONMENT: PRODUCTION
-
     steps:
       - checkout
 
@@ -30,12 +26,33 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: cat /dev/null | sbt compile
+      - run: cat /dev/null | sbt test:compile
 
       - save_cache:
           paths:
             - ~/.m2
           key: v1-dependencies--{{ checksum "build.sbt" }}
 
-      # start the bot
-      - run: cat /dev/null | sbt run
+      # run tests
+      - run: cat /dev/null | sbt test:test
+
+  deploy:
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "cb:8a:e4:29:10:37:cf:0e:06:3e:e2:d3:ce:52:7b:24"
+      - run:
+          name: "Deploy to digitalocean"
+          command: ssh -v $DROPLET_USER@$DROPLET_IP "cd ~/tg-anonymizer; export ANONYMIZER_BOT_TOKEN=$TOKEN; git pull; ./deploy.sh"
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
