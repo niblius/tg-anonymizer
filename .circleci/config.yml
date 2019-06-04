@@ -37,6 +37,8 @@ jobs:
       - run: cat /dev/null | sbt test:test
 
   deploy:
+    machine:
+      enabled: true
     steps:
       - add_ssh_keys:
           fingerprints:
