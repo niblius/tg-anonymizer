@@ -16,6 +16,9 @@ jobs:
 
     working_directory: ~/repo
 
+    environment:
+      BOT_ENVIRONMENT: "TEST"
+
     steps:
       - checkout
 
@@ -37,15 +40,21 @@ jobs:
       - run: cat /dev/null | sbt test:test
 
   deploy:
+
     machine:
       enabled: true
+
+    environment:
+      INSTANCE: "inst1"
+
     steps:
       - add_ssh_keys:
           fingerprints:
             - "cb:8a:e4:29:10:37:cf:0e:06:3e:e2:d3:ce:52:7b:24"
+
       - run:
           name: "Deploy to digitalocean"
-          command: ssh -v $DROPLET_USER@$DROPLET_IP "cd ~/tg-anonymizer; export ANONYMIZER_BOT_TOKEN=$TOKEN; git pull; ./deploy.sh"
+          command: ssh -v $DROPLET_USER@$DROPLET_IP "cd ~/tg-anonymizer; export ANONYMIZER_BOT_TOKEN=$TOKEN; export INSTANCE=$INSTANCE; git pull; ./deploy.sh"
 
 workflows:
   version: 2

@@ -1,1 +1,0 @@
-echo "$ANONYMIZER_BOT_TOKEN" > "testfile.txt"
