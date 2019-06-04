@@ -32,16 +32,19 @@ object Server extends IOApp {
     def readToken: F[String] =
       Sync[F].delay(System.getenv("ANONYMIZER_BOT_TOKEN"))
 
+    def readEnv: F[String] =
+      Sync[F].delay(System.getenv("BOT_ENVIRONMENT"))
+
     // TODO: use separate execution contexts
 
     def allocateResources(
-        config: BotConfig): Resource[F, (Client[F], HikariTransactor[F])] =
+        config: DatabaseConfig): Resource[F, (Client[F], HikariTransactor[F])] =
       for {
         client <- BlazeClientBuilder[F](global).resource
-        xa     <- DatabaseConfig.dbTransactor(config.db, global, global)
+        xa     <- DatabaseConfig.dbTransactor(config, global, global)
       } yield (client, xa)
 
-    def launch(logger: Logger[F], config: BotConfig, token: String)(
+    def launch(logger: Logger[F], token: String)(
         resources: (Client[F], HikariTransactor[F])): F[Unit] = {
       val (client, xa) = resources
       val usersRepo    = DoobieUserRepository(xa)
@@ -60,12 +63,18 @@ object Server extends IOApp {
       _      <- logger.info("Reading configuration...")
       config <- readConfiguration
       token  <- readToken
-      _      <- logger.info("Prepare database...")
-      _      <- DatabaseConfig.initializeDb(config.db)
-      _      <- logger.info("Launching the bot...")
-      _      <- allocateResources(config).use(launch(logger, config, token))
+      env    <- readEnv
+      dbConf = if (env == "PRODUCTION")
+        config.production
+      else config.development
+      _ <- logger.info("Prepare database...")
+      _ <- DatabaseConfig.initializeDb(dbConf)
+      _ <- logger.info("Launching the bot...")
+      _ <- allocateResources(dbConf).use(launch(logger, token))
     } yield ()
   }
+
+  // TODO: graceful stop
 
   def run(args: List[String]): IO[ExitCode] =
     createServer[IO].as(ExitCode.Success)

@@ -36,6 +36,7 @@ libraryDependencies ++= Seq(
   "org.flywaydb" % "flyway-core" % flywayVersion,
   "org.tpolecat" %% "doobie-core" % doobieVersion,
   "org.tpolecat" %% "doobie-h2" % doobieVersion,
+  "org.tpolecat" %% "doobie-postgres" % doobieVersion,
   "org.tpolecat" %% "doobie-scalatest" % doobieVersion,
   "org.tpolecat" %% "doobie-hikari" % doobieVersion,
 )
