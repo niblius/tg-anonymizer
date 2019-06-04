@@ -4,5 +4,4 @@
 target
 project/target
 *.db
-Dockerfile
 
