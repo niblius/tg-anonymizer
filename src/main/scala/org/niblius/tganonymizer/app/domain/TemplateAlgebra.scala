@@ -18,4 +18,6 @@ trait TemplateAlgebra {
   def message(name: String, content: String, from: ForwardOpt): String
   def forward(name: String, from: Forward): String
   def sendItem(name: String): String
+  def rejoin(name: String): String
+  def alreadyInChannel(name: String): String
 }

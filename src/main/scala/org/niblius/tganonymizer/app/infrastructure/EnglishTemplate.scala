@@ -12,11 +12,11 @@ class EnglishTemplate extends TemplateAlgebra {
     s"`$helpStr` - to show this help message",
     s"`$leaveStr` - to stop receiving messages",
     s" $joinStr` - to enter the channel",
-    s"`$setDelayStr NUMBER` - to set delay (in seconds) for your messages",
+    s"`$setDelayStr` - to set delay (in seconds) for your messages",
     s"`$resetNicknameStr` - to reset your current nickname (nicknames are valid for 1 one hour)",
     s"`$resetDelayStr` - equivalent to $setDelayStr 0",
     s"`$showAllStr` - to print a list of every member that ever joined the channel`",
-    s"`$makeActiveStr MEMBER_ID` - to print a list of every member that ever joined the channel`",
+    s"`$makeActiveStr` - to print a list of every member that ever joined the channel`",
   ).mkString("\n")
 
   val notJoined = s"You should $joinStr the channel first."
@@ -99,4 +99,10 @@ class EnglishTemplate extends TemplateAlgebra {
 
   def sendItem(name: String): String =
     s"$name sends:"
+
+  def rejoin(name: String): String =
+    s"$name have just rejoined - yay! Welcome back!"
+
+  def alreadyInChannel(name: String): String =
+    s"$name tried to join the channel, but failed due to the Pigeonhole principle."
 }
