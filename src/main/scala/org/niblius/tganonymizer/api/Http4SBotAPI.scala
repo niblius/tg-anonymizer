@@ -3,6 +3,8 @@ package org.niblius.tganonymizer.api
 import java.io.IOError
 
 import cats.effect.Sync
+import cats._
+import cats.data._
 import cats.implicits._
 import fs2.Stream
 import org.http4s.circe._
@@ -47,7 +49,22 @@ class Http4SBotAPI[F[_]](token: String, client: Client[F], logger: Logger[F])(
     : EntityDecoder[F, BotResponse[Message]] =
     jsonOf
 
-  def sendMessage(chatId: ChatId, message: String): F[Message] = {
+  private def makeRequest[A](req: Request[F])(errorMsg: String)(
+      implicit dec: EntityDecoder[F, BotResponse[A]]): F[Either[ApiError, A]] =
+    client
+      .expectOr[BotResponse[A]](req)(logApiError(errorMsg))
+      .map(_.result.asRight[ApiError])
+      .recover { case error: ApiError => error.asLeft[A] }
+
+  private def makeRequest[A](uri: Uri)(errorMsg: String)(
+      implicit dec: EntityDecoder[F, BotResponse[A]])
+    : F[Either[ApiError, A]] = {
+    val req = Request[F]().withMethod(Method.GET).withUri(uri)
+    makeRequest[A](req)(errorMsg)
+  }
+
+  def sendMessage(chatId: ChatId,
+                  message: String): F[Either[ApiError, Message]] = {
     val uri = botApiUri / "sendMessage"
 
     val data = SendMessageReq(chatId.toString, "Markdown", message)
@@ -57,10 +74,7 @@ class Http4SBotAPI[F[_]](token: String, client: Client[F], logger: Logger[F])(
       .withUri(uri)
       .withEntity(data.asJson)
 
-    client
-      .expectOr[BotResponse[Message]](req)(
-        logApiError("Failed to send message"))
-      .map(_.result)
+    makeRequest(req)("Failed to send message")
   }
 
   def pollUpdates(fromOffset: Offset): Stream[F, BotUpdate] = {
@@ -101,133 +115,108 @@ class Http4SBotAPI[F[_]](token: String, client: Client[F], logger: Logger[F])(
       case nonEmpty => Some(nonEmpty.maxBy(_.updateId).updateId)
     }
 
-  def getChat(chatId: ChatId): F[Option[Chat]] = {
+  def getChat(chatId: ChatId): F[Either[ApiError, Chat]] = {
     val uri = botApiUri / "getChat" =? Map(
       "chat_id" -> List(chatId)
     )
 
-    client
-      .expectOr[BotResponse[Chat]](uri)(error =>
-        error.as[ApiError].map(throw _))
-      .map(resp => resp.result.some)
-      .recover {
-        case ApiError(_, 404, _) => None: Option[Chat]
-      }
-      .onError { case ex => logger.error(ex)("Failed to get chat") }
+    makeRequest(uri)(s"Failed to get chat with id $chatId")
   }
 
   def forwardMessage(chatId: ChatId,
                      fromChatId: String,
-                     messageId: MessageId): F[Message] = {
+                     messageId: MessageId): F[Either[ApiError, Message]] = {
     val uri = botApiUri / "forwardMessage" =? Map(
       "chat_id"      -> List(chatId.toString),
       "from_chat_id" -> List(fromChatId),
       "message_id"   -> List(messageId.toString)
     )
 
-    client
-      .expectOr[BotResponse[Message]](uri)(
-        logApiError("Failed to forward message"))
-      .map(_.result)
+    makeRequest(uri)("Failed to forward message")
   }
 
-  def sendPhoto(chatId: ChatId, photo: String): F[Message] = {
+  def sendPhoto(chatId: ChatId, photo: String): F[Either[ApiError, Message]] = {
     val uri = botApiUri / "sendPhoto" =? Map(
       "chat_id" -> List(chatId.toString),
       "photo"   -> List(photo)
     )
 
-    client
-      .expectOr[BotResponse[Message]](uri)(logApiError("Failed to send photo"))
-      .map(_.result)
+    makeRequest(uri)("Failed to send photo")
   }
 
-  def sendAudio(chatId: ChatId, audio: String): F[Message] = {
+  def sendAudio(chatId: ChatId, audio: String): F[Either[ApiError, Message]] = {
     val uri = botApiUri / "sendAudio" =? Map(
       "chat_id" -> List(chatId.toString),
       "audio"   -> List(audio)
     )
 
-    client
-      .expectOr[BotResponse[Message]](uri)(logApiError("Failed to send audio"))
-      .map(_.result)
+    makeRequest(uri)("Failed to send audio")
   }
 
-  def sendDocument(chatId: ChatId, document: String): F[Message] = {
+  def sendDocument(chatId: ChatId,
+                   document: String): F[Either[ApiError, Message]] = {
     val uri = botApiUri / "sendDocument" =? Map(
       "chat_id"  -> List(chatId.toString),
       "document" -> List(document)
     )
 
-    client
-      .expectOr[BotResponse[Message]](uri)(
-        logApiError("Failed to send document"))
-      .map(_.result)
+    makeRequest(uri)("Failed to send document")
   }
 
-  def sendVideo(chatId: ChatId, video: String): F[Message] = {
+  def sendVideo(chatId: ChatId, video: String): F[Either[ApiError, Message]] = {
     val uri = botApiUri / "sendVideo" =? Map(
       "chat_id" -> List(chatId.toString),
       "video"   -> List(video)
     )
 
-    client
-      .expectOr[BotResponse[Message]](uri)(logApiError("Failed to end video"))
-      .map(_.result)
+    makeRequest(uri)("Failed to send video")
   }
 
-  def sendAnimation(chatId: ChatId, animation: String): F[Message] = {
+  def sendAnimation(chatId: ChatId,
+                    animation: String): F[Either[ApiError, Message]] = {
     val uri = botApiUri / "sendAnimation" =? Map(
       "chat_id"   -> List(chatId.toString),
       "animation" -> List(animation)
     )
 
-    client
-      .expectOr[BotResponse[Message]](uri)(
-        logApiError("Failed to send animaiton"))
-      .map(_.result)
+    makeRequest(uri)("Failed to send animation")
   }
 
-  def sendVoice(chatId: ChatId, voice: String): F[Message] = {
+  def sendVoice(chatId: ChatId, voice: String): F[Either[ApiError, Message]] = {
     val uri = botApiUri / "sendVoice" =? Map(
       "chat_id" -> List(chatId.toString),
       "voice"   -> List(voice)
     )
 
-    client
-      .expectOr[BotResponse[Message]](uri)(logApiError("Failed to send voice"))
-      .map(_.result)
+    makeRequest(uri)("Failed to send voice")
   }
 
-  def sendVideoNote(chatId: ChatId, videoNote: String): F[Message] = {
+  def sendVideoNote(chatId: ChatId,
+                    videoNote: String): F[Either[ApiError, Message]] = {
     val uri = botApiUri / "sendVideoNote" =? Map(
       "chat_id"    -> List(chatId.toString),
       "video_note" -> List(videoNote)
     )
 
-    client
-      .expectOr[BotResponse[Message]](uri)(
-        logApiError("Failed to send video note"))
-      .map(_.result)
+    makeRequest(uri)("Failed to send video note")
   }
 
-  def sendSticker(chatId: ChatId, sticker: String): F[Message] = {
+  def sendSticker(chatId: ChatId,
+                  sticker: String): F[Either[ApiError, Message]] = {
     val uri = botApiUri / "sendSticker" =? Map(
       "chat_id" -> List(chatId.toString),
       "sticker" -> List(sticker)
     )
 
-    client
-      .expectOr[BotResponse[Message]](uri)(
-        logApiError("Failed to send sticker"))
-      .map(_.result)
+    makeRequest(uri)("Failed to send sticker")
   }
 
   private case class SendMediaGroupReq(chat_id: String,
                                        media: List[InputMediaPhoto])
 
-  def sendMediaGroup(chatId: ChatId,
-                     media: List[InputMediaPhoto]): F[Message] = {
+  def sendMediaGroup(
+      chatId: ChatId,
+      media: List[InputMediaPhoto]): F[Either[ApiError, Message]] = {
 
     val uri = botApiUri / "sendMediaGroup"
     val req = Request[F]()
@@ -235,10 +224,7 @@ class Http4SBotAPI[F[_]](token: String, client: Client[F], logger: Logger[F])(
       .withUri(uri)
       .withEntity(SendMediaGroupReq(chatId.toString, media).asJson)
 
-    client
-      .expectOr[BotResponse[Message]](req)(
-        logApiError("Failed to send media group"))
-      .map(_.result)
+    makeRequest(req)("Failed to send media group")
   }
 
   private case class SendLocationReq(chat_id: String,
@@ -247,7 +233,7 @@ class Http4SBotAPI[F[_]](token: String, client: Client[F], logger: Logger[F])(
 
   def sendLocation(chatId: ChatId,
                    latitude: Float,
-                   longitude: Float): F[Message] = {
+                   longitude: Float): F[Either[ApiError, Message]] = {
     val uri = botApiUri / "sendLocation"
 
     val req = Request[F]()
@@ -255,9 +241,6 @@ class Http4SBotAPI[F[_]](token: String, client: Client[F], logger: Logger[F])(
       .withUri(uri)
       .withEntity(SendLocationReq(chatId.toString, latitude, longitude).asJson)
 
-    client
-      .expectOr[BotResponse[Message]](req)(
-        logApiError("Failed to send location"))
-      .map(_.result)
+    makeRequest(req)("Failed to send location")
   }
 }

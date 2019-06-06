@@ -219,8 +219,11 @@ class AnonymizerBot[F[_]: Timer](
   private def handleShowAll(chatId: ChatId): F[Unit] = {
     def retrieveTelegramChats(
         users: List[User]): F[List[Option[(Chat, Boolean)]]] =
-      users.traverse(usr =>
-        api.getChat(usr.chatId).map(_.map(chat => (chat, usr.isActive))))
+      users.traverse(
+        usr =>
+          api
+            .getChat(usr.chatId)
+            .map(either => either.map(chat => (chat, usr.isActive)).toOption))
 
     for {
       _                <- logger.info(s"User $chatId requests show all ($showAllStr)")
