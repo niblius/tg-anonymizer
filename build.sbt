@@ -1,6 +1,6 @@
 val http4sVersion = "0.20.1"
 val kindProjectorVersion = "0.10.1"
-val circeVersion = "0.11.1"
+val circeVersion = "0.12.0-M2"
 val catsVersion = "2.0.0-M1"
 val fs2Version = "1.0.4"
 val loggerVersion =  "0.3.0"
@@ -18,10 +18,9 @@ scalacOptions += "-Ypartial-unification"
 libraryDependencies ++= Seq(
   compilerPlugin("org.typelevel" %% "kind-projector" % kindProjectorVersion),
   "io.circe" %% "circe-generic" % circeVersion,
-  "io.circe" %% "circe-literal" % circeVersion,
   "io.circe" %% "circe-generic-extras" % circeVersion,
   "io.circe" %% "circe-parser" % circeVersion,
-  "io.circe" %% "circe-java8" % circeVersion,
+  "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-config" % circeConfigVersion,
   "org.typelevel" %% "cats-core" % catsVersion,
   "org.typelevel" %% "cats-effect" % catsVersion,
@@ -38,8 +37,10 @@ libraryDependencies ++= Seq(
   "org.tpolecat" %% "doobie-h2" % doobieVersion,
   "org.tpolecat" %% "doobie-postgres" % doobieVersion,
   "org.tpolecat" %% "doobie-scalatest" % doobieVersion,
-  "org.tpolecat" %% "doobie-hikari" % doobieVersion,
+  "org.tpolecat" %% "doobie-hikari" % doobieVersion
 )
 
 enablePlugins(ScalafmtPlugin)
-addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
+addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full)
+
+javaOptions += "-Dorg.slf4j.simpleLogger.defaultLogLevel=debug"

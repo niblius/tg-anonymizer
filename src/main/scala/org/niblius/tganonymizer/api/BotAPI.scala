@@ -23,7 +23,10 @@ trait BotAPI[F[_], S[_]] {
   /**
     * Send a message to specified chat
     */
-  def sendMessage(chatId: ChatId, message: String): F[Either[ApiError, Message]]
+  def sendMessage(
+      chatId: ChatId,
+      message: String,
+      replyId: Option[MessageId] = None): F[Either[ApiError, Message]]
 
   /**
     * Stream all updated for this bot using long polling. `S[_]` is the streaming effect.

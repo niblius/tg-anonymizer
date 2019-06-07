@@ -46,7 +46,7 @@ case class ChatMemberServiceInterp[F[_]: Sync: Timer](
       activeCount <- userRepo.getByIsActive(true).map(_.size)
       seed        <- Sync[F].delay(rand.nextLong())
       members     <- store.get.map(_.values)
-      length   = Math.ceil(Math.log10(activeCount) + 1d).toInt
+      length   = Math.ceil(Math.log10(activeCount + 1) + 1d).toInt
       name     = generate(seed, length)
       isUnique = !members.exists(_.name == name)
     } yield (name, isUnique, rand)

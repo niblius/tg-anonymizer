@@ -5,10 +5,15 @@ import java.util.concurrent.TimeUnit
 import _root_.io.chrisdavenport.log4cats._
 import cats._
 import cats.data._
-import cats.effect.{Concurrent, Sync, Timer}
+import cats.effect.{Concurrent, Fiber, Sync, Timer}
 import cats.implicits._
 import fs2._
-import org.niblius.tganonymizer.api.dto.{Chat, InputMediaPhoto}
+import org.niblius.tganonymizer.api.dto.{
+  ApiError,
+  Chat,
+  InputMediaPhoto,
+  Message => ApiMessage
+}
 import org.niblius.tganonymizer.api.{ChatId, FileId, MessageId, StreamingBotAPI}
 import org.niblius.tganonymizer.app.domain.BotCommand._
 import org.niblius.tganonymizer.app.domain._
@@ -26,7 +31,8 @@ class AnonymizerBot[F[_]: Timer](
     api: StreamingBotAPI[F],
     logger: Logger[F],
     userRepo: UserRepositoryAlgebra[F],
-    memberRepo: ChatMemberServiceAlgebra[F])(implicit F: Concurrent[F]) {
+    memberRepo: ChatMemberServiceAlgebra[F],
+    messageRepo: MessageRepositoryAlgebra[F])(implicit F: Concurrent[F]) {
 
   private val language = new EnglishTemplate
 
@@ -36,11 +42,12 @@ class AnonymizerBot[F[_]: Timer](
   def launch: Stream[F, Unit] =
     pollCommands.evalMap(handleCommand)
 
-  // TODO: pinned
+  // TODO: pinned - how?
   // TODO: reply
   // TODO: editing
-  // TODO: logging - log description field in the response, log request string in DEBUG mode
-  // TODO: delay because of the limit of messages per user, can be implemented in API
+  // TODO: deleting - reply to message with /delete
+  // TODO: periodically run clean up process to remove non-existing chats and those that banned bot
+  // TODO: delay for all messages, not only plain
 
   private def pollCommands: Stream[F, BotCommand] =
     for {
@@ -55,47 +62,59 @@ class AnonymizerBot[F[_]: Timer](
     } yield command
 
   private def handleCommand(command: BotCommand): F[Unit] = {
-    def process: F[Unit] = command match {
-      case c: ShowHelp       => handleHelp(c.chatId)
+    val process: F[Unit] = command match {
+      case c: ShowHelp       => handleHelp(c.chatId, c.messageId)
       case c: Join           => handleJoin(c.chatId)
       case c: Leave          => handleLeave(c.chatId)
       case c: SetDelay       => handleSetDelay(c.chatId, c.delay)
       case c: ResetDelay     => handleResetDelay(c.chatId)
       case c: ResetNickname  => handleResetNickname(c.chatId)
       case c: UnknownCommand => handleUnknown(c.chatId)
-      case c: ShowAll        => handleShowAll(c.chatId)
+      case c: ShowAll        => handleShowAll(c.chatId, c.messageId)
       case c: MakeActive =>
         handleMakeActive(c.chatId, c.target)
-      case c: PlainMessage => handleMessage(c.chatId, c.content, c.from)
+      case c: PlainMessage =>
+        handleMessage(c.chatId, c.messageId, c.content, c.replyId, c.from)
 
       case c: SendMediaGroup =>
-        trivia(c.chatId, c.from)(handleMediaGroup(c.fileIds))
+        trivia(c.chatId, c.messageId, c.from)(handleMediaGroup(c.fileIds))
       case c: SendLocation =>
-        trivia(c.chatId, c.from)(handleLocation(c.longitude, c.latitude))
-      case c: SendPhoto    => trivia(c.chatId, c.from)(handlePhoto(c.fileId))
-      case c: SendAudio    => trivia(c.chatId, c.from)(handleAudio(c.fileId))
-      case c: SendDocument => trivia(c.chatId, c.from)(handleDocument(c.fileId))
+        trivia(c.chatId, c.messageId, c.from)(
+          handleLocation(c.longitude, c.latitude))
+      case c: SendPhoto =>
+        trivia(c.chatId, c.messageId, c.from)(handlePhoto(c.fileId))
+      case c: SendAudio =>
+        trivia(c.chatId, c.messageId, c.from)(handleAudio(c.fileId))
+      case c: SendDocument =>
+        trivia(c.chatId, c.messageId, c.from)(handleDocument(c.fileId))
       case c: SendAnimation =>
-        trivia(c.chatId, c.from)(handleAnimation(c.fileId))
-      case c: SendSticker => trivia(c.chatId, c.from)(handleSticker(c.fileId))
-      case c: SendVideo   => trivia(c.chatId, c.from)(handleVideo(c.fileId))
-      case c: SendVoice   => trivia(c.chatId, c.from)(handleVoice(c.fileId))
+        trivia(c.chatId, c.messageId, c.from)(handleAnimation(c.fileId))
+      case c: SendSticker =>
+        trivia(c.chatId, c.messageId, c.from)(handleSticker(c.fileId))
+      case c: SendVideo =>
+        trivia(c.chatId, c.messageId, c.from)(handleVideo(c.fileId))
+      case c: SendVoice =>
+        trivia(c.chatId, c.messageId, c.from)(handleVoice(c.fileId))
       case c: SendVideoNote =>
-        trivia(c.chatId, c.from)(handleVideoNote(c.fileId))
+        trivia(c.chatId, c.messageId, c.from)(handleVideoNote(c.fileId))
     }
 
     (command match {
       case Join(_) =>
         process
       case _ =>
-        userRepo
-          .getByIsActive(true)
-          .flatMap(
-            _.find(m => m.chatId == command.chatId)
-              .map(_ => process)
-              .getOrElse(
-                api.sendMessage(command.chatId, language.notJoined).void))
-    }).handleErrorWith(e => logger.error(e.toString))
+        userRepo.get(command.chatId).flatMap {
+          case Some(user) if user.isActive => process
+          case _ =>
+            val askToJoin =
+              api.sendMessage(command.chatId, language.notJoined).void
+            for {
+              apiUser <- api.getChat(command.chatId)
+              privateApiUser = apiUser.toOption.filter(_.`type` == "private")
+              _ <- privateApiUser.map(_ => askToJoin).getOrElse(F.pure(()))
+            } yield ()
+        }
+    }).handleErrorWith(e => logger.error(e)("Error during command processing"))
   }
 
   /**
@@ -106,98 +125,125 @@ class AnonymizerBot[F[_]: Timer](
     * @param from
     * @return
     */
-  def trivia(chatId: ChatId, from: ForwardOpt)(
-      sendItem: ChatId => F[Unit]): F[Unit] = {
+  def trivia(chatId: ChatId, messageId: MessageId, from: ForwardOpt)(
+      sendItem: (ChatId, MessageId) => F[Unit]): F[Unit] = {
     for {
       member <- memberRepo.touch(chatId)
-      msg = from
+      content = from
         .map(forw => language.forward(member.name, forw))
         .getOrElse(language.sendItem(member.name))
-      _ <- sendEveryone(msg, chatId.some)
-      _ <- sendItem(chatId)
+      _ <- sendEveryone(content, None, chatId.some) // TODO: can't reply to the title
+      _ <- sendItem(chatId, messageId)
     } yield ()
   }
 
-  def handleMediaGroup(fileIds: List[FileId])(chatId: ChatId): F[Unit] = {
+  private def makeSelfSource(chatId: ChatId, messageId: MessageId): Message = {
+    val _msg = Message(chatId, messageId)
+    _msg.copy(source = _msg.some)
+  }
+
+  private def sendEveryoneButSelfAndRecord(
+      chatId: ChatId,
+      messageId: MessageId,
+      sendItem: User => F[Either[ApiError, ApiMessage]]): F[Unit] = {
+    val source = makeSelfSource(chatId, messageId)
+    for {
+      _ <- messageRepo.create(source)
+      _ <- execForAll(u => recordMessage(sendItem(u), source.some).void,
+                      chatId.some)
+    } yield ()
+  }
+
+  def handleMediaGroup(fileIds: List[FileId])(chatId: ChatId,
+                                              messageId: MessageId): F[Unit] = {
     val media = fileIds.map(id => InputMediaPhoto("photo", id))
     for {
       _ <- logger.info(
         s"User $chatId sends a media group of ${fileIds.size} items")
-      _ <- execForAll(usr => api.sendMediaGroup(usr.chatId, media).void,
-                      chatId.some)
+      sendItem = (usr: User) => api.sendMediaGroup(usr.chatId, media)
+      _ <- sendEveryoneButSelfAndRecord(chatId, messageId, sendItem)
     } yield ()
   }
 
   def handleLocation(longitude: Float, latitude: Float)(
-      chatId: ChatId): F[Unit] =
+      chatId: ChatId,
+      messageId: MessageId): F[Unit] =
     for {
       _ <- logger.info(s"User $chatId sends a location")
-      _ <- execForAll(
-        usr => api.sendLocation(usr.chatId, latitude, longitude).void,
-        chatId.some)
+      sendItem = (usr: User) =>
+        api.sendLocation(usr.chatId, latitude, longitude)
+      _ <- sendEveryoneButSelfAndRecord(chatId, messageId, sendItem)
     } yield ()
 
-  def handlePhoto(fileId: FileId)(chatId: ChatId): F[Unit] =
+  def handlePhoto(fileId: FileId)(chatId: ChatId,
+                                  messageId: MessageId): F[Unit] =
     for {
       _ <- logger.info(s"User $chatId sends a photo")
-      _ <- execForAll(usr => api.sendPhoto(usr.chatId, fileId).void,
-                      chatId.some)
+      sendItem = (usr: User) => api.sendPhoto(usr.chatId, fileId)
+      _ <- sendEveryoneButSelfAndRecord(chatId, messageId, sendItem)
     } yield ()
 
-  def handleAudio(fileId: FileId)(chatId: ChatId): F[Unit] =
+  def handleAudio(fileId: FileId)(chatId: ChatId,
+                                  messageId: MessageId): F[Unit] =
     for {
       _ <- logger.info(s"User $chatId sends an audio")
-      _ <- execForAll(usr => api.sendAudio(usr.chatId, fileId).void,
-                      chatId.some)
+      sendItem = (usr: User) => api.sendAudio(usr.chatId, fileId)
+      _ <- sendEveryoneButSelfAndRecord(chatId, messageId, sendItem)
     } yield ()
 
-  def handleDocument(fileId: FileId)(chatId: ChatId): F[Unit] =
+  def handleDocument(fileId: FileId)(chatId: ChatId,
+                                     messageId: MessageId): F[Unit] =
     for {
       _ <- logger.info(s"User $chatId sends a document")
-      _ <- execForAll(usr => api.sendDocument(usr.chatId, fileId).void,
-                      chatId.some)
+      sendItem = (usr: User) => api.sendDocument(usr.chatId, fileId)
+      _ <- sendEveryoneButSelfAndRecord(chatId, messageId, sendItem)
     } yield ()
 
-  def handleAnimation(fileId: FileId)(chatId: ChatId): F[Unit] =
+  def handleAnimation(fileId: FileId)(chatId: ChatId,
+                                      messageId: MessageId): F[Unit] =
     for {
       _ <- logger.info(s"User $chatId sends an animation")
-      _ <- execForAll(usr => api.sendAnimation(usr.chatId, fileId).void,
-                      chatId.some)
+      sendItem = (usr: User) => api.sendAnimation(usr.chatId, fileId)
+      _ <- sendEveryoneButSelfAndRecord(chatId, messageId, sendItem)
     } yield ()
 
-  def handleSticker(fileId: FileId)(chatId: ChatId): F[Unit] =
+  def handleSticker(fileId: FileId)(chatId: ChatId,
+                                    messageId: MessageId): F[Unit] =
     for {
       _ <- logger.info(s"User $chatId sends a sticker")
-      _ <- execForAll(usr => api.sendSticker(usr.chatId, fileId).void,
-                      chatId.some)
+      sendItem = (usr: User) => api.sendSticker(usr.chatId, fileId)
+      _ <- sendEveryoneButSelfAndRecord(chatId, messageId, sendItem)
     } yield ()
 
-  def handleVideo(fileId: FileId)(chatId: ChatId): F[Unit] =
+  def handleVideo(fileId: FileId)(chatId: ChatId,
+                                  messageId: MessageId): F[Unit] =
     for {
       _ <- logger.info(s"User $chatId sends a video")
-      _ <- execForAll(usr => api.sendVideo(usr.chatId, fileId).void,
-                      chatId.some)
+      sendItem = (usr: User) => api.sendVideo(usr.chatId, fileId)
+      _ <- sendEveryoneButSelfAndRecord(chatId, messageId, sendItem)
     } yield ()
 
-  def handleVoice(fileId: FileId)(chatId: ChatId): F[Unit] =
+  def handleVoice(fileId: FileId)(chatId: ChatId,
+                                  messageId: MessageId): F[Unit] =
     for {
       _ <- logger.info(s"User $chatId sends a voice")
-      _ <- execForAll(usr => api.sendVoice(usr.chatId, fileId).void,
-                      chatId.some)
+      sendItem = (usr: User) => api.sendVoice(usr.chatId, fileId)
+      _ <- sendEveryoneButSelfAndRecord(chatId, messageId, sendItem)
     } yield ()
 
-  def handleVideoNote(fileId: FileId)(chatId: ChatId): F[Unit] =
+  def handleVideoNote(fileId: FileId)(chatId: ChatId,
+                                      messageId: MessageId): F[Unit] =
     for {
       _ <- logger.info(s"User $chatId sends a video note")
-      _ <- execForAll(usr => api.sendVideoNote(usr.chatId, fileId).void,
-                      chatId.some)
+      sendItem = (usr: User) => api.sendVideoNote(usr.chatId, fileId)
+      _ <- sendEveryoneButSelfAndRecord(chatId, messageId, sendItem)
     } yield ()
 
-  private def handleHelp(chatId: ChatId): F[Unit] =
+  private def handleHelp(chatId: ChatId, messageId: MessageId): F[Unit] =
     for {
       _ <- logger.info(s"User $chatId requests help")
-      _ <- handleMessage(chatId, helpStr, None)
-      _ <- sendEveryone(language.help)
+      _ <- handleMessage(chatId, messageId, helpStr, None, None)
+      _ <- sendEveryoneMakeSrc(chatId, language.help)
     } yield ()
 
   private def handleMakeActive(chatId: ChatId, targetIdStr: String): F[Unit] =
@@ -207,16 +253,18 @@ class AnonymizerBot[F[_]: Timer](
       targetUser <- userRepo.get(targetIdStr.toLong)
       _ <- targetUser match {
         case Some(t) =>
+          val template = language.makeActiveSucc(member.name, targetIdStr)
           for {
             _ <- userRepo.update(t.copy(isActive = true))
-            _ <- sendEveryone(language.makeActiveSucc(member.name, targetIdStr))
+            _ <- sendEveryoneMakeSrc(chatId, template)
           } yield ()
         case None =>
-          sendEveryone(language.makeActiveFail(member.name, targetIdStr))
+          val template = language.makeActiveFail(member.name, targetIdStr)
+          sendEveryoneMakeSrc(chatId, template)
       }
     } yield ()
 
-  private def handleShowAll(chatId: ChatId): F[Unit] = {
+  private def handleShowAll(chatId: ChatId, messageId: MessageId): F[Unit] = {
     def retrieveTelegramChats(
         users: List[User]): F[List[Option[(Chat, Boolean)]]] =
       users.traverse(
@@ -227,26 +275,26 @@ class AnonymizerBot[F[_]: Timer](
 
     for {
       _                <- logger.info(s"User $chatId requests show all ($showAllStr)")
-      _                <- handleMessage(chatId, showAllStr, None)
+      _                <- handleMessage(chatId, messageId, showAllStr, None, None)
       allUsers         <- userRepo.getAll
       chatsAndIsActive <- retrieveTelegramChats(allUsers)
       (active, notActive) = chatsAndIsActive.flatten.partition(_._2)
       template            = language.showAll(active.map(_._1), notActive.map(_._1))
-      _ <- sendEveryone(template)
+      _ <- sendEveryoneMakeSrc(chatId, template)
     } yield ()
   }
 
   private def handleUnknown(chatId: ChatId): F[Unit] =
     for {
       _ <- logger.info(s"Received unknown command from $chatId")
-      _ <- api.sendMessage(chatId, language.unknown)
+      _ <- sendMessage(chatId, None, None, language.unknown)
     } yield ()
 
   private def handleResetNickname(chatId: ChatId): F[Unit] =
     for {
       _      <- logger.info(s"User $chatId resets nickname")
       member <- memberRepo.resetName(chatId)
-      _      <- api.sendMessage(chatId, language.resetNickname(member.name))
+      _      <- sendMessage(chatId, None, None, language.resetNickname(member.name))
     } yield ()
 
   private def handleSetDelay(chatId: ChatId, delayStr: String): F[Unit] =
@@ -254,7 +302,7 @@ class AnonymizerBot[F[_]: Timer](
       _ <- logger.info(s"User $chatId sets delay to $delayStr")
       _ <- memberRepo.touch(chatId)
       _ <- memberRepo.setDelay(chatId, Some(delayStr.toInt))
-      _ <- api.sendMessage(chatId, language.setDelay(delayStr))
+      _ <- sendMessage(chatId, None, None, language.setDelay(delayStr))
     } yield ()
 
   private def handleResetDelay(chatId: ChatId): F[Unit] =
@@ -262,7 +310,7 @@ class AnonymizerBot[F[_]: Timer](
       _ <- logger.info(s"User $chatId resets nickname")
       _ <- memberRepo.touch(chatId)
       _ <- memberRepo.resetDelay(chatId)
-      _ <- api.sendMessage(chatId, language.resetDelay)
+      _ <- sendMessage(chatId, None, None, language.resetDelay)
     } yield ()
 
   private def handleJoin(chatId: ChatId): F[Unit] =
@@ -282,12 +330,22 @@ class AnonymizerBot[F[_]: Timer](
         case _ =>
           F.pure(language.alreadyInChannel(member.name))
       }
-      _ <- sendEveryone(template)
+      _ <- sendEveryoneMakeSrc(chatId, template)
+    } yield ()
+
+  /*
+   * Same as sendEveryone, but makes one of the sent messages a source
+   */
+  private def sendEveryoneMakeSrc(chatId: ChatId, template: String): F[Unit] =
+    for {
+      source <- sendMessageMakeSrc(chatId, None, template)
+      _      <- sendEveryone(template, source, chatId.some)
     } yield ()
 
   private def sendEveryone(content: String,
+                           source: Option[Message],
                            but: Option[ChatId] = None): F[Unit] =
-    execForAll(usr => api.sendMessage(usr.chatId, content).void, but)
+    execForAll(usr => sendMessage(usr.chatId, None, source, content).void, but)
 
   private def execForAll(action: User => F[Unit],
                          but: Option[ChatId] = None): F[Unit] =
@@ -298,48 +356,108 @@ class AnonymizerBot[F[_]: Timer](
     } yield ()
 
   private def handleLeave(chatId: ChatId): F[Unit] =
-    logger
-      .info(s"User $chatId tries to leave the channel")
-      .flatMap(
-        _ =>
-          OptionT(userRepo.get(chatId))
-            .semiflatMap(settings =>
-              for {
-                member <- memberRepo.touch(chatId)
-                template = language.leave(member.name)
-                _ <- sendEveryone(template)
-                _ <- userRepo.update(settings.copy(isActive = false))
-              } yield ())
-            .value)
-      .void
+    for {
+      _       <- logger.info(s"User $chatId tries to leave the channel")
+      userOpt <- userRepo.get(chatId)
+      leaveActionOpt = userOpt.map(user =>
+        for {
+          member <- memberRepo.touch(chatId)
+          template = language.leave(member.name)
+          _ <- sendEveryoneMakeSrc(chatId, template)
+          _ <- userRepo.update(user.copy(isActive = false))
+        } yield ())
+      _ <- leaveActionOpt.getOrElse(F.pure(()))
+    } yield ()
+
+  /**
+    * Each user get different message from the bot. To match replies correctly
+    * we need to get the chat-message correspondence map.
+    */
+  // TODO: rename?
+  private def getChatToMessageMap(
+      chatId: ChatId,
+      replyIdOpt: Option[MessageId]): F[Map[ChatId, MessageId]] =
+    for {
+      replyOpt <- replyIdOpt
+        .map(replyId => messageRepo.get(chatId, replyId))
+        .getOrElse(F.pure(None))
+      messages <- replyOpt
+        .flatMap(_.source)
+        .map(source => messageRepo.getBySource(source))
+        .getOrElse(F.pure(List[Message]()))
+    } yield messages.groupBy(_.chatId).mapValues(_.head.messageId)
 
   private def handleMessage(chatId: ChatId,
+                            messageId: ChatId,
                             content: String,
-                            from: ForwardOpt): F[Unit] =
-    for {
-      _      <- logger.info(s"User $chatId sends message, forward from: $from")
-      member <- memberRepo.touch(chatId)
-      template = language.message(member.name, content, from)
-      active <- userRepo.getByIsActive(true)
-      _ <- active
-        .filter(usr => usr.chatId != chatId)
-        .traverse { usr =>
-          member.delay
-            .map(delay => sendDelayedMessage(usr.chatId, template, delay))
-            .getOrElse(api.sendMessage(usr.chatId, template).void)
-        }
-    } yield ()
+                            replyId: Option[MessageId],
+                            from: ForwardOpt): F[Unit] = {
 
-  private def sendDelayedMessage(chatId: ChatId,
-                                 content: String,
-                                 delay: SECOND): F[Unit] = {
-    val send = for {
-      _ <- Timer[F].sleep(FiniteDuration.apply(delay, TimeUnit.SECONDS))
+    def send(delayOpt: Option[SECOND],
+             replies: Map[ChatId, MessageId],
+             source: Option[Message],
+             template: String)(usr: User): F[Unit] = {
+      val sendNow =
+        sendMessage(usr.chatId, replies.get(usr.chatId), source, template).void
+
+      val sendDelayed = execDelayed(sendNow)(_)
+
+      if (usr.chatId != chatId)
+        delayOpt.map(sendDelayed).map(_.void).getOrElse(sendNow)
+      else F.pure(())
+    }
+
+    for {
       _ <- logger.info(
-        s"User $chatId sends delayed message (delay was $delay seconds)")
-      _ <- api.sendMessage(chatId, content)
+        s"User $chatId sends message, forward from: $from, reply on: $replyId")
+      member <- memberRepo.touch(chatId)
+      active <- userRepo.getByIsActive(true)
+      template = language.message(member.name, content, from)
+      source   = makeSelfSource(chatId, messageId)
+      _       <- messageRepo.create(source)
+      replies <- getChatToMessageMap(chatId, replyId)
+      _       <- active.traverse(send(member.delay, replies, source.some, template))
     } yield ()
-    F.start(send).void
+  }
+
+  /*
+   * Same as sendMessage, but links to itself as a source
+   */
+  private def sendMessageMakeSrc(chatId: ChatId,
+                                 replyId: Option[MessageId],
+                                 content: String): F[Option[Message]] =
+    (for {
+      apiMsg <- EitherT(api.sendMessage(chatId, content, replyId)).toOption
+      source = makeSelfSource(chatId, apiMsg.messageId)
+      _ <- OptionT.liftF(messageRepo.create(source))
+    } yield source).value
+
+  def recordMessage(sendItem: F[Either[ApiError, ApiMessage]],
+                    source: Option[Message]): F[Option[Message]] =
+    recordMessageOpt(sendItem.map(_.toOption), source)
+
+  def recordMessageOpt(sendItem: F[Option[ApiMessage]],
+                       source: Option[Message]): F[Option[Message]] =
+    (for {
+      apiMsg <- OptionT(sendItem)
+      msg = Message(apiMsg.chat.id, apiMsg.messageId, source)
+      _ <- OptionT.liftF(messageRepo.create(msg))
+    } yield msg).value
+
+  private def sendMessage(chatId: ChatId,
+                          replyId: Option[MessageId],
+                          source: Option[Message],
+                          content: String): F[Option[Message]] =
+    recordMessage(api.sendMessage(chatId, content, replyId), source)
+
+  private def execDelayed[A](action: F[A])(delay: SECOND): F[Fiber[F, A]] = {
+    val fiber = for {
+      _   <- Timer[F].sleep(FiniteDuration.apply(delay, TimeUnit.SECONDS))
+      _   <- logger.info(s"Executing delayed action after $delay seconds)")
+      res <- action
+    } yield res
+
+    F.start(fiber)
   }
 }
 
@@ -348,6 +466,7 @@ object AnonymizerBot {
       api: StreamingBotAPI[F],
       logger: Logger[F],
       userRepo: UserRepositoryAlgebra[F],
-      memberRepo: ChatMemberServiceAlgebra[F]): AnonymizerBot[F] =
-    new AnonymizerBot(api, logger, userRepo, memberRepo)
+      memberRepo: ChatMemberServiceAlgebra[F],
+      messageRepo: MessageRepositoryAlgebra[F]): AnonymizerBot[F] =
+    new AnonymizerBot(api, logger, userRepo, memberRepo, messageRepo)
 }

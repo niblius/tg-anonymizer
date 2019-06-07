@@ -16,10 +16,7 @@ import org.niblius.tganonymizer.app.domain.{
   ChatMember,
   ChatMemberServiceAlgebra
 }
-import org.niblius.tganonymizer.app.infrastructure.{
-  DoobieUserRepository,
-  ChatMemberServiceInterp
-}
+import org.niblius.tganonymizer.app.infrastructure._
 import io.circe.generic.auto._
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -47,13 +44,18 @@ object Server extends IOApp {
     def launch(logger: Logger[F], token: String)(
         resources: (Client[F], HikariTransactor[F])): F[Unit] = {
       val (client, xa) = resources
-      val usersRepo    = DoobieUserRepository(xa)
+      val userRepo     = DoobieUserRepository(xa)
+      val messageRepo  = DoobieMessageRepository(xa)
       val botAPI       = new Http4SBotAPI(token, client, logger)
       for {
-        membersRepo <- Ref
+        memberRepo <- Ref
           .of(Map.empty[ChatId, ChatMember])
-          .map(m => ChatMemberServiceInterp[F](m, usersRepo))
-        bot = new AnonymizerBot(botAPI, logger, usersRepo, membersRepo)
+          .map(m => ChatMemberServiceInterp[F](m, userRepo))
+        bot = new AnonymizerBot(botAPI,
+                                logger,
+                                userRepo,
+                                memberRepo,
+                                messageRepo)
         _ <- bot.launch.compile.drain
       } yield ()
     }

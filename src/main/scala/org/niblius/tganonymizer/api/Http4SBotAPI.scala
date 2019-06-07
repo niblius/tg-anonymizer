@@ -34,16 +34,20 @@ class Http4SBotAPI[F[_]](token: String, client: Client[F], logger: Logger[F])(
 
   private case class SendMessageReq(chat_id: String,
                                     parse_more: String,
-                                    text: String)
+                                    text: String,
+                                    reply_to_message_id: Option[MessageId])
 
   private implicit val apiErrorEntityDec: EntityDecoder[F, ApiError] =
     jsonOf
 
   private def logApiError(msg: String): Response[F] => F[Throwable] =
     (error: Response[F]) =>
-      logger
-        .error(s"$msg:\n${error.toString()}")
-        .flatMap(_ => error.as[ApiError].map(throw _))
+      error
+        .as[ApiError]
+        .flatTap(apiError =>
+          logger
+            .error(s"$msg:\n${apiError.toString}"))
+        .map(throw _)
 
   private implicit val apiMessageEntityDec
     : EntityDecoder[F, BotResponse[Message]] =
@@ -63,18 +67,20 @@ class Http4SBotAPI[F[_]](token: String, client: Client[F], logger: Logger[F])(
     makeRequest[A](req)(errorMsg)
   }
 
-  def sendMessage(chatId: ChatId,
-                  message: String): F[Either[ApiError, Message]] = {
+  def sendMessage(
+      chatId: ChatId,
+      message: String,
+      replyId: Option[MessageId] = None): F[Either[ApiError, Message]] = {
     val uri = botApiUri / "sendMessage"
 
-    val data = SendMessageReq(chatId.toString, "Markdown", message)
+    val data = SendMessageReq(chatId.toString, "Markdown", message, replyId)
 
     val req = Request[F]()
       .withMethod(Method.POST)
       .withUri(uri)
       .withEntity(data.asJson)
 
-    makeRequest(req)("Failed to send message")
+    makeRequest(req)(s"Failed to send message to $chatId")
   }
 
   def pollUpdates(fromOffset: Offset): Stream[F, BotUpdate] = {
