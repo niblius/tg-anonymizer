@@ -43,17 +43,16 @@ class AnonymizerBot[F[_]: Timer](
     pollCommands.evalMap(handleCommand)
 
   // TODO: pinned - how? Probably something like notification whenever user enters the chat.
-  // TODO: editing
-  // TODO: deleting - reply to message with /delete
   // TODO: periodically run clean up process to remove non-existing chats and those that banned bot
   // TODO: delay for all messages, not only plain
 
   private def pollCommands: Stream[F, BotCommand] =
     for {
-      update  <- api.pollUpdates(0)
-      _       <- Stream.eval(logger.debug(s"Received an update:\n${update.toString}"))
-      message <- Stream.emits(update.message.toSeq)
-      cmdOpt = BotCommand.fromRawMessage(message)
+      update <- api.pollUpdates(0)
+      _      <- Stream.eval(logger.debug(s"Received an update:\n${update.toString}"))
+      newMsgCmd = update.message.flatMap(BotCommand.fromRawMessage)
+      editedMsg = update.editedMessage.flatMap(BotCommand.fromEditedMessage)
+      cmdOpt    = newMsgCmd.orElse(editedMsg)
       _ <- cmdOpt
         .map(cmd => Stream.eval(logger.debug(cmd.toString)))
         .getOrElse(Stream.eval(logger.info("Received unknown message.")))
@@ -82,21 +81,28 @@ class AnonymizerBot[F[_]: Timer](
         trivia(c.chatId, c.messageId, c.from)(
           handleLocation(c.longitude, c.latitude))
       case c: SendPhoto =>
-        trivia(c.chatId, c.messageId, c.from)(handlePhoto(c.fileId))
+        trivia(c.chatId, c.messageId, c.from)(handlePhoto(c.fileId, c.caption))
       case c: SendAudio =>
-        trivia(c.chatId, c.messageId, c.from)(handleAudio(c.fileId))
+        trivia(c.chatId, c.messageId, c.from)(handleAudio(c.fileId, c.caption))
       case c: SendDocument =>
-        trivia(c.chatId, c.messageId, c.from)(handleDocument(c.fileId))
+        trivia(c.chatId, c.messageId, c.from)(
+          handleDocument(c.fileId, c.caption))
       case c: SendAnimation =>
-        trivia(c.chatId, c.messageId, c.from)(handleAnimation(c.fileId))
+        trivia(c.chatId, c.messageId, c.from)(
+          handleAnimation(c.fileId, c.caption))
       case c: SendSticker =>
         trivia(c.chatId, c.messageId, c.from)(handleSticker(c.fileId))
       case c: SendVideo =>
-        trivia(c.chatId, c.messageId, c.from)(handleVideo(c.fileId))
+        trivia(c.chatId, c.messageId, c.from)(handleVideo(c.fileId, c.caption))
       case c: SendVoice =>
-        trivia(c.chatId, c.messageId, c.from)(handleVoice(c.fileId))
+        trivia(c.chatId, c.messageId, c.from)(handleVoice(c.fileId, c.caption))
       case c: SendVideoNote =>
         trivia(c.chatId, c.messageId, c.from)(handleVideoNote(c.fileId))
+
+      case c: EditPlainMessage =>
+        handleEditMessage(c.chatId, c.messageId, c.newText)
+      case c: EditCaption =>
+        handleEditCaption(c.chatId, c.messageId, c.newCaption)
     }
 
     (command match {
@@ -117,6 +123,33 @@ class AnonymizerBot[F[_]: Timer](
     }).handleErrorWith(e => logger.error(e)("Error during command processing"))
   }
 
+  private def execEdit(chatId: ChatId,
+                       messageId: MessageId,
+                       edit: Message => F[Unit]): F[Unit] =
+    for {
+      messages <- messageRepo.getBySource(Message(chatId, messageId, None))
+      _ <- messages.traverse(m =>
+        if (m.chatId != chatId) edit(m) else F.pure(()))
+    } yield ()
+
+  def handleEditCaption(chatId: ChatId,
+                        messageId: MessageId,
+                        newCaption: String): F[Unit] = {
+    val editCaption = (m: Message) =>
+      api.editMessageCaption(m.chatId, m.messageId, newCaption).void
+
+    execEdit(chatId, messageId, editCaption)
+  }
+
+  def handleEditMessage(chatId: ChatId,
+                        messageId: MessageId,
+                        newText: String): F[Unit] = {
+    val editMessage = (m: Message) =>
+      api.editMessageText(m.chatId, m.messageId, newText).void
+
+    execEdit(chatId, messageId, editMessage)
+  }
+
   /**
     * Wrapper that performs routine operations:
     *  - checks if it's a forward
@@ -132,7 +165,7 @@ class AnonymizerBot[F[_]: Timer](
       content = from
         .map(forw => language.forward(member.name, forw))
         .getOrElse(language.sendItem(member.name))
-      _ <- sendEveryone(content, None, chatId.some) // TODO: can't reply to the title
+      _ <- sendEveryone(content, None, chatId.some)
       _ <- sendItem(chatId, messageId)
     } yield ()
   }
@@ -175,35 +208,39 @@ class AnonymizerBot[F[_]: Timer](
       _ <- sendEveryoneButSelfAndRecord(chatId, messageId, sendItem)
     } yield ()
 
-  def handlePhoto(fileId: FileId)(chatId: ChatId,
-                                  messageId: MessageId): F[Unit] =
+  def handlePhoto(fileId: FileId, caption: Option[String])(
+      chatId: ChatId,
+      messageId: MessageId): F[Unit] =
     for {
       _ <- logger.info(s"User $chatId sends a photo")
-      sendItem = (usr: User) => api.sendPhoto(usr.chatId, fileId)
+      sendItem = (usr: User) => api.sendPhoto(usr.chatId, fileId, caption)
       _ <- sendEveryoneButSelfAndRecord(chatId, messageId, sendItem)
     } yield ()
 
-  def handleAudio(fileId: FileId)(chatId: ChatId,
-                                  messageId: MessageId): F[Unit] =
+  def handleAudio(fileId: FileId, caption: Option[String])(
+      chatId: ChatId,
+      messageId: MessageId): F[Unit] =
     for {
       _ <- logger.info(s"User $chatId sends an audio")
-      sendItem = (usr: User) => api.sendAudio(usr.chatId, fileId)
+      sendItem = (usr: User) => api.sendAudio(usr.chatId, fileId, caption)
       _ <- sendEveryoneButSelfAndRecord(chatId, messageId, sendItem)
     } yield ()
 
-  def handleDocument(fileId: FileId)(chatId: ChatId,
-                                     messageId: MessageId): F[Unit] =
+  def handleDocument(fileId: FileId, caption: Option[String])(
+      chatId: ChatId,
+      messageId: MessageId): F[Unit] =
     for {
       _ <- logger.info(s"User $chatId sends a document")
-      sendItem = (usr: User) => api.sendDocument(usr.chatId, fileId)
+      sendItem = (usr: User) => api.sendDocument(usr.chatId, fileId, caption)
       _ <- sendEveryoneButSelfAndRecord(chatId, messageId, sendItem)
     } yield ()
 
-  def handleAnimation(fileId: FileId)(chatId: ChatId,
-                                      messageId: MessageId): F[Unit] =
+  def handleAnimation(fileId: FileId, caption: Option[String])(
+      chatId: ChatId,
+      messageId: MessageId): F[Unit] =
     for {
       _ <- logger.info(s"User $chatId sends an animation")
-      sendItem = (usr: User) => api.sendAnimation(usr.chatId, fileId)
+      sendItem = (usr: User) => api.sendAnimation(usr.chatId, fileId, caption)
       _ <- sendEveryoneButSelfAndRecord(chatId, messageId, sendItem)
     } yield ()
 
@@ -215,19 +252,21 @@ class AnonymizerBot[F[_]: Timer](
       _ <- sendEveryoneButSelfAndRecord(chatId, messageId, sendItem)
     } yield ()
 
-  def handleVideo(fileId: FileId)(chatId: ChatId,
-                                  messageId: MessageId): F[Unit] =
+  def handleVideo(fileId: FileId, caption: Option[String])(
+      chatId: ChatId,
+      messageId: MessageId): F[Unit] =
     for {
       _ <- logger.info(s"User $chatId sends a video")
-      sendItem = (usr: User) => api.sendVideo(usr.chatId, fileId)
+      sendItem = (usr: User) => api.sendVideo(usr.chatId, fileId, caption)
       _ <- sendEveryoneButSelfAndRecord(chatId, messageId, sendItem)
     } yield ()
 
-  def handleVoice(fileId: FileId)(chatId: ChatId,
-                                  messageId: MessageId): F[Unit] =
+  def handleVoice(fileId: FileId, caption: Option[String])(
+      chatId: ChatId,
+      messageId: MessageId): F[Unit] =
     for {
       _ <- logger.info(s"User $chatId sends a voice")
-      sendItem = (usr: User) => api.sendVoice(usr.chatId, fileId)
+      sendItem = (usr: User) => api.sendVoice(usr.chatId, fileId, caption)
       _ <- sendEveryoneButSelfAndRecord(chatId, messageId, sendItem)
     } yield ()
 
@@ -400,7 +439,6 @@ class AnonymizerBot[F[_]: Timer](
     * Each user get different message from the bot. To match replies correctly
     * we need to get the chat-message correspondence map.
     */
-  // TODO: rename?
   private def getChatToMessageMap(
       chatId: ChatId,
       replyIdOpt: Option[MessageId]): F[Map[ChatId, MessageId]] =

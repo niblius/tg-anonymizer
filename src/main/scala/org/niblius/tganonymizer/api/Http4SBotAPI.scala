@@ -53,19 +53,28 @@ class Http4SBotAPI[F[_]](token: String, client: Client[F], logger: Logger[F])(
     : EntityDecoder[F, BotResponse[Message]] =
     jsonOf
 
-  private def makeRequest[A](req: Request[F])(errorMsg: String)(
-      implicit dec: EntityDecoder[F, BotResponse[A]]): F[Either[ApiError, A]] =
+  private def makeApiRequestRaw[R[_], A](req: Request[F])(errorMsg: String)(
+      implicit dec: EntityDecoder[F, R[A]]): F[Either[ApiError, R[A]]] =
     client
-      .expectOr[BotResponse[A]](req)(logApiError(errorMsg))
-      .map(_.result.asRight[ApiError])
-      .recover { case error: ApiError => error.asLeft[A] }
+      .expectOr[R[A]](req)(logApiError(errorMsg))
+      .map(_.asRight[ApiError])
+      .recover { case error: ApiError => error.asLeft[R[A]] }
+
+  private def makeApiRequestRaw[R[_], A](uri: Uri)(errorMsg: String)(
+      implicit dec: EntityDecoder[F, R[A]]): F[Either[ApiError, R[A]]] = {
+    val req = Request[F]().withMethod(Method.GET).withUri(uri)
+    makeApiRequestRaw[R, A](req)(errorMsg)
+  }
 
   private def makeRequest[A](uri: Uri)(errorMsg: String)(
-      implicit dec: EntityDecoder[F, BotResponse[A]])
-    : F[Either[ApiError, A]] = {
-    val req = Request[F]().withMethod(Method.GET).withUri(uri)
-    makeRequest[A](req)(errorMsg)
-  }
+      implicit dec: EntityDecoder[F, BotResponse[A]]): F[Either[ApiError, A]] =
+    makeApiRequestRaw[BotResponse, A](uri)(errorMsg)
+      .map(_.flatMap(_.result.asRight))
+
+  private def makeRequest[A](req: Request[F])(errorMsg: String)(
+      implicit dec: EntityDecoder[F, BotResponse[A]]): F[Either[ApiError, A]] =
+    makeApiRequestRaw[BotResponse, A](req)(errorMsg)
+      .map(_.flatMap(_.result.asRight))
 
   def sendMessage(
       chatId: ChatId,
@@ -98,7 +107,7 @@ class Http4SBotAPI[F[_]](token: String, client: Client[F], logger: Logger[F])(
     val uri = botApiUri / "getUpdates" =? Map(
       "offset"          -> List((offset + 1).toString),
       "timeout"         -> List(timeout),
-      "allowed_updates" -> List("""["message"]""")
+      "allowed_updates" -> List("""["message", "edited_message"]""")
     )
 
     client
@@ -141,57 +150,73 @@ class Http4SBotAPI[F[_]](token: String, client: Client[F], logger: Logger[F])(
     makeRequest(uri)("Failed to forward message")
   }
 
-  def sendPhoto(chatId: ChatId, photo: String): F[Either[ApiError, Message]] = {
+  def sendPhoto(chatId: ChatId,
+                photo: String,
+                caption: Option[String]): F[Either[ApiError, Message]] = {
     val uri = botApiUri / "sendPhoto" =? Map(
       "chat_id" -> List(chatId.toString),
-      "photo"   -> List(photo)
+      "photo"   -> List(photo),
+      "caption" -> List(caption.getOrElse(""))
     )
 
     makeRequest(uri)("Failed to send photo")
   }
 
-  def sendAudio(chatId: ChatId, audio: String): F[Either[ApiError, Message]] = {
+  def sendAudio(chatId: ChatId,
+                audio: String,
+                caption: Option[String]): F[Either[ApiError, Message]] = {
     val uri = botApiUri / "sendAudio" =? Map(
       "chat_id" -> List(chatId.toString),
-      "audio"   -> List(audio)
+      "audio"   -> List(audio),
+      "caption" -> List(caption.getOrElse(""))
     )
 
     makeRequest(uri)("Failed to send audio")
   }
 
   def sendDocument(chatId: ChatId,
-                   document: String): F[Either[ApiError, Message]] = {
+                   document: String,
+                   caption: Option[String]): F[Either[ApiError, Message]] = {
     val uri = botApiUri / "sendDocument" =? Map(
       "chat_id"  -> List(chatId.toString),
-      "document" -> List(document)
+      "document" -> List(document),
+      "caption"  -> List(caption.getOrElse(""))
     )
 
     makeRequest(uri)("Failed to send document")
   }
 
-  def sendVideo(chatId: ChatId, video: String): F[Either[ApiError, Message]] = {
+  def sendVideo(chatId: ChatId,
+                video: String,
+                caption: Option[String]): F[Either[ApiError, Message]] = {
     val uri = botApiUri / "sendVideo" =? Map(
       "chat_id" -> List(chatId.toString),
-      "video"   -> List(video)
+      "video"   -> List(video),
+      "caption" -> List(caption.getOrElse(""))
     )
 
     makeRequest(uri)("Failed to send video")
   }
 
   def sendAnimation(chatId: ChatId,
-                    animation: String): F[Either[ApiError, Message]] = {
+                    animation: String,
+                    caption: Option[String]): F[Either[ApiError, Message]] = {
     val uri = botApiUri / "sendAnimation" =? Map(
       "chat_id"   -> List(chatId.toString),
-      "animation" -> List(animation)
+      "animation" -> List(animation),
+      "caption"   -> List(caption.getOrElse(""))
     )
 
     makeRequest(uri)("Failed to send animation")
   }
 
-  def sendVoice(chatId: ChatId, voice: String): F[Either[ApiError, Message]] = {
+  def sendVoice(chatId: ChatId,
+                voice: String,
+                caption: Option[String]): F[Either[ApiError, Message]] = {
     val uri = botApiUri / "sendVoice" =? Map(
       "chat_id" -> List(chatId.toString),
-      "voice"   -> List(voice)
+      "voice"   -> List(voice),
+      "caption" -> List(caption.getOrElse(""))
     )
 
     makeRequest(uri)("Failed to send voice")
@@ -250,20 +275,60 @@ class Http4SBotAPI[F[_]](token: String, client: Client[F], logger: Logger[F])(
     makeRequest(req)("Failed to send location")
   }
 
-  private implicit val quickResultEntityDec: EntityDecoder[F, QuickResult] =
+  private implicit val quickResultEntityDec
+    : EntityDecoder[F, QuickResult[Unit]] =
     jsonOf
 
-  def deleteMessage(chatId: ChatId,
-                    messageId: MessageId): F[Either[ApiError, QuickResult]] = {
+  def deleteMessage(
+      chatId: ChatId,
+      messageId: MessageId): F[Either[ApiError, QuickResult[Unit]]] = {
     val uri = botApiUri / "deleteMessage" =? Map(
       "chat_id"    -> List(chatId.toString),
       "message_id" -> List(messageId.toString))
 
-    val errorMsg = s"Failed to delete message $messageId from chat $chatId"
+    val errorMsg = s"Failed to delete a message $messageId in chat $chatId"
 
-    client
-      .expectOr[QuickResult](uri)(logApiError(errorMsg))
-      .map(_.asRight[ApiError])
-      .recover { case error: ApiError => error.asLeft[QuickResult] }
+    makeApiRequestRaw[QuickResult, Unit](uri)(errorMsg)
+  }
+
+  case class EditMessageTextReq(chat_id: ChatId,
+                                message_id: MessageId,
+                                text: String)
+
+  def editMessageText(
+      chatId: ChatId,
+      messageId: MessageId,
+      newText: String): F[Either[ApiError, QuickResult[Unit]]] = {
+    val uri = botApiUri / "editMessageText"
+
+    val req = Request[F]()
+      .withMethod(Method.POST)
+      .withUri(uri)
+      .withEntity(EditMessageTextReq(chatId, messageId, newText).asJson)
+
+    val errorMsg = s"Failed to edit a message $messageId in the chat $chatId"
+
+    makeApiRequestRaw[QuickResult, Unit](req)(errorMsg)
+  }
+
+  case class EditMessageCaptionReq(chat_id: ChatId,
+                                   message_id: MessageId,
+                                   caption: String)
+
+  def editMessageCaption(
+      chatId: ChatId,
+      messageId: MessageId,
+      newText: String): F[Either[ApiError, QuickResult[Unit]]] = {
+    val uri = botApiUri / "editMessageCaption"
+
+    val req = Request[F]()
+      .withMethod(Method.POST)
+      .withUri(uri)
+      .withEntity(EditMessageCaptionReq(chatId, messageId, newText).asJson)
+
+    val errorMsg =
+      s"Failed to edit a caption of the message $messageId in the chat $chatId"
+
+    makeApiRequestRaw[QuickResult, Unit](req)(errorMsg)
   }
 }

@@ -59,23 +59,28 @@ object BotCommand {
   case class SendPhoto(chatId: ChatId,
                        messageId: ChatId,
                        fileId: FileId,
+                       caption: Option[String],
                        from: ForwardOpt)
       extends BotCommand
+
   case class SendAudio(chatId: ChatId,
                        messageId: ChatId,
                        fileId: FileId,
+                       caption: Option[String],
                        from: ForwardOpt)
       extends BotCommand
 
   case class SendDocument(chatId: ChatId,
                           messageId: ChatId,
                           fileId: FileId,
+                          caption: Option[String],
                           from: ForwardOpt)
       extends BotCommand
 
   case class SendAnimation(chatId: ChatId,
                            messageId: ChatId,
                            fileId: FileId,
+                           caption: Option[String],
                            from: ForwardOpt)
       extends BotCommand
 
@@ -88,12 +93,14 @@ object BotCommand {
   case class SendVideo(chatId: ChatId,
                        messageId: ChatId,
                        fileId: FileId,
+                       caption: Option[String],
                        from: ForwardOpt)
       extends BotCommand
 
   case class SendVoice(chatId: ChatId,
                        messageId: ChatId,
                        fileId: FileId,
+                       caption: Option[String],
                        from: ForwardOpt)
       extends BotCommand
 
@@ -101,6 +108,16 @@ object BotCommand {
                            messageId: ChatId,
                            fileId: FileId,
                            from: ForwardOpt)
+      extends BotCommand
+
+  case class EditPlainMessage(chatId: ChatId,
+                              messageId: MessageId,
+                              newText: String)
+      extends BotCommand
+
+  case class EditCaption(chatId: ChatId,
+                         messageId: MessageId,
+                         newCaption: String)
       extends BotCommand
 
   private def fromText(m: api.dto.Message,
@@ -130,39 +147,49 @@ object BotCommand {
   private def fromPhoto(chatId: ChatId,
                         messageId: MessageId,
                         photos: List[PhotoSize],
-                        from: ForwardOpt): Option[BotCommand] = {
+                        caption: Option[String],
+                        from: ForwardOpt): Option[BotCommand] =
     if (photos.isEmpty) None
-    else SendPhoto(chatId, messageId, photos.head.fileId, from).some
+    else SendPhoto(chatId, messageId, photos.head.fileId, caption, from).some
+
+  def fromEditedMessage(m: api.dto.Message): Option[BotCommand] = {
+    val editMessage =
+      m.text.map(text => EditPlainMessage(m.chat.id, m.messageId, text))
+    val editCaption =
+      m.caption.map(caption => EditCaption(m.chat.id, m.messageId, caption))
+
+    editCaption.orElse(editMessage)
   }
 
   def fromRawMessage(m: api.dto.Message): Option[BotCommand] = {
     val chatId    = m.chat.id
     val messageId = m.messageId
     val replyId   = m.replyToMessage.map(_.messageId)
+    val caption   = m.caption
     val from: ForwardOpt = (m.forwardFrom, m.forwardFromChat) match {
       case (Some(user), _) => user.asLeft.some
       case (_, Some(chat)) => chat.asRight.some
       case _               => None
     }
 
-    // TODO: log input in debug
-
     // TODO: media group
-    // TODO: caption
 
-    lazy val photo = m.photo.flatMap(fromPhoto(chatId, messageId, _, from))
+    lazy val photo =
+      m.photo.flatMap(fromPhoto(chatId, messageId, _, caption, from))
     lazy val audio =
-      m.audio.map(a => SendAudio(chatId, messageId, a.fileId, from))
+      m.audio.map(a => SendAudio(chatId, messageId, a.fileId, caption, from))
     lazy val document =
-      m.document.map(d => SendDocument(chatId, messageId, d.fileId, from))
+      m.document.map(d =>
+        SendDocument(chatId, messageId, d.fileId, caption, from))
     lazy val animation =
-      m.animation.map(a => SendAnimation(chatId, messageId, a.fileId, from))
+      m.animation.map(a =>
+        SendAnimation(chatId, messageId, a.fileId, caption, from))
     lazy val sticker =
       m.sticker.map(s => SendSticker(chatId, messageId, s.fileId, from))
     lazy val video =
-      m.video.map(v => SendVideo(chatId, messageId, v.fileId, from))
+      m.video.map(v => SendVideo(chatId, messageId, v.fileId, caption, from))
     lazy val voice =
-      m.voice.map(v => SendVoice(chatId, messageId, v.fileId, from))
+      m.voice.map(v => SendVoice(chatId, messageId, v.fileId, caption, from))
     lazy val videoNote =
       m.videoNote.map(vn => SendVideoNote(chatId, messageId, vn.fileId, from))
     lazy val location =

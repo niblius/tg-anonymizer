@@ -41,24 +41,55 @@ trait BotAPI[F[_], S[_]] {
   def forwardMessage(chatId: ChatId,
                      fromChatId: String,
                      messageId: MessageId): F[Either[ApiError, Message]]
-  def sendPhoto(chatId: ChatId, photo: String): F[Either[ApiError, Message]]
-  def sendAudio(chatId: ChatId, audio: String): F[Either[ApiError, Message]]
+
+  def sendPhoto(chatId: ChatId,
+                photo: String,
+                caption: Option[String]): F[Either[ApiError, Message]]
+
+  def sendAudio(chatId: ChatId,
+                audio: String,
+                caption: Option[String]): F[Either[ApiError, Message]]
+
   def sendDocument(chatId: ChatId,
-                   document: String): F[Either[ApiError, Message]]
-  def sendVideo(chatId: ChatId, video: String): F[Either[ApiError, Message]]
+                   document: String,
+                   caption: Option[String]): F[Either[ApiError, Message]]
+
+  def sendVideo(chatId: ChatId,
+                video: String,
+                caption: Option[String]): F[Either[ApiError, Message]]
+
   def sendAnimation(chatId: ChatId,
-                    animation: String): F[Either[ApiError, Message]]
-  def sendVoice(chatId: ChatId, voice: String): F[Either[ApiError, Message]]
+                    animation: String,
+                    caption: Option[String]): F[Either[ApiError, Message]]
+
+  def sendVoice(chatId: ChatId,
+                voice: String,
+                caption: Option[String]): F[Either[ApiError, Message]]
+
   def sendVideoNote(chatId: ChatId,
                     videoNote: String): F[Either[ApiError, Message]]
+
   def sendMediaGroup(chatId: ChatId,
                      media: List[InputMediaPhoto]): F[Either[ApiError, Message]]
+
   def sendLocation(chatId: ChatId,
                    longitude: Float,
                    latitude: Float): F[Either[ApiError, Message]]
+
   def sendSticker(chatId: ChatId, voice: String): F[Either[ApiError, Message]]
-  def deleteMessage(chatId: ChatId,
-                    messageId: MessageId): F[Either[ApiError, QuickResult]]
+
+  def deleteMessage(
+      chatId: ChatId,
+      messageId: MessageId): F[Either[ApiError, QuickResult[Unit]]]
+
+  def editMessageText(chatId: ChatId,
+                      messageId: MessageId,
+                      newText: String): F[Either[ApiError, QuickResult[Unit]]]
+
+  def editMessageCaption(
+      chatId: ChatId,
+      messageId: MessageId,
+      newText: String): F[Either[ApiError, QuickResult[Unit]]]
 }
 
 trait StreamingBotAPI[F[_]] extends BotAPI[F, Stream[F, ?]]
