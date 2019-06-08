@@ -6,7 +6,8 @@ import org.niblius.tganonymizer.api.dto.{
   BotUpdate,
   Chat,
   InputMediaPhoto,
-  Message
+  Message,
+  QuickResult
 }
 
 import scala.language.higherKinds
@@ -56,7 +57,8 @@ trait BotAPI[F[_], S[_]] {
                    longitude: Float,
                    latitude: Float): F[Either[ApiError, Message]]
   def sendSticker(chatId: ChatId, voice: String): F[Either[ApiError, Message]]
-
+  def deleteMessage(chatId: ChatId,
+                    messageId: MessageId): F[Either[ApiError, QuickResult]]
 }
 
 trait StreamingBotAPI[F[_]] extends BotAPI[F, Stream[F, ?]]

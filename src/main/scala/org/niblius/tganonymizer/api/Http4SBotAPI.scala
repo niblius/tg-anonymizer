@@ -249,4 +249,21 @@ class Http4SBotAPI[F[_]](token: String, client: Client[F], logger: Logger[F])(
 
     makeRequest(req)("Failed to send location")
   }
+
+  private implicit val quickResultEntityDec: EntityDecoder[F, QuickResult] =
+    jsonOf
+
+  def deleteMessage(chatId: ChatId,
+                    messageId: MessageId): F[Either[ApiError, QuickResult]] = {
+    val uri = botApiUri / "deleteMessage" =? Map(
+      "chat_id"    -> List(chatId.toString),
+      "message_id" -> List(messageId.toString))
+
+    val errorMsg = s"Failed to delete message $messageId from chat $chatId"
+
+    client
+      .expectOr[QuickResult](uri)(logApiError(errorMsg))
+      .map(_.asRight[ApiError])
+      .recover { case error: ApiError => error.asLeft[QuickResult] }
+  }
 }

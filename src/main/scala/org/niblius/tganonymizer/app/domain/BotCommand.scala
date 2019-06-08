@@ -31,6 +31,10 @@ object BotCommand {
   case class UnknownCommand(chatId: ChatId)                extends BotCommand
   case class ShowAll(chatId: ChatId, messageId: MessageId) extends BotCommand
   case class MakeActive(chatId: ChatId, target: String)    extends BotCommand
+  case class DeleteMessage(chatId: ChatId,
+                           messageId: MessageId,
+                           replyId: Option[MessageId])
+      extends BotCommand
 
   case class PlainMessage(chatId: ChatId,
                           messageId: ChatId,
@@ -117,6 +121,7 @@ object BotCommand {
         case `resetNicknameStr`   => ResetNickname(chatId)
         case `showAllStr`         => ShowAll(chatId, messageId)
         case makeActive(target)   => MakeActive(chatId, target)
+        case `deleteStr`          => DeleteMessage(chatId, messageId, replyId)
         case unknownCommand()     => UnknownCommand(chatId)
         case text                 => PlainMessage(chatId, messageId, text, replyId, None)
       })
@@ -188,6 +193,7 @@ object BotCommand {
   val makeActiveStr    = "/add ID"
   val showAllStr       = "/members"
   val makeActive       = "/add (-?[0-9]{1,19})".r
+  val deleteStr        = "/d"
 
   // TODO: ban
   // TODO: assignName

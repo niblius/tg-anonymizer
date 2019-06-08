@@ -20,4 +20,7 @@ trait TemplateAlgebra {
   def sendItem(name: String): String
   def rejoin(name: String): String
   def alreadyInChannel(name: String): String
+  def cannotDelete: String
+  def notAllowedToDelete: String
+  def replyToDelete: String
 }

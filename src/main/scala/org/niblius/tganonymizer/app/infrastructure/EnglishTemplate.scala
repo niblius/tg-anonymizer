@@ -13,13 +13,20 @@ class EnglishTemplate extends TemplateAlgebra {
     s"`$leaveStr` - to stop receiving messages",
     s" $joinStr` - to enter the channel",
     s"`$setDelayStr` - to set delay (in seconds) for your messages",
-    s"`$resetNicknameStr` - to reset your current nickname (nicknames are valid for 1 one hour)",
+    s"`$resetNicknameStr` - to reset your current nickname (nicknames are valid for one hour)",
     s"`$resetDelayStr` - equivalent to $setDelayStr 0",
     s"`$showAllStr` - to print a list of every member that ever joined the channel`",
     s"`$makeActiveStr` - to print a list of every member that ever joined the channel`",
+    s"`$deleteStr` - to delete a message (by applying this command with a reply to the message you want to delete)"
   ).mkString("\n")
 
   val notJoined = s"You should $joinStr the channel first."
+
+  val cannotDelete = "You cannot delete this message."
+
+  val notAllowedToDelete = "You can only delete your own messages."
+
+  val replyToDelete = s"Use the `$deleteStr` command along with reply."
 
   def makeActiveFail(name: String, target: String): String =
     s"$name tried to add $target to the channel, but such user wasn't found."

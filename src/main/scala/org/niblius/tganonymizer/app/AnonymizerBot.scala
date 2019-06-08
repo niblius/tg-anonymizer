@@ -42,8 +42,7 @@ class AnonymizerBot[F[_]: Timer](
   def launch: Stream[F, Unit] =
     pollCommands.evalMap(handleCommand)
 
-  // TODO: pinned - how?
-  // TODO: reply
+  // TODO: pinned - how? Probably something like notification whenever user enters the chat.
   // TODO: editing
   // TODO: deleting - reply to message with /delete
   // TODO: periodically run clean up process to remove non-existing chats and those that banned bot
@@ -73,6 +72,7 @@ class AnonymizerBot[F[_]: Timer](
       case c: ShowAll        => handleShowAll(c.chatId, c.messageId)
       case c: MakeActive =>
         handleMakeActive(c.chatId, c.target)
+      case c: DeleteMessage => handleDelete(c.chatId, c.messageId, c.replyId)
       case c: PlainMessage =>
         handleMessage(c.chatId, c.messageId, c.content, c.replyId, c.from)
 
@@ -284,17 +284,44 @@ class AnonymizerBot[F[_]: Timer](
     } yield ()
   }
 
+  private def deleteMsg(source: Message): F[Unit] =
+    for {
+      messages <- messageRepo.getBySource(source)
+      _        <- messages.traverse(m => api.deleteMessage(m.chatId, m.messageId))
+    } yield ()
+
+  private def handleDelete(chatId: ChatId,
+                           messageId: MessageId,
+                           replyIdOpt: Option[MessageId]): F[Unit] = {
+    val result: EitherT[F, String, Message] = for {
+      _ <- EitherT.liftF(
+        logger.info(s"User $chatId tries to delete message $replyIdOpt"))
+      replyId <- EitherT.fromOption[F](replyIdOpt, language.replyToDelete)
+      message <- EitherT.fromOptionF(messageRepo.get(chatId, replyId),
+                                     language.cannotDelete)
+      source <- EitherT.fromOption[F](message.source, language.cannotDelete)
+      _ <- EitherT
+        .cond[F](source.chatId == chatId, (), language.notAllowedToDelete)
+    } yield source
+
+    result.value.flatMap {
+      case Left(str) => api.sendMessage(chatId, str).void
+      case Right(source) =>
+        deleteMsg(source).flatTap(_ => api.deleteMessage(chatId, messageId))
+    }
+  }
+
   private def handleUnknown(chatId: ChatId): F[Unit] =
     for {
       _ <- logger.info(s"Received unknown command from $chatId")
-      _ <- sendMessage(chatId, None, None, language.unknown)
+      _ <- api.sendMessage(chatId, language.unknown)
     } yield ()
 
   private def handleResetNickname(chatId: ChatId): F[Unit] =
     for {
       _      <- logger.info(s"User $chatId resets nickname")
       member <- memberRepo.resetName(chatId)
-      _      <- sendMessage(chatId, None, None, language.resetNickname(member.name))
+      _      <- api.sendMessage(chatId, language.resetNickname(member.name))
     } yield ()
 
   private def handleSetDelay(chatId: ChatId, delayStr: String): F[Unit] =
@@ -302,7 +329,7 @@ class AnonymizerBot[F[_]: Timer](
       _ <- logger.info(s"User $chatId sets delay to $delayStr")
       _ <- memberRepo.touch(chatId)
       _ <- memberRepo.setDelay(chatId, Some(delayStr.toInt))
-      _ <- sendMessage(chatId, None, None, language.setDelay(delayStr))
+      _ <- api.sendMessage(chatId, language.setDelay(delayStr))
     } yield ()
 
   private def handleResetDelay(chatId: ChatId): F[Unit] =
@@ -310,7 +337,7 @@ class AnonymizerBot[F[_]: Timer](
       _ <- logger.info(s"User $chatId resets nickname")
       _ <- memberRepo.touch(chatId)
       _ <- memberRepo.resetDelay(chatId)
-      _ <- sendMessage(chatId, None, None, language.resetDelay)
+      _ <- api.sendMessage(chatId, language.resetDelay)
     } yield ()
 
   private def handleJoin(chatId: ChatId): F[Unit] =
